@@ -1,43 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.c                                     :+:      :+:    :+:   */
+/*   token_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 14:34:15 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/06 22:32:48 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/06 21:29:45 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/06 22:28:37 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	ft_check_token(char *line, int *index)
+int	ft_handle_pipe(char *line, int index)
 {
-	while (line[*index])
+	if (!line[index + 1] || line[index + 1] == '\0' || index == 0
+		|| line[index + 1] == '|')
 	{
-		if (line[*index] == '|')
-			return (PIPE);
-		(*index)++;
+		ft_printerror("syntax error near `|'\n");
+		return (-1);
 	}
 	return (0);
-}
-
-t_toexec	*ft_tokenization(char *line)
-{
-	int			check;
-	t_toexec	*test = NULL;
-	int			index;
-	index = 0;
-	while (line[index])
-	{
-		check = ft_check_token(line, &index);
-		if (check == PIPE)
-		{
-			if (ft_handle_pipe(line, index) == -1)
-				return NULL;
-		}
-		index++;
-	}
-	return (test);
 }

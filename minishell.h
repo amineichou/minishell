@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/06 15:56:02 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/06 22:26:58 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define MINISHELL_H
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <readline/readline.h>
 
 
@@ -22,7 +24,7 @@ typedef struct s_env {
 	struct s_env	*next;
 } t_env;
 
-// parsing
+// lexing
 typedef struct  s_toexec {
 	int					input;
 	int					output;
@@ -35,12 +37,22 @@ typedef struct  s_toexec {
 enum token {
 	WORD,
 	PIPE,
-	RE_AP,
-	RE_RP,
+	AP,
+	RP,
+	RD_IN,
+	RD_OUT, 
 	BRACET_LEFT,
 	BRAKET_WRITE,
 };
 
-t_toexec	ft_tokenization(char *line);
+// lexing
+t_toexec	*ft_tokenization(char *line);
+
+// handlers
+// token_1
+int	ft_handle_pipe(char *line, int index);
+
+// error hanling
+void	ft_printerror(char *str);
 
 #endif
