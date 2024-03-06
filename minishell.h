@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/06 14:53:55 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/06 15:56:02 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,24 @@ typedef struct s_env {
 } t_env;
 
 // parsing
-typedef struct s_token {
-	int				input;
-	int				output;
-	char			**args;
-	t_env 			*env;
-	struct s_token	*next;
-	struct s_token	*prev;
-}	t_token;
+typedef struct  s_toexec {
+	int					input;
+	int					output;
+	char				**args;
+	t_env 				*env;
+	struct  s_toexec	*next;
+	struct  s_toexec	*prev;
+}	t_toexec;
 
+enum token {
+	WORD,
+	PIPE,
+	RE_AP,
+	RE_RP,
+	BRACET_LEFT,
+	BRAKET_WRITE,
+};
 
-
-
-t_token	ft_parsing(char *line);
+t_toexec	ft_tokenization(char *line);
 
 #endif
