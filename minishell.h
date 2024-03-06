@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/06 14:58:40 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/03/06 20:55:51 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 
 #include <stdio.h>
 #include <readline/readline.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 
 typedef struct s_env {
 	char			*var;
 	struct s_env	*next;
-} t_env;
+}	t_env;
 
 // parsing
 typedef struct s_token {
