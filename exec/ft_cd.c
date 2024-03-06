@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/06 14:58:51 by zyamli           ###   ########.fr       */
+/*   Created: 2024/03/06 13:13:47 by zyamli            #+#    #+#             */
+/*   Updated: 2024/03/06 16:38:23 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
+
+void ft_cd (char *dir)
+{
+	if (chdir(dir) == -1)
+		perror("cd");
+}
 
 int main(int ac, char **av)
 {
-	char *line;
-	t_token lst;
-	while (1)
-	{
-		line = readline("minishell$ ");
-		lst = ft_parsing(line);
-	}
+	(void)ac;
+	ft_cd(av[1]);
 }

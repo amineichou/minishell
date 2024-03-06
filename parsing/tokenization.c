@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/06 14:58:51 by zyamli           ###   ########.fr       */
+/*   Created: 2024/03/06 14:34:15 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/06 14:36:12 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./minishell.h"
 
-int main(int ac, char **av)
+t_token	ft_parsing(char *line)
 {
-	char *line;
-	t_token lst;
-	while (1)
-	{
-		line = readline("minishell$ ");
-		lst = ft_parsing(line);
-	}
+	
 }

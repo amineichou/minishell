@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/06 14:58:51 by zyamli           ###   ########.fr       */
+/*   Created: 2024/03/06 15:14:31 by zyamli            #+#    #+#             */
+/*   Updated: 2024/03/06 15:51:11 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int main(int ac, char **av)
+void ft_pwd(void)
 {
-	char *line;
-	t_token lst;
-	while (1)
-	{
-		line = readline("minishell$ ");
-		lst = ft_parsing(line);
-	}
+	char	buff[1024];
+	if(getcwd(buff, 1024) == NULL)
+		perror("pwd");
+	else
+		printf("%s\n", buff);
 }
