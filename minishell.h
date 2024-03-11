@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/06 20:55:51 by zyamli           ###   ########.fr       */
-=======
-/*   Updated: 2024/03/06 22:26:58 by moichou          ###   ########.fr       */
->>>>>>> 64342c4d2c6e4e1b244394994bc38bf9afec8abd
+/*   Updated: 2024/03/11 17:35:05 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +26,6 @@ typedef struct s_env {
 	struct s_env	*next;
 }	t_env;
 
-// lexing
 typedef struct  s_toexec {
 	int					input;
 	int					output;
@@ -51,14 +46,14 @@ enum token {
 	BRAKET_WRITE,
 };
 
-// lexing
-t_toexec	*ft_tokenization(char *line);
+// parsing
+// synthax sanitizer
+int		ft_sanitizer(char *line);
+int		ft_sanitize_pipes(char *line);
+int		ft_sanitize_double_quotes(char *line);
 
-// handlers
-// token_1
-int	ft_handle_pipe(char *line, int index);
-
-// error hanling
+// utils
 void	ft_printerror(char *str);
+char	*ft_remove_un_spaces(char *str);
 
 #endif

@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_1.c                                          :+:      :+:    :+:   */
+/*   ft_sanitizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 21:29:45 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/06 22:28:37 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/11 17:21:28 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-int	ft_handle_pipe(char *line, int index)
+int	ft_sanitizer(char *line)
 {
-	if (!line[index + 1] || line[index + 1] == '\0' || index == 0
-		|| line[index + 1] == '|')
-	{
-		ft_printerror("syntax error near `|'\n");
+	if (ft_sanitize_pipes(line) == -1)
 		return (-1);
-	}
-	return (0);
+	return (0); 
 }
