@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_sanitize_pipes.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 21:35:18 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/11 17:52:28 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/11 15:24:33 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/11 17:27:33 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-void	ft_printerror(char *str)
+int	ft_sanitize_pipes(char *line)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (line[i])
 	{
-		write (2, &str[i], 1);
+		if (line[i] == '|' && i == 0
+			|| line[i] == '|' && line[i + 1] == '\0'
+			|| line[i] == '|' && line[i + 1] == '|')
+		{
+			ft_printerror("syntax error near unexpected token `|'\n");
+			return (-1);
+		}
 		i++;
 	}
+	return (0);
 }

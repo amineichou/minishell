@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_sanitize_double.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 21:35:18 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/11 17:52:28 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/11 15:24:25 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/11 17:19:17 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-void	ft_printerror(char *str)
+static int	ft_count_double_quotes(char *line)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-	while (str[i])
+	count = 0;
+	while (*line)
 	{
-		write (2, &str[i], 1);
-		i++;
+		if (*line == '"')
+			count++;
+		line++;
 	}
+	return (count);
+}
+
+int	ft_sanitize_double_quotes(char *line)
+{
+	int	double_quotes_size;
+
+	double_quotes_size = ft_count_double_quotes(line);
+	if (double_quotes_size % 2 != 0)
+	{
+		ft_printerror("syntax error missing quote\n");
+		return (-1);
+	}
+	return (0);
 }
