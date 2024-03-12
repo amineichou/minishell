@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 15:14:31 by zyamli            #+#    #+#             */
-/*   Updated: 2024/03/07 14:39:18 by zyamli           ###   ########.fr       */
+/*   Created: 2024/03/11 18:26:15 by zyamli            #+#    #+#             */
+/*   Updated: 2024/03/11 18:32:19 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include<unistd.h>
+#include<stdio.h>
 
-void ft_pwd(void)
+int main()
 {
-	char	buff[1024];
-	if(getcwd(buff, 1024) == NULL)
-		perror("pwd");
-	else
-		printf("%s\n", buff);
+	char *args[] = {"ls", "-l", NULL};
+	execve("/bin/ls", args, NULL);
+	printf("makhdamch/n");
 }
