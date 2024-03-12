@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:41:47 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/11 18:40:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/12 14:40:38 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,20 @@ static void	encypt_wanted_spaces(char **str)
 	i = 0;
 	while ((*str)[i])
 	{
-		if ((*str)[i] && (*str)[i] == '"')
+		if ((*str)[i] == '"')
 		{
-			i++;
 			while ((*str)[i++] && (*str)[i] != '"')
 			{
 				if ((*str)[i] == ' ')
-					(*str)[i] *= -1;
+					(*str)[i] = 127;
 			}
 		}
-		if ((*str)[i] && (*str)[i] == '\'')
+		if ((*str)[i] == '\'')
 		{
-			i++; 
 			while ((*str)[i++] && (*str)[i] != '\'')
 			{
 				if ((*str)[i] == ' ')
-					(*str)[i] *= -1;
+					(*str)[i] = 127;
 			}
 		}
 		i++;
@@ -50,22 +48,20 @@ static void	decypt_wanted_spaces(char **str)
 	i = 0;
 	while ((*str)[i])
 	{
-		if ((*str)[i] && (*str)[i] == '"')
+		if ((*str)[i] == '"')
 		{
-			i++;
 			while ((*str)[i++] && (*str)[i] != '"')
 			{
-				if ((*str)[i] == ' ')
-					(*str)[i] *= -1;
+				if ((*str)[i] == 127)
+					(*str)[i] = 32;
 			}
 		}
-		if ((*str)[i] && (*str)[i] == '\'')
+		if ((*str)[i] == '\'')
 		{
-			i++; 
 			while ((*str)[i++] && (*str)[i] != '\'')
 			{
-				if ((*str)[i] == ' ')
-					(*str)[i] *= -1;
+				if ((*str)[i] == 127)
+					(*str)[i] = 32;
 			}
 		}
 		i++;
@@ -74,11 +70,18 @@ static void	decypt_wanted_spaces(char **str)
 
 // remove unnecessary spaces
 // free the old one if you allocate
-char	*ft_remove_un_spaces(char *str)
+char	**ft_remove_split_spaces(char *line)
 {
-	encypt_wanted_spaces(&str);
-	printf("%s\n", str);
-	decypt_wanted_spaces(&str);
-	printf("%s\n", str);
-	return (str);
+	char **splited_line;
+	int	i;
+
+	encypt_wanted_spaces(&line);
+	splited_line = ft_split(line, ' ');
+	i = 0;
+	while (splited_line[i])
+	{
+		decypt_wanted_spaces(&splited_line[i]);
+		i++;
+	}
+	return (splited_line);
 }

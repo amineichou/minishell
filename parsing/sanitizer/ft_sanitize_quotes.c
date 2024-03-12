@@ -1,25 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sanitizer.c                                     :+:      :+:    :+:   */
+/*   ft_sanitize_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 15:03:04 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/12 14:36:51 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/12 14:38:31 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_sanitizer(char *line)
+static int	ft_count_char(char *line, char c)
 {
-	char **sanitize_result;
+	int	count;
 
-	if (ft_sanitize_pipes(line) == -1 
-		|| ft_sanitize_quotes(line) == -1
-		|| ft_sanitize_redirections(line) == -1)
+	count = 0;
+	while (*line)
+	{
+		if (*line == c)
+			count++;
+		line++;
+	}
+	return (count);
+}
+
+int	ft_sanitize_quotes(char *line)
+{
+	int	double_quotes_size;
+	int	single_quotes_size;
+
+	double_quotes_size = ft_count_char(line, '"');
+	single_quotes_size = ft_count_char(line, '\'');
+	if (double_quotes_size % 2 != 0
+		|| single_quotes_size % 2 != 0)
+	{
+		ft_printerror("syntax error missing quote\n");
 		return (-1);
-	sanitize_result = ft_remove_split_spaces(line);
+	}
 	return (0);
 }

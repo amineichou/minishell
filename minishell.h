@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/11 17:35:05 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/12 15:26:42 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,13 @@ enum token {
 // synthax sanitizer
 int		ft_sanitizer(char *line);
 int		ft_sanitize_pipes(char *line);
-int		ft_sanitize_double_quotes(char *line);
+int		ft_sanitize_quotes(char *line);
+int		ft_sanitize_redirections(char *line);
+char	**ft_remove_split_spaces(char *line);
 
 // utils
+int		ft_strlen(char *str);
 void	ft_printerror(char *str);
-char	*ft_remove_un_spaces(char *str);
-
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	**ft_split(char const *s, char c);
 #endif
