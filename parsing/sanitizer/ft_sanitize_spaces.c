@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:41:47 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 14:40:38 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/12 22:01:38 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	encypt_wanted_spaces(char **str)
 			while ((*str)[i++] && (*str)[i] != '"')
 			{
 				if ((*str)[i] == ' ')
-					(*str)[i] = 127;
+					(*str)[i] *= -1;
 			}
 		}
 		if ((*str)[i] == '\'')
@@ -33,7 +33,7 @@ static void	encypt_wanted_spaces(char **str)
 			while ((*str)[i++] && (*str)[i] != '\'')
 			{
 				if ((*str)[i] == ' ')
-					(*str)[i] = 127;
+					(*str)[i] *= -1;
 			}
 		}
 		i++;
@@ -52,7 +52,7 @@ static void	decypt_wanted_spaces(char **str)
 		{
 			while ((*str)[i++] && (*str)[i] != '"')
 			{
-				if ((*str)[i] == 127)
+				if ((*str)[i] == -32)
 					(*str)[i] = 32;
 			}
 		}
@@ -60,7 +60,7 @@ static void	decypt_wanted_spaces(char **str)
 		{
 			while ((*str)[i++] && (*str)[i] != '\'')
 			{
-				if ((*str)[i] == 127)
+				if ((*str)[i] == -32)
 					(*str)[i] = 32;
 			}
 		}

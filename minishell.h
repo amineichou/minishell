@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 15:26:42 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 02:04:33 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_env {
 typedef struct  s_toexec {
 	int					input;
 	int					output;
+	char				*cmd;
 	char				**args;
 	t_env 				*env;
 	struct  s_toexec	*next;
@@ -46,17 +47,24 @@ enum token {
 	BRAKET_WRITE,
 };
 
-// parsing
 // synthax sanitizer
-int		ft_sanitizer(char *line);
+char	**ft_sanitizer(char *line);
 int		ft_sanitize_pipes(char *line);
 int		ft_sanitize_quotes(char *line);
 int		ft_sanitize_redirections(char *line);
 char	**ft_remove_split_spaces(char *line);
+
+// analyser
+int		ft_analyser(char **args);
 
 // utils
 int		ft_strlen(char *str);
 void	ft_printerror(char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	**ft_split(char const *s, char c);
+
+// struct tools
+t_toexec	*ft_create_node(char *cmd, char **args);
+void		ft_append_node(t_toexec *head, t_toexec *node);
+
 #endif

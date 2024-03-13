@@ -6,20 +6,24 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 14:33:49 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 02:06:57 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
-	char		*line;
 	t_toexec	*lst;
-	(void)av;
+	char		*line;
+	char		**sanitize_result;
 	while (1)
 	{
-		line = readline("\e[1;32mminishell$\e[0;0m ");
-		ft_sanitizer(line);
+		line = readline("minishell$ ");
+		add_history(line);
+		sanitize_result = ft_sanitizer(line);
+		if (sanitize_result)
+			ft_analyser(sanitize_result);
 	}
+	(void)av;
 }
