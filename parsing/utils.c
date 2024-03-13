@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 21:35:18 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 02:35:10 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 18:18:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,29 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	}
 	dst[i] = '\0';
 	return (src_len);
+}
+
+char	*ft_strtrim(char *s1, char *set)
+{
+	char	*result;
+	int		i;
+	int		beginning;
+	int		end;
+
+	if (!s1 || !set)
+		return (NULL);
+	beginning = 0;
+	end = ft_strlen(s1) - 1;
+	i = 0;
+	while (ft_strchr(set, s1[beginning]) && beginning <= end)
+		beginning++;
+	if (beginning > end)
+		return (ft_strdup(""));
+	while (ft_strchr(set, s1[end]) && end >= 0)
+		end--;
+	result = malloc(sizeof(char) * (end - beginning + 2));
+	if (!result)
+		return (MALLOC_ERORR, NULL);
+	ft_strlcpy(result, &s1[beginning], end - beginning + 2);
+	return (result);
 }

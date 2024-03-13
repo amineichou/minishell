@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 02:48:59 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:47:32 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,15 @@ int		ft_strlen(char *str);
 void	ft_printerror(char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	**ft_split(char const *s, char c);
+char	*ft_strtrim(char *s1, char *set);
+int		ft_strlen(char *str);
 
 // struct tools
 t_toexec	*ft_create_node(char *cmd, char **args);
 void		ft_append_node(t_toexec *head, t_toexec *node);
+
+// libft
+char	*ft_strdup(char *s1);
+char	*ft_strchr(char *s, int c);
 
 #endif

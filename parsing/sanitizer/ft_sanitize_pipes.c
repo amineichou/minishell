@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:24:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 02:40:40 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:54:57 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@ int	ft_sanitize_pipes(char *line)
 	int	i;
 
 	i = 0;
-	if (pipe_is_last_prop(line))
-	{
-		ft_printerror(SYNTAX_ERROR_PIPE);
-		return (-1);
-	}
 	while (line[i])
 	{
 		if (line[i] == '|' && i == 0
