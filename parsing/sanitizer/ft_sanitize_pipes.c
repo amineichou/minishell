@@ -6,11 +6,12 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:24:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 15:44:50 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 02:40:40 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include "../includes/macros.h"
 
 static int	pipe_is_last_prop(char *line)
 {
@@ -36,7 +37,7 @@ int	ft_sanitize_pipes(char *line)
 	i = 0;
 	if (pipe_is_last_prop(line))
 	{
-		ft_printerror("syntax error near unexpected token `|'\n");
+		ft_printerror(SYNTAX_ERROR_PIPE);
 		return (-1);
 	}
 	while (line[i])
@@ -45,7 +46,7 @@ int	ft_sanitize_pipes(char *line)
 			|| line[i] == '|' && line[i + 1] == '\0'
 			|| line[i] == '|' && line[i + 1] == '|')
 		{
-			ft_printerror("syntax error near unexpected token `|'\n");
+			ft_printerror(SYNTAX_ERROR_PIPE);
 			return (-1);
 		}
 		i++;

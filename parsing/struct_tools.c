@@ -6,16 +6,20 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:16:12 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 01:54:23 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 02:46:08 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include "includes/macros.h"
 
 t_toexec	*ft_create_node(char *cmd, char **args)
 {
 	t_toexec	*node;
 
+	node = malloc(sizeof(t_toexec));
+	if (!node)
+		return (ft_printerror(MALLOC_ERORR) ,NULL);
 	node->cmd = cmd;
 	node->args = args;
 	return (node);

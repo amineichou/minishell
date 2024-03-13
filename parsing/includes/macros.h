@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_analyser.c                                      :+:      :+:    :+:   */
+/*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 02:24:29 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/13 02:28:37 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/13 02:42:33 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#ifndef MACROS_H
+# define MACROS_H
 
-int	ft_analyser(char **args)
-{
-	int	i;
+#define MALLOC_ERORR "allocation failed\n"
+#define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
+#define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
+#define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `>'\n"
 
-	i = 0;
-	while ((*args)[i])
-	{
-		
-		i++;
-	}
-}
+#endif

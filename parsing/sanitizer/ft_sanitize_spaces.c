@@ -6,11 +6,12 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:41:47 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 22:01:38 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 02:44:20 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include "../includes/macros.h"
 
 // encrypt the spaces that we want to save aka space between quotes
 static void	encypt_wanted_spaces(char **str)
@@ -77,6 +78,8 @@ char	**ft_remove_split_spaces(char *line)
 
 	encypt_wanted_spaces(&line);
 	splited_line = ft_split(line, ' ');
+	if (!splited_line)
+		return (ft_printerror(MALLOC_ERORR), NULL);
 	i = 0;
 	while (splited_line[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:19:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 14:19:28 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 02:38:25 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ char	**ft_split(char const *s, char c)
 	int		count_del;
 
 	if (!s)
-		return (0);
+		return (NULL);
 	count_del = ft_count_delimiters(s, c);
 	splited = malloc(sizeof(char *) * (count_del + 1));
 	if (!splited)
-		return (0);
+		return (NULL);
 	if (!fill_the_splited(splited, s, c))
-		return (0);
+		return (NULL);
 	splited[count_del] = 0;
 	return (splited);
 }

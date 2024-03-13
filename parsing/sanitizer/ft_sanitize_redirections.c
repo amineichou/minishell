@@ -6,11 +6,12 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:53:48 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 15:05:55 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/13 02:42:42 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include "../includes/macros.h"
 
 static int	count_bigest_series_char(char *line, char c)
 {
@@ -40,7 +41,7 @@ int	ft_sanitize_redirections(char *line)
 	if (count_bigest_series_char(line, '>') > 2
 		|| count_bigest_series_char(line, '<') > 2)
 	{
-		ft_printerror("syntax error near unexpected token `>'\n");
+		ft_printerror(SYNTAX_ERROR_REDIRECTION);
 		return (-1);
 	}
 	return (0);
