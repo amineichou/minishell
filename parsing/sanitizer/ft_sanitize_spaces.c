@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:41:47 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 16:58:07 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/14 18:25:54 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,48 @@ static void	decypt_wanted_spaces(char **str)
 	}
 }
 
+static int	count_legal_pipes(char *line)
+{
+	int	i;
+	int	size;
+
+	size = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '"')
+		{
+			i++;
+			while (line[i++] != '"');
+			i++;
+		}
+		if (line[i] == '\'')
+		{
+			i++;
+			while (line[i++] != '\'');
+			i++;
+		}
+		if (line[i] == '|')
+			size++;
+		i++;
+	}
+	return (size);
+}
+
+static void	add_spaces_to_pipes(char **line)
+{
+	int	i;
+	int	legal_pipes;
+
+	i = 0;
+	legal_pipes = count_legal_pipes(*line);
+	printf("%d\n", legal_pipes);
+	// while ((*line)[i])
+	// {
+		
+	// }
+}
+
 // remove unnecessary spaces
 // free the old one if you allocate
 char	**ft_remove_split_spaces(char *line)
@@ -77,6 +119,7 @@ char	**ft_remove_split_spaces(char *line)
 	int	i;
 
 	encypt_wanted_spaces(&line);
+	add_spaces_to_pipes(&line);
 	splited_line = ft_split(line, ' ');
 	if (!splited_line)
 		return (ft_printerror(MALLOC_ERORR), NULL);

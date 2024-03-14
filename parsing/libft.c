@@ -6,11 +6,29 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 16:47:26 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/14 02:38:12 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_isspace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\f' || c == '\r' || c == '\v')
+		return (1);
+	return (0);
+}
 
 char	*ft_strdup(char *s1)
 {

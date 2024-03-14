@@ -6,39 +6,43 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:36:51 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 02:41:46 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:51:28 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 #include "../includes/macros.h"
 
-static int	ft_count_char(char *line, char c)
+static int	ft_check_closure(char *line, char c, int *index)
 {
-	int	count;
-
-	count = 0;
-	while (*line)
+	(*index)++;
+	while (line[*index])
 	{
-		if (*line == c)
-			count++;
-		line++;
+		if (line[*index] == c)
+			return (1);
+		(*index)++;
 	}
-	return (count);
+	return (0);
 }
 
 int	ft_sanitize_quotes(char *line)
 {
-	int	double_quotes_size;
-	int	single_quotes_size;
+	int	i;
 
-	double_quotes_size = ft_count_char(line, '"');
-	single_quotes_size = ft_count_char(line, '\'');
-	if (double_quotes_size % 2 != 0
-		|| single_quotes_size % 2 != 0)
+	i = 0;
+	while (line[i])
 	{
-		ft_printerror(SYNTAX_ERROR_QUOTE);
-		return (-1);
+		if (line[i] == '"')
+		{
+			if (ft_check_closure(line, '"', &i) == 0)
+				return (ft_printerror(SYNTAX_ERROR_QUOTE), -1);
+		}
+		else if (line[i] == '\'')
+		{
+			if (ft_check_closure(line,'\'', &i) == 0)
+				return (ft_printerror(SYNTAX_ERROR_QUOTE), -1);
+		}
+		i++;
 	}
 	return (0);
 }

@@ -6,34 +6,12 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 21:35:18 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 18:18:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/14 17:35:15 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "includes/macros.h"
-
-int		ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void	ft_printerror(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		write (2, &str[i], 1);
-		i++;
-	}
-}
 
 // free after using
 char	*ft_get_word(char *str)
@@ -107,4 +85,40 @@ char	*ft_strtrim(char *s1, char *set)
 		return (MALLOC_ERORR, NULL);
 	ft_strlcpy(result, &s1[beginning], end - beginning + 2);
 	return (result);
+}
+
+void	ft_trim_spaces(char *str)
+{
+    int i;
+	int	j;
+
+	i = 0;
+    while (ft_isspace(str[i]))
+        i++;
+    j = 0;
+    while (str[i] != '\0') {
+        str[j] = str[i];
+        i++;
+        j++;
+    }
+    str[j] = '\0';
+    j = ft_strlen(str) - 1;
+    while (j >= 0 && ft_isspace(str[j]))
+	{
+        str[j] = '\0';
+        j--;
+    }
+}
+
+void	ft_printerror(char *msg)
+{
+	int	i;
+
+	i = 0;
+	write(2, "minishell: ", 12);
+	while (msg[i])
+	{
+		write(2, &msg[i], 1);
+		i++;
+	}
 }

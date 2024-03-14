@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sanitizer.c                                     :+:      :+:    :+:   */
+/*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/14 02:52:11 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/13 23:33:14 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/14 16:15:15 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-char	**ft_sanitizer(char *line)
+void	ft_sigkill_handler(int signum)
 {
-	char **sanitize_result;
-
-	ft_trim_spaces(line);
-	if (ft_sanitize_pipes(line) == -1 
-		|| ft_sanitize_quotes(line) == -1
-		|| ft_sanitize_redirections(line) == -1)
-		return (NULL);
-	sanitize_result = ft_remove_split_spaces(line);
-	return (sanitize_result);
+	rl_redisplay();
+	printf("minishell$ ");
 }
