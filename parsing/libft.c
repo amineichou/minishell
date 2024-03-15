@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/14 23:19:36 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/15 18:35:15 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,16 @@ char	*ft_strchr(char *s, int c)
 	if (d == '\0')
 		return (searched + ft_strlen(searched));
 	return (NULL);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (-1);
+	while (s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }
