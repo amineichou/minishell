@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 21:35:18 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/14 17:35:15 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/15 00:13:38 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,29 +62,32 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (src_len);
 }
 
-char	*ft_strtrim(char *s1, char *set)
+int	count_legal_char(char *line, char c)
 {
-	char	*result;
-	int		i;
-	int		beginning;
-	int		end;
+	int	i;
+	int	size;
 
-	if (!s1 || !set)
-		return (NULL);
-	beginning = 0;
-	end = ft_strlen(s1) - 1;
+	size = 0;
 	i = 0;
-	while (ft_strchr(set, s1[beginning]) && beginning <= end)
-		beginning++;
-	if (beginning > end)
-		return (ft_strdup(""));
-	while (ft_strchr(set, s1[end]) && end >= 0)
-		end--;
-	result = malloc(sizeof(char) * (end - beginning + 2));
-	if (!result)
-		return (MALLOC_ERORR, NULL);
-	ft_strlcpy(result, &s1[beginning], end - beginning + 2);
-	return (result);
+	while (line[i])
+	{
+		if (line[i] == '"')
+		{
+			i++;
+			while (line[i++] != '"');
+			i++;
+		}
+		if (line[i] == '\'')
+		{
+			i++;
+			while (line[i++] != '\'');
+			i++;
+		}
+		if (line[i] == c)
+			size++;
+		i++;
+	}
+	return (size);
 }
 
 void	ft_trim_spaces(char *str)
