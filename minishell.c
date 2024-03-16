@@ -6,19 +6,31 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/15 18:39:10 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/16 01:41:28 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_list(t_toexec *lst)
+static void	print_list(t_toexec *lst)
 {
 	t_toexec *test = lst;
+	if (!test)
+	{
+		printf("list is empty\n");
+		return ;
+	}
+	printf("  \033[0;31mCMD\033[0m          \033[0;32mARGS\033[0m            \033[0;33mOUTPUT\033[0m      \033[0;34mINPUT\033[0m \n");
 	while (test)
 	{
-		printf("|cmd %s", test->cmd);
-		printf("|args %s", test->args);
+		printf("--------------------------------------------------------------------------------------------\n");
+		printf("\033[0;31m[%s ,]\033[0m\033[0;32m[", test->cmd);
+		for (int i = 0; test->args[i]; i++)
+			printf("%s ,", test->args[i]);
+		printf("]\033[0m[");
+		printf("\033[0;33m%d]\033[0m[", test->output);
+		printf("\033[0;34m%d]\033[0m", test->input);
+		printf("\n--------------------------------------------------------------------------------------------\n");
 		test = test->next;
 	}
 }
@@ -47,7 +59,8 @@ int main(int ac, char **av, char **env)
 			if (sanitize_result)
 				lst = ft_analyser(sanitize_result);
 
-
+			print_list(lst);
+			
 			free(line);
 		}
 	}

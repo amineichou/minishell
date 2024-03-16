@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/15 18:35:07 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/16 01:19:23 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int			ft_count_legal_char(char *line, char c);
 char		*ft_get_word(char *str);
 
 // struct tools
+t_toexec	*ft_append_node(t_toexec *head, t_toexec *node);
 t_toexec	*ft_create_node(char *cmd, char **args);
-void		ft_append_node(t_toexec *head, t_toexec *node);
 
 // libft
 char		*ft_strdup(char *s1);
