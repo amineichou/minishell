@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/15 18:35:15 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/17 02:39:17 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,17 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
+}
+
+void	ft_strcpy(char *dst, char *src, size_t dstsize)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < dstsize)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
 }

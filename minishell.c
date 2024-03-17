@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/16 01:41:28 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/17 00:56:31 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main(int ac, char **av, char **env)
 {
 	t_toexec	*lst;
 	char		*line;
-	char		**sanitize_result;
+	char		*sanitize_result;
 
 	// signal(SIGINT, ft_sigkill_handler);
 
@@ -59,7 +59,7 @@ int main(int ac, char **av, char **env)
 			if (sanitize_result)
 				lst = ft_analyser(sanitize_result);
 
-			print_list(lst);
+			// print_list(lst);
 			
 			free(line);
 		}

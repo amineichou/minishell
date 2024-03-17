@@ -6,11 +6,34 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:19:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 17:51:56 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/17 02:39:08 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	src_len;
+	size_t	i;
+
+	src_len = 0;
+	while (src[src_len] != '\0')
+	{
+		src_len++;
+	}
+	if (dstsize == 0)
+		return (src_len);
+	i = 0;
+	while (src[i] != '\0' && i < (dstsize - 1))
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (src_len);
+}
+
 
 static size_t	ft_count_delimiters(char const *s, char c)
 {
@@ -90,3 +113,13 @@ char	**ft_split(char const *s, char c)
 	splited[count_del] = 0;
 	return (splited);
 }
+
+// int main(void)
+// {
+// 	char test[] = "hello | my | name '|' is \"|\"amine";
+// 	char **res = ft_split(test, '|');
+// 	for (int i = 0; res[i]; i++)
+// 	{
+// 		printf("%s\n", res[i]);
+// 	}
+// }

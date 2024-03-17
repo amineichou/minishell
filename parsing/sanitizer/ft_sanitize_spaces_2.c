@@ -6,37 +6,13 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:58:02 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/15 17:46:17 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/17 00:51:00 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 #include "../includes/macros.h"
 
-void	ft_replace_illegal_tab(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '"')
-		{
-			i++;
-			while (line[i] != '"')
-				i++;
-		}
-		if (line[i] == '\'')
-		{
-			i++;
-			while (line[i] != '\'')
-				i++;
-		}
-		if (ft_isspace(line[i]))
-			line[i] = ' ';
-		i++;
-	}
-}
 
 static void	ft_add_spaces_to_pipes(char *line, char *res)
 {

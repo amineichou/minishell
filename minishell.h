@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/16 01:19:23 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/17 02:39:30 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct  s_toexec {
 	struct  s_toexec	*prev;
 }	t_toexec;
 
-enum token {
+typedef enum token {
 	WORD,
 	PIPE,
 	AP,
@@ -46,31 +46,32 @@ enum token {
 	RD_OUT, 
 	BRACET_LEFT,
 	BRAKET_WRITE,
-};
+}	token;
+
+typedef struct s_token {
+	token token;
+	char	*value;
+	struct s_token	*next;
+}	t_token;
 
 // synthax sanitizer
-char		**ft_sanitizer(char *line);
+char		*ft_sanitizer(char *line);
 int			ft_sanitize_pipes(char *line);
 int			ft_sanitize_quotes(char *line);
 int			ft_sanitize_redirections(char *line);
-char		**ft_sanitize_spaces(char *line);
-void		ft_replace_illegal_tab(char *line);
-char		*ft_addspace_illegal_pipe(char *line);
+void		ft_sanitize_spaces(char *line);
 
 // analyser
-t_toexec	*ft_analyser(char **args);
+t_toexec	*ft_analyser(char *sanitize_result);
 
 // utils
 int			ft_strlen(char *str);
-size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char		**ft_split(char const *s, char c);
-void		ft_trim_spaces(char *str);
 void		ft_printerror(char *msg);
 int			ft_count_legal_char(char *line, char c);
-char		*ft_get_word(char *str);
 
 // struct tools
-t_toexec	*ft_append_node(t_toexec *head, t_toexec *node);
+void		ft_append_node(t_toexec *head, t_toexec *node);
 t_toexec	*ft_create_node(char *cmd, char **args);
 
 // libft
@@ -79,6 +80,7 @@ char		*ft_strchr(char *s, int c);
 int			ft_strlen(char *str);
 int			ft_isspace(char c);
 int			ft_strcmp(char *s1, char *s2);
+void		ft_strcpy(char *dst, char *src, size_t dstsize);
 
 // signal hanldler
 void		ft_sigkill_handler(int signum);
