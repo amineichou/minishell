@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:41:47 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 02:49:13 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/17 23:57:11 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,35 +69,12 @@
 // 	}
 // }
 
-static void	ft_replace_illegal_tab(char *line)
-{
-	int	i;
 
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '"')
-		{
-			i++;
-			while (line[i] != '"')
-				i++;
-		}
-		if (line[i] == '\'')
-		{
-			i++;
-			while (line[i] != '\'')
-				i++;
-		}
-		if (ft_isspace(line[i]))
-			line[i] = ' ';
-		i++;
-	}
-}
 
 // remove unnecessary spaces
 // free the old one if you allocate
 // protect these functions ???????????????????
 void	ft_sanitize_spaces(char *line)
 {
-	ft_replace_illegal_tab(line);
+	//ft_replace_illegal_tab(line);
 }

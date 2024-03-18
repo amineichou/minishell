@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 00:56:31 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/18 00:10:46 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	print_list(t_toexec *lst)
 
 int main(int ac, char **av, char **env)
 {
-	t_toexec	*lst;
+	t_token	*lst;
 	char		*line;
 	char		*sanitize_result;
 
@@ -58,6 +58,13 @@ int main(int ac, char **av, char **env)
 			sanitize_result = ft_sanitizer(line);
 			if (sanitize_result)
 				lst = ft_analyser(sanitize_result);
+
+			// while (lst)
+			// {
+			// 	printf("value : %s\n", lst->value);
+			// 	printf("type %d\n", lst->token);
+			// 	lst = lst->next;
+			// }
 
 			// print_list(lst);
 			

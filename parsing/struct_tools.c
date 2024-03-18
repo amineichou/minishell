@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:16:12 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 02:19:17 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/18 00:55:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ t_toexec	*ft_create_node(char *cmd, char **args)
 	return (node);
 }
 
-void	ft_append_node(t_toexec *head, t_toexec *node)
+void	ft_append_node(t_token **head, t_token *node)
 {
-	t_toexec	*last;
+	t_token	*last;
 
-	if (head == NULL)
+	if ((*head) == NULL)
 	{
-		head = node;
-		node->next = NULL;
+		(*head) = node;
+		(*head)->next = NULL;
 		return ;
 	}
 
-	last = head;
+	last = (*head);
 	while (last->next)
 		last = last->next;
 	last->next = node;

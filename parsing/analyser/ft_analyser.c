@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 03:40:08 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/18 04:11:46 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,23 +84,80 @@ static char *ft_get_args(char *rest_args, int *i)
 	return (res);
 }
 
-t_toexec	*ft_analyser(char *sanitize_result)
+static token	ft_check_token(char *args)
 {
-	t_toexec	*lst;
-	t_toexec	*node;
-	char		*cmd;
-	char		*args;
+	if (args[0] == '|')
+		return (PIPE);
+	if (args[0] == '<')
+		return (RD_IN);
+	if (args[0] == '>')
+		return (RD_OUT);
+	return (0);
+}
+
+static void  ft_count_with_quotes(char *sanitize_result, int *i, int *j)
+{
+	while (sanitize_result[*i] && !ft_isspecialchars(sanitize_result[*i]))
+	{
+		if (ft_isquote(sanitize_result[*i]) == 1)
+		{
+			(*j)++;
+			(*i)++;
+			while (sanitize_result[*i] && ft_isquote(sanitize_result[(*i)++]) != 1)
+				(*j)++;
+		}
+		else if (ft_isquote(sanitize_result[*i]) == 2)
+		{
+			(*j)++;
+			(*i)++;
+			while (sanitize_result[*i] && ft_isquote(sanitize_result[(*i)++]) != 2)
+				(*j)++;
+		}
+		else
+		{
+			(*i)++;
+			(*j)++;
+		}
+	}
+}
+
+t_token	*ft_analyser(char *sanitize_result)
+{
+	t_token		*lst_token;
+	t_token		*node;
 	int			i;
+	int			j;
+	int			start;
 
 	i = 0;
+	lst_token = NULL;
 	while (sanitize_result[i])
 	{
-		//cmd = ft_get_word(&sanitize_result[i], &i);
-		//printf("%d\n", i);
-		//args = ft_get_args(&sanitize_result[i], &i);
-		// node = ft_create_node(cmd, ft_split(args, ' '));
-		//ft_append_node(lst, node);
-		i++;
+		node = malloc(sizeof(t_token));
+		j = 0;
+		start = i;
+		ft_count_with_quotes(sanitize_result, &i, &j);
+		if (j > 0)
+		{
+			node->value = ft_strlrdup(&sanitize_result[start], j);
+			node->token = ft_check_token(node->value);
+			ft_append_node(&lst_token, node);
+			continue ;
+		}
+		while (sanitize_result[i] && ft_isspecialchars(sanitize_result[i]))
+		{
+			i++;
+			j++;
+		}
+		node->value = ft_strlrdup(&sanitize_result[start], j);
+		node->token = ft_check_token(node->value);
+		ft_append_node(&lst_token, node);
 	}
-	return (lst);
+	while (lst_token)
+	{
+		printf("value : %s\n", lst_token->value);
+		printf("type %d\n", lst_token->token);
+		lst_token = lst_token->next;
+	}
+	return (lst_token);
 }

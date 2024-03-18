@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 02:39:30 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/18 03:24:25 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct  s_toexec {
 typedef enum token {
 	WORD,
 	PIPE,
-	AP,
-	RP,
+	RD_AP,
+	RD_RP,
 	RD_IN,
 	RD_OUT, 
 	BRACET_LEFT,
@@ -62,16 +62,19 @@ int			ft_sanitize_redirections(char *line);
 void		ft_sanitize_spaces(char *line);
 
 // analyser
-t_toexec	*ft_analyser(char *sanitize_result);
+t_token		*ft_analyser(char *sanitize_result);
 
 // utils
 int			ft_strlen(char *str);
 char		**ft_split(char const *s, char c);
 void		ft_printerror(char *msg);
 int			ft_count_legal_char(char *line, char c);
+char		*ft_strlrdup(char *s1, int lenght);
+int			ft_isspecialchars(char c);
+int			ft_isquote(char c);
 
 // struct tools
-void		ft_append_node(t_toexec *head, t_toexec *node);
+void	ft_append_node(t_token **head, t_token *node);
 t_toexec	*ft_create_node(char *cmd, char **args);
 
 // libft

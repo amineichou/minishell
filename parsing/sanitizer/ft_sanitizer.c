@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 02:49:16 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/17 22:40:50 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,38 @@ static void	ft_trim_spaces(char *str)
     }
 }
 
+static void	ft_replace_illegal_tab(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '"')
+		{
+			i++;
+			while (line[i] != '"')
+				i++;
+		}
+		if (line[i] == '\'')
+		{
+			i++;
+			while (line[i] != '\'')
+				i++;
+		}
+		if (ft_isspace(line[i]))
+			line[i] = ' ';
+		i++;
+	}
+}
+
 char	*ft_sanitizer(char *line)
 {
 	ft_trim_spaces(line);
-	if (ft_sanitize_pipes(line) == -1 
+    ft_replace_illegal_tab(line);
+	if (ft_sanitize_pipes(line) == -1
 		|| ft_sanitize_quotes(line) == -1
 		|| ft_sanitize_redirections(line) == -1)
 		return (NULL);
-	ft_sanitize_spaces(line); // protect this ?????????????
 	return (line);
 }
