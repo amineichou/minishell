@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 22:40:50 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/19 02:56:37 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ static void	ft_replace_illegal_tab(char *line)
 		if (line[i] == '"')
 		{
 			i++;
-			while (line[i] != '"')
+			while (line[i] && line[i] != '"')
 				i++;
 		}
 		if (line[i] == '\'')
 		{
 			i++;
-			while (line[i] != '\'')
+			while (line[i] && line[i] != '\'')
 				i++;
 		}
 		if (ft_isspace(line[i]))
@@ -64,9 +64,9 @@ static void	ft_replace_illegal_tab(char *line)
 char	*ft_sanitizer(char *line)
 {
 	ft_trim_spaces(line);
-    ft_replace_illegal_tab(line);
-	if (ft_sanitize_pipes(line) == -1
-		|| ft_sanitize_quotes(line) == -1
+	ft_replace_illegal_tab(line);
+	if (ft_sanitize_quotes(line) == -1
+		|| ft_sanitize_pipes(line) == -1
 		|| ft_sanitize_redirections(line) == -1)
 		return (NULL);
 	return (line);

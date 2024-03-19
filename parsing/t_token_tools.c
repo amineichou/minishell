@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_tools.c                                     :+:      :+:    :+:   */
+/*   t_token_tools.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 01:16:12 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/18 00:55:06 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/19 03:30:26 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/19 03:31:00 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_toexec	*ft_create_node(char *cmd, char **args)
 	return (node);
 }
 
-void	ft_append_node(t_token **head, t_token *node)
+void	ft_append_node_t_token(t_token **head, t_token *node)
 {
 	t_token	*last;
 

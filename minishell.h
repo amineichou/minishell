@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/18 03:24:25 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/19 03:32:11 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@ typedef enum token {
 	RD_AP,
 	RD_RP,
 	RD_IN,
-	RD_OUT, 
-	BRACET_LEFT,
-	BRAKET_WRITE,
+	RD_OUT,
+	HEREDOC,
 }	token;
 
 typedef struct s_token {
@@ -62,7 +61,8 @@ int			ft_sanitize_redirections(char *line);
 void		ft_sanitize_spaces(char *line);
 
 // analyser
-t_token		*ft_analyser(char *sanitize_result);
+t_toexec	*ft_analyser(char *sanitize_result);
+t_token		*ft_analyse_tokens(char *sanitize_result);
 
 // utils
 int			ft_strlen(char *str);
@@ -73,9 +73,11 @@ char		*ft_strlrdup(char *s1, int lenght);
 int			ft_isspecialchars(char c);
 int			ft_isquote(char c);
 
-// struct tools
-void	ft_append_node(t_token **head, t_token *node);
+// t_token tools
+void		ft_append_node_t_token(t_token **head, t_token *node);
 t_toexec	*ft_create_node(char *cmd, char **args);
+// t_toexec tools
+void		ft_append_node_t_toexec(t_toexec **head, t_toexec *node);
 
 // libft
 char		*ft_strdup(char *s1);
@@ -87,5 +89,10 @@ void		ft_strcpy(char *dst, char *src, size_t dstsize);
 
 // signal hanldler
 void		ft_sigkill_handler(int signum);
+
+// tests start
+void test_tokens(t_token *lst_token_input);
+void	test_lst(t_toexec *lst);
+// test end
 
 #endif
