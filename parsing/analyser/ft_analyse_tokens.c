@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/19 03:35:15 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/20 02:01:08 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	ft_count_without_quotes(char *sanitize_result, int *i, int *j)
 static void	ft_edit_node(t_token **node, char *sanitize_result, int start, int j)
 {
 	(*node)->value = ft_strlrdup(&sanitize_result[start], j);
+	ft_trim_spaces((*node)->value);
 	(*node)->token = ft_check_token((*node)->value);
 }
 

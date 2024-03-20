@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/19 03:32:11 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/20 03:41:41 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int			ft_sanitize_pipes(char *line);
 int			ft_sanitize_quotes(char *line);
 int			ft_sanitize_redirections(char *line);
 void		ft_sanitize_spaces(char *line);
+void		ft_trim_spaces(char *str); // TODO : move it to tools
+void		ft_handle_redirections(token token_type, t_toexec **lst_toexec, t_toexec *node);
 
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result);
@@ -73,10 +75,9 @@ char		*ft_strlrdup(char *s1, int lenght);
 int			ft_isspecialchars(char c);
 int			ft_isquote(char c);
 
-// t_token tools
-void		ft_append_node_t_token(t_token **head, t_token *node);
+// tools
 t_toexec	*ft_create_node(char *cmd, char **args);
-// t_toexec tools
+void		ft_append_node_t_token(t_token **head, t_token *node);
 void		ft_append_node_t_toexec(t_toexec **head, t_toexec *node);
 
 // libft

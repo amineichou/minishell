@@ -6,14 +6,14 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/19 02:56:37 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/20 01:45:40 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 // make it allocat in the heap bc this is bullshit
-static void	ft_trim_spaces(char *str)
+void	ft_trim_spaces(char *str)
 {
     int i;
 	int	j;

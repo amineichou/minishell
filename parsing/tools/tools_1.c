@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   tools_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 21:35:18 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/18 03:28:24 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/20 02:55:54 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-#include "includes/macros.h"
+#include "../../minishell.h"
+#include "../includes/macros.h"
 
 int	ft_count_legal_char(char *line, char c)
 {
