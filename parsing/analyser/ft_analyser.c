@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/20 02:58:50 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/20 03:53:34 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ t_toexec	*ft_analyser(char *sanitize_result)
 		{
 			node->cmd = ft_get_cmd(lst_token->value);
 			node->args = ft_get_args(lst_token->value);
-			node->input = 0;
-			node->output = 2;
 		}
 		ft_append_node_t_toexec(&lst_toexec, node);
 		lst_token = lst_token->next;
