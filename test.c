@@ -97,6 +97,7 @@ char	*ft_strlrdup(char *s1, int lenght)
 		s2[i] = s1[i];
 		i++;
 	}
+	// TODO : sigfautl bruuh if s1 is < lenght
 	s2[lenght] = '\0';
 	return (s2);
 }
