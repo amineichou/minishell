@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/20 03:14:04 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:02:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main(int ac, char **av, char **env)
 	char		*line;
 	char		*sanitize_result;
 
-	atexit(lex);
+	// atexit(lex);
 	// signal(SIGINT, ft_sigkill_handler);
 	while (1)
 	{
@@ -42,10 +42,7 @@ int main(int ac, char **av, char **env)
 				lst = ft_analyser(sanitize_result);
 				test_lst(lst);
 			}
-			
-			
 			free(line);
-			exit(1);
 		}
 	}
 	(void)av;

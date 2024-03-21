@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/20 02:55:54 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/21 00:34:24 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,24 @@ char	*ft_strlrdup(char *s1, int lenght)
 	}
 	s2[lenght] = '\0';
 	return (s2);
+}
+
+char	*ft_remove_qoutes(char *str)
+{
+	char	*res;
+	int		i;
+	int		in_quotes;
+
+	i = 0;
+	in_quotes = 0;
+	if (ft_isquote(str[0]))
+		in_quotes = 1;
+	if (in_quotes)
+	{
+		res = ft_strlrdup(str + 1, ft_strlen(str) - 2);
+		// TODO : protect
+	}
+	else
+		return (NULL);
+	return (res);
 }

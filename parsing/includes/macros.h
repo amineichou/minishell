@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 02:28:37 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 00:59:34 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/21 03:21:47 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 #define MALLOC_ERORR "allocation failed\n"
 #define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
 #define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
-#define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `><'\n"
+#define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `new_line'\n"
 
 #endif

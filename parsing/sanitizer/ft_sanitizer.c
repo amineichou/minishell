@@ -6,34 +6,28 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/20 01:45:40 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/21 03:46:09 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// make it allocat in the heap bc this is bullshit
-void	ft_trim_spaces(char *str)
+// remove the spaces/tabs form the bigg-end if str 
+char	*ft_trim_spaces(char *str)
 {
-    int i;
-	int	j;
+	char	*res;
+	int		i;
+	int		j;
 
 	i = 0;
-    while (ft_isspace(str[i]))
-        i++;
-    j = 0;
-    while (str[i] != '\0') {
-        str[j] = str[i];
-        i++;
-        j++;
-    }
-    str[j] = '\0';
-    j = ft_strlen(str) - 1;
-    while (j >= 0 && ft_isspace(str[j]))
-	{
-        str[j] = '\0';
-        j--;
-    }
+	j = ft_strlen(str) - 1;
+	while (ft_isspace(str[i]))
+		i++;
+	while (ft_isspace(str[j]))
+		j--;
+	res = ft_strlrdup(str + i, ft_strlen(str) - (i + j));
+	// TODO : protect this
+	return (res);
 }
 
 static void	ft_replace_illegal_tab(char *line)

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/20 03:41:41 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/21 03:24:08 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <fcntl.h>
 
 typedef struct s_env {
 	char			*var;
@@ -48,8 +49,9 @@ typedef enum token {
 }	token;
 
 typedef struct s_token {
-	token token;
+	token 	token;
 	char	*value;
+	int		order;
 	struct s_token	*next;
 }	t_token;
 
@@ -60,7 +62,7 @@ int			ft_sanitize_quotes(char *line);
 int			ft_sanitize_redirections(char *line);
 void		ft_sanitize_spaces(char *line);
 void		ft_trim_spaces(char *str); // TODO : move it to tools
-void		ft_handle_redirections(token token_type, t_toexec **lst_toexec, t_toexec *node);
+void		ft_handle_redirections(t_token *lst_token, t_toexec **node);
 
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result);
