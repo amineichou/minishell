@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 21:35:18 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/11 17:52:28 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/13 02:28:37 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/21 03:21:47 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#ifndef MACROS_H
+# define MACROS_H
 
-void	ft_printerror(char *str)
-{
-	int	i;
+#define MALLOC_ERORR "allocation failed\n"
+#define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
+#define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
+#define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `new_line'\n"
 
-	i = 0;
-	while (str[i])
-	{
-		write (2, &str[i], 1);
-		i++;
-	}
-}
+#endif

@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sanitize_double.c                               :+:      :+:    :+:   */
+/*   t_toexec_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 15:24:25 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/11 17:19:17 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/19 03:30:22 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/20 02:55:45 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include "../includes/macros.h"
 
-static int	ft_count_double_quotes(char *line)
+void	ft_append_node_t_toexec(t_toexec **head, t_toexec *node)
 {
-	int	count;
+	t_toexec	*last;
 
-	count = 0;
-	while (*line)
+	if ((*head) == NULL)
 	{
-		if (*line == '"')
-			count++;
-		line++;
+		(*head) = node;
+		(*head)->next = NULL;
+		return ;
 	}
-	return (count);
-}
 
-int	ft_sanitize_double_quotes(char *line)
-{
-	int	double_quotes_size;
-
-	double_quotes_size = ft_count_double_quotes(line);
-	if (double_quotes_size % 2 != 0)
-	{
-		ft_printerror("syntax error missing quote\n");
-		return (-1);
-	}
-	return (0);
+	last = (*head);
+	while (last->next)
+		last = last->next;
+	last->next = node;
+	node->next = NULL;
 }

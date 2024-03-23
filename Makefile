@@ -1,10 +1,9 @@
 FLAGS = -Wall -Wextra -Werror
 CC = cc
 NAME = minishell
-SRC = /parsing/tokenization.c
-OBJ = (SRC.c=.o)
+SRC = parsing/*.c parsing/sanitizer/*.c parsing/analyser/*.c
+OBJ = (SRC:.c=.o)
 READLINE_LIB = -lreadline
-
 
 
 all : $(NAME)
