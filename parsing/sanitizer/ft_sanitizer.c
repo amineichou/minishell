@@ -6,11 +6,12 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/21 03:46:09 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/23 01:19:57 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+#include "../includes/macros.h"
 
 // remove the spaces/tabs form the bigg-end if str 
 char	*ft_trim_spaces(char *str)
@@ -20,13 +21,19 @@ char	*ft_trim_spaces(char *str)
 	int		j;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	j = ft_strlen(str) - 1;
-	while (ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
+	if (i == ft_strlen(str))
+		return (NULL);
 	while (ft_isspace(str[j]))
 		j--;
-	res = ft_strlrdup(str + i, ft_strlen(str) - (i + j));
-	// TODO : protect this
+	j = ft_strlen(str) - j - 1;
+	res = ft_strlrdup(str + i, (ft_strlen(str) - i - j));
+	if (!res)
+		ft_printerror(MALLOC_ERORR);
 	return (res);
 }
 
@@ -42,12 +49,14 @@ static void	ft_replace_illegal_tab(char *line)
 			i++;
 			while (line[i] && line[i] != '"')
 				i++;
+			continue ;
 		}
 		if (line[i] == '\'')
 		{
 			i++;
 			while (line[i] && line[i] != '\'')
 				i++;
+			continue ;
 		}
 		if (ft_isspace(line[i]))
 			line[i] = ' ';
@@ -57,7 +66,6 @@ static void	ft_replace_illegal_tab(char *line)
 
 char	*ft_sanitizer(char *line)
 {
-	ft_trim_spaces(line);
 	ft_replace_illegal_tab(line);
 	if (ft_sanitize_quotes(line) == -1
 		|| ft_sanitize_pipes(line) == -1

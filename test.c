@@ -97,7 +97,11 @@ char	*ft_strlrdup(char *s1, int lenght)
 		s2[i] = s1[i];
 		i++;
 	}
-	// TODO : sigfautl bruuh if s1 is < lenght
+	if (i < lenght)
+	{
+		s2[i] = '\0';
+		i++;
+	}
 	s2[lenght] = '\0';
 	return (s2);
 }
@@ -120,6 +124,7 @@ int	ft_isspace(char c)
 	return (0);
 }
 
+// remove the spaces/tabs form the bigg-end if str 
 char	*ft_trim_spaces(char *str)
 {
 	char	*res;
@@ -127,19 +132,25 @@ char	*ft_trim_spaces(char *str)
 	int		j;
 
 	i = 0;
+	if (!str)
+		return (NULL)
 	j = ft_strlen(str) - 1;
-	while (ft_isspace(str[i]))
+	while (str[i] && ft_isspace(str[i]))
 		i++;
+	if (i == ft_strlen(str))
+		return (NULL);
 	while (ft_isspace(str[j]))
 		j--;
-	res = ft_strlrdup(str + i, ft_strlen(str));
-	// TODO : protect this
+	j = strlen(str) - j - 1;
+	res = ft_strlrdup(str + i, (strlen(str) - i - j));
+	if (!res)
+		perror("malloc");
 	return (res);
 }
 
 int main(void)
 {
-	char test[] = "    amine ichou				";
+	char *test = NULL;
 	char *res = ft_trim_spaces(test);
 	printf("%s\n", res);
 }

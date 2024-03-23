@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/23 03:06:55 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/03/23 03:08:55 by moichou          ###   ########.fr       */
+>>>>>>> 907dedf078847489a6b3394515b5184e1d1d59f2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +77,15 @@ typedef struct s_token {
 	struct s_token	*next;
 }	t_token;
 
+// #define malloc(x) NULL
+
 // synthax sanitizer
 char		*ft_sanitizer(char *line);
 int			ft_sanitize_pipes(char *line);
 int			ft_sanitize_quotes(char *line);
 int			ft_sanitize_redirections(char *line);
 void		ft_sanitize_spaces(char *line);
-void		ft_trim_spaces(char *str); // TODO : move it to tools
+char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token *lst_token, t_toexec **node);
 
 // analyser

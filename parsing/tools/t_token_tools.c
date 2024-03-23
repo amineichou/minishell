@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 03:30:26 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/20 02:55:49 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/22 03:16:23 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_toexec	*ft_create_node(char *cmd, char **args)
 	node = malloc(sizeof(t_toexec));
 	if (!node)
 		return (ft_printerror(MALLOC_ERORR) ,NULL);
-	node->cmd = cmd;
 	node->args = args;
 	return (node);
 }

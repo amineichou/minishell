@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/21 00:34:24 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/22 00:15:42 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ char	*ft_remove_qoutes(char *str)
 	if (in_quotes)
 	{
 		res = ft_strlrdup(str + 1, ft_strlen(str) - 2);
-		// TODO : protect
+		if (!res)
+			ft_printerror(MALLOC_ERORR);
 	}
 	else
 		return (NULL);
