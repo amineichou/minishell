@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/23 01:20:31 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/23 03:08:55 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 typedef struct s_env {
 	char			*var;
+	char			*name;
 	struct s_env	*next;
 }	t_env;
 
@@ -36,6 +37,25 @@ typedef struct  s_toexec {
 	struct  s_toexec	*next;
 	struct  s_toexec	*prev;
 }	t_toexec;
+
+typedef struct t_pipe
+{
+	int		i;
+	int		*pids;
+	int		link_var;
+	int		fd[2];
+	int		step;
+	int		infile;
+	int		outfile;
+	char	*infile_name;
+	char	*outfile_name;
+	char	*path;
+	char	**cmd;
+	char	*limiter;
+	char	**env;
+	int		*pids;
+	int		p;
+}	t_pipe;
 
 typedef enum token {
 	WORD,
