@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/23 03:03:16 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/03/23 03:06:55 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct  s_toexec {
 typedef struct t_pipe
 {
 	int		i;
-	int		*pids;
 	int		link_var;
 	int		fd[2];
 	int		step;

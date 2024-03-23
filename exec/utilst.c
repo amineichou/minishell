@@ -6,11 +6,11 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 15:11:11 by zyamli            #+#    #+#             */
-/*   Updated: 2024/03/21 22:52:36 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/03/23 03:15:36 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 #include<string.h>
 
 char* ft_strstr(const char* haystack, const char* needle)
@@ -184,7 +184,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (ft_strlen(src));
 }
 
-static char	**free_leaks(char **strs)
+char	**free_leaks(char **strs)
 {
 	size_t	i;
 
