@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/04 03:04:08 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/04 23:24:12 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,21 @@ char **env_tolist(t_env *env_list)
     result[size] = NULL;
     return (result);
 }
-
+void in_out_handler(t_toexec *cmds, t_pipe *needs)
+{
+	if(cmds->input != STDIN_FILENO && cmds->input != -1)
+	{
+		dup2(cmds->input, STDIN_FILENO);
+		close(cmds->input);
+		close(needs->fd[0]);
+	}
+	if(cmds->output != STDOUT_FILENO && cmds->input != -1)
+	{
+		dup2(cmds->output, STDOUT_FILENO);
+		close(cmds->output);
+		close(needs->fd[1]);
+	}
+}
 int check_builtin(t_toexec *cmd, t_pipe *needs)
 {
 	if(!needs->env_dup)
@@ -210,6 +224,7 @@ void	last_child(t_toexec **cmds, t_pipe *needs)
 		// if (-1 == dup2(cmds->output, 1))
 		// 	error_handler("dup2");
 		// dprintf(2, "{{{%s\n", (*cmds)->args[0]);
+		in_out_handler(*cmds, needs);
 		if(check_builtin((*cmds), needs))
 			exit(0) ;
 		// print_open_file_descriptors();
@@ -229,9 +244,9 @@ void cmds_executer(t_toexec *cmds, t_pipe *needs)
 	
 	if (needs->pids[needs->p] == 0)
 	{
-		
-		close(needs->save_fd_in);
-		close(needs->save_fd_out);
+		in_out_handler(cmds, needs);
+		// close(needs->save_fd_in);
+		// close(needs->save_fd_out);
 		// open_handler(needs);
 		if (-1 == dup2(needs->fd[1], STDOUT_FILENO))
 			error_handler("dup2");
@@ -271,21 +286,7 @@ void	first_cmd(t_toexec **cmds, t_pipe *needs)
 		needs->i--;
 	}
 }
-void in_out_handler(t_toexec *cmds, t_pipe *needs)
-{
-	if(cmds->input != STDIN_FILENO)
-	{
-		dup2(cmds->input, STDIN_FILENO);
-		close(cmds->input);
-		close(needs->fd[0]);
-	}
-	if(cmds->output != STDOUT_FILENO)
-	{
-		dup2(cmds->output, STDOUT_FILENO);
-		close(cmds->output);
-		close(needs->fd[1]);
-	}
-}
+
 void executer(t_toexec *cmds, t_pipe *needs)
 {
 	// t_pipe needs;
@@ -302,7 +303,10 @@ void executer(t_toexec *cmds, t_pipe *needs)
 		if(needs->pids[needs->p] == -1)
 			perror("forkk");
 		if(needs->pids[needs->p] == 0)
+		{
+			in_out_handler(cmds, needs);
 			ft_execution(cmds, needs);
+		}
 	}
 	else
 	{
@@ -318,6 +322,12 @@ void executer(t_toexec *cmds, t_pipe *needs)
 		// ff();
 
 	// dprintf(2, "{{%d}}\n", needs.p);
+		int fds = 3;
+		while(fds < 24000)
+		{
+			// printf("%d\n", fds);
+			close(fds++);
+		}
 	needs->j = 0;
 	while(needs->j <= needs->p)
 	{

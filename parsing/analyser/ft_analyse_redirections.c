@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_analyse_redirections.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:52:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 22:25:12 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/04 23:25:54 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_hanlde_ed_rp(t_token *lst_token, t_toexec *node)
 
 static void	ft_hanlde_ed_in(t_token *lst_token, t_toexec *node)
 {
-	node->input = open(lst_token->next->value, O_RDWR);
+	node->input = open(lst_token->next->value, O_RDWR, 777);
 	if (node->input == -1)
 		ft_printerror("no such file or directory\n");
 }
