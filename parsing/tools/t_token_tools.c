@@ -6,12 +6,11 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 03:30:26 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/22 03:16:23 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/23 03:23:54 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include "../includes/macros.h"
 
 t_toexec	*ft_create_node(char *cmd, char **args)
 {

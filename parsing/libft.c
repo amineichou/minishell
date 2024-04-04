@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 23:32:21 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/04 05:55:14 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,20 @@ int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n'
 		|| c == '\f' || c == '\r' || c == '\v')
+		return (1);
+	return (0);
+}
+
+int	ft_is_alphanumeric(char c)
+{
+	if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
+		return (1);
+	return (0);
+}
+
+int	ft_isdigit(char c)
+{
+	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
 }
@@ -79,7 +93,7 @@ int	ft_strcmp(char *s1, char *s2)
 	i = 0;
 	if (ft_strlen(s1) != ft_strlen(s2))
 		return (-1);
-	while (s1[i] == s2[i])
+	while (s1[i] && s2[i] && (s1[i] == s2[i]))
 		i++;
 	return (s1[i] - s2[i]);
 }
@@ -95,4 +109,50 @@ void	ft_strcpy(char *dst, char *src, size_t dstsize)
 		i++;
 	}
 	dst[i] = '\0';
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	src_len;
+	size_t	i;
+
+	src_len = 0;
+	while (src[src_len] != '\0')
+	{
+		src_len++;
+	}
+	if (dstsize == 0)
+		return (src_len);
+	i = 0;
+	while (src[i] != '\0' && i < (dstsize - 1))
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (src_len);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*res;
+	int		all_length;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	all_length = ft_strlen(s1) + ft_strlen(s2);
+	res = malloc(sizeof(char) * all_length + 1);
+	if (!res)
+		return (0);
+	i = 0;
+	j = 0;
+	while (s1[j])
+		res[i++] = s1[j++];
+	j = 0;
+	while (s2[j])
+		res[i++] = s2[j++];
+	res[i] = '\0';
+	return (res);
 }

@@ -6,34 +6,47 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:52:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/23 01:22:25 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/04 22:25:12 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-#include "../includes/macros.h"
 
-static void	ft_handle_file_open(t_token *lst_token, t_toexec **node)
+static void	ft_hanlde_ed_ap(t_token *lst_token, t_toexec *node)
 {
-	int fd;
-	if (lst_token->token == RD_AP)
-	{
-		fd = open(lst_token->next->value, O_RDWR | O_APPEND | O_CREAT, 777);
-		if (fd == -1)
-			ft_printerror(FILE_D_ERROR_FAIL);
-	}
-	else if (lst_token->token == RD_RP)
-	{
-		fd = open(lst_token->next->value, O_RDWR | O_TRUNC | O_CREAT, 777);
-		if (fd == -1)
-			ft_printerror(FILE_D_ERROR_FAIL);
-	}
-	(*node)->output = fd;
+	node->output = open(lst_token->next->value, O_RDWR | O_APPEND | O_CREAT, 777);
+	if (node->output == -1)
+		ft_printerror(FILE_D_ERROR_FAIL);
 }
 
-void	ft_handle_redirections(t_token *lst_token, t_toexec **node)
+static void	ft_hanlde_ed_rp(t_token *lst_token, t_toexec *node)
 {
-	if (lst_token->token == RD_AP
-		|| lst_token->token == RD_RP)
-		ft_handle_file_open(lst_token, node);
+	node->output = open(lst_token->next->value, O_RDWR | O_TRUNC | O_CREAT, 777);
+	if (node->output == -1)
+		ft_printerror(FILE_D_ERROR_FAIL);
+}
+
+static void	ft_hanlde_ed_in(t_token *lst_token, t_toexec *node)
+{
+	node->input = open(lst_token->next->value, O_RDWR);
+	if (node->input == -1)
+		ft_printerror("no such file or directory\n");
+}
+
+void	ft_handle_redirections(t_token **lst_token, t_toexec *node)
+{
+	while ((*lst_token) && ((*lst_token)->token == RD_AP || (*lst_token)->token == RD_RP || (*lst_token)->token == RD_IN))
+	{
+		if ((*lst_token)->token == RD_AP)
+			ft_hanlde_ed_ap(*lst_token, node);
+		else if ((*lst_token)->token == RD_RP)
+			ft_hanlde_ed_rp(*lst_token, node);
+		else if ((*lst_token)->token == RD_IN)
+			ft_hanlde_ed_in(*lst_token, node);
+		(*lst_token) = (*lst_token)->next->next;
+		if ((*lst_token) && ((*lst_token)->token == RD_AP || (*lst_token)->token == RD_RP))
+			close(node->output);
+		else if ((*lst_token) && (*lst_token)->token == RD_IN)
+			close(node->input);
+	}
 }

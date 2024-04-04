@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macros.h                                           :+:      :+:    :+:   */
+/*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 02:28:37 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/23 00:59:12 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
+/*   Updated: 2024/04/02 03:28:26 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_H
-# define MACROS_H
+#include "../minishell.h"
 
-#define MALLOC_ERORR "allocation failed\n"
-#define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
-#define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
-#define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `new_line'\n"
-#define FILE_D_ERROR_FAIL "faild to open fd\n"
+t_toexec	*ft_parser(char *line)
+{
+	char		*sanitize_result;
+	t_toexec	*lst_toexec;
 
-#endif
+	sanitize_result = ft_sanitizer(line);
+	if (!sanitize_result)
+		return (NULL); // TODO : free
+	lst_toexec = ft_analyser(sanitize_result);
+	if (!lst_toexec)
+		return (NULL);
+	test_lst(lst_toexec);
+	return (lst_toexec);
+}

@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_toexec_tools.c                                   :+:      :+:    :+:   */
+/*   ft_valid_tokens.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 03:30:22 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/23 03:23:51 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/23 23:53:35 by moichou           #+#    #+#             */
+/*   Updated: 2024/03/25 03:20:19 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_append_node_t_toexec(t_toexec **head, t_toexec *node)
+// static int	ft_check_rd_in()
+
+int	ft_check_valid_tokens(t_token *lst_token)
 {
-	t_toexec	*last;
+	t_token	*node_token;
 
-	if ((*head) == NULL)
+	node_token = lst_token;
+	while (node_token)
 	{
-		(*head) = node;
-		(*head)->next = NULL;
-		return ;
+		if ((node_token->token == RD_AP
+			|| node_token->token == RD_IN
+			|| node_token->token == RD_OUT
+			|| node_token->token == RD_RP)
+			&& (node_token->next->token != WORD))
+			return (ft_printerror(SYNTAX_ERROR_REDIRECTION_2), -1);
+		node_token = node_token->next;
 	}
-
-	last = (*head);
-	while (last->next)
-		last = last->next;
-	last->next = node;
-	node->next = NULL;
+	return (0);
 }
