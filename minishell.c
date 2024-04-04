@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/23 02:43:32 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/04 22:19:05 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,69 @@ void lex(void)
 {
 	system("leaks minishell");
 }
-
+void fill_envinlist(t_toexec **head, t_env *env_list)
+{
+    t_toexec *current = *head;
+    while (current != NULL) 
+	{
+        current->env = env_list;
+        current = current->next;
+    }
+}
 int main(int ac, char **av, char **env)
 {
 	t_toexec	*lst;
 	char		*line;
 	char		*sanitize_result;
+	t_env	*envl = NULL;
+	t_env	*tmp = NULL;
+	char	**argument = NULL;
 
+	(void)ac;
+	(void)av;
+	int i;
+
+	i = 0;
+	while (env[i])
+	{
+		t_env *new_env = malloc(sizeof(t_env));
+		if (!new_env)
+		{
+			perror("malloc");
+			exit(EXIT_FAILURE);
+        }
+		argument = ft_split(env[i], '=');
+        new_env->var = argument[1];
+		new_env->name = argument[0];
+        new_env->next = NULL;
+        if (envl == NULL)
+            envl = new_env;
+		else
+		{
+			tmp = envl;
+            while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new_env;
+		}
+		i++;
+	}
+	
+	t_pipe needs;
+	needs.env_dup = NULL;
 	// atexit(lex);
 	// signal(SIGINT, ft_sigkill_handler);
-	disableEcho();
+	// disableEcho();
+	
+
 	while (1)
 	{
+		// line = "\0"
+		// needs.save_fd_out = dup(STDOUT_FILENO);
 		line = readline("minishell$ ");
 		if (!line)
 		{
 			printf("exit\n");
-			exit(0);
+			exit (0);
 		}
 		line = ft_trim_spaces(line); //TODO : protect
 		if (line && line[0])
@@ -59,11 +105,16 @@ int main(int ac, char **av, char **env)
 			if (sanitize_result)
 			{
 				lst = ft_analyser(sanitize_result);
-				test_lst(lst);
+				// test_lst(lst);
+				fill_envinlist(&lst, envl);
+				executer(lst, &needs);
+				envl = lst->env;
+	
+				// continue ;
 			}
 			free(line);
 		}
 	}
 	(void)av;
-	enableEcho();
+	// enableEcho();
 }

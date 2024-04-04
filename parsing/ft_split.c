@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:19:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/17 02:39:08 by moichou          ###   ########.fr       */
+/*   Updated: 2024/03/23 03:56:14 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	src_len;
-	size_t	i;
+// static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+// {
+// 	size_t	src_len;
+// 	size_t	i;
 
-	src_len = 0;
-	while (src[src_len] != '\0')
-	{
-		src_len++;
-	}
-	if (dstsize == 0)
-		return (src_len);
-	i = 0;
-	while (src[i] != '\0' && i < (dstsize - 1))
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (src_len);
-}
+// 	src_len = 0;
+// 	while (src[src_len] != '\0')
+// 	{
+// 		src_len++;
+// 	}
+// 	if (dstsize == 0)
+// 		return (src_len);
+// 	i = 0;
+// 	while (src[i] != '\0' && i < (dstsize - 1))
+// 	{
+// 		dst[i] = src[i];
+// 		i++;
+// 	}
+// 	dst[i] = '\0';
+// 	return (src_len);
+// }
 
 
 static size_t	ft_count_delimiters(char const *s, char c)
@@ -68,7 +68,7 @@ static char	**free_allocated(char **splited)
 	return (0);
 }
 
-static char	**fill_the_splited(char **splited, const char *str, char c)
+static char	**fill_the_splited(char **splited, char *str, char c)
 {
 	int	splited_i;
 	int	index;
@@ -97,7 +97,7 @@ static char	**fill_the_splited(char **splited, const char *str, char c)
 	return (splited);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**splited;
 	int		count_del;

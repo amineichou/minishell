@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:26:15 by zyamli            #+#    #+#             */
-/*   Updated: 2024/03/22 02:44:02 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/03/30 00:43:37 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int main(int ac, char **av, char **env)
 // while ((entry = readdir(dir)) != NULL)
 // 	{
 // 		printf("%s\n", entry->d_name);
-	char *arg[] = {"grep"," ", NULL};
-    execve("/usr/bin/grep", arg, NULL);
+	// char *arg[] = ;
+    execve("/bin/bash", (char **){"bash", NULL}, NULL);
      perror("MKHDAMCH");
 // 	}
 //     closedir(dir);

@@ -6,11 +6,12 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:05:13 by zyamli            #+#    #+#             */
-/*   Updated: 2024/03/17 22:23:19 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/04 00:46:43 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include"head.h"
+#include "../minishell.h"
 #include <string.h>
 
 char *env_list_serch_res(t_env **head, char *to_look)
@@ -26,8 +27,8 @@ char *env_list_serch_res(t_env **head, char *to_look)
 	tmp = *head;
 	while(tmp)
 		{
-			if(strcmp(tmp->name, to_look) == 0)
-				return(tmp->var);
+			if(ft_strcmp(tmp->name, to_look) == 0)
+				return(ft_strdup(tmp->var));
 			tmp = tmp->next;
 		}
 		return(NULL);
@@ -48,20 +49,18 @@ char *expander(char *arg, t_env *env)
 	char *expanded;
 	i = 0;
 	
-	while(arg[i] != '$' && arg[i])
+	while(arg[i] && arg[i] != '$')
 		i++;
 	if(!arg[i])
 		return(NULL);
 	i++;
 	b = i;
-	if(arg[i] > '0' && arg[i] < '9')
+	if(arg[i] >= '0' && arg[i] <= '9')
 		return(NULL);
-	while(is_alphanumeric(arg[i]) && arg[i])
+	while(arg[i] && is_alphanumeric(arg[i]))
 		i++;
 	to_look = ft_substr(arg, b, i - b);
 	expanded = env_list_serch_res(&env, to_look);
-	if(!expanded)
-		expanded = "";
 	return(expanded);
 }
 
@@ -77,21 +76,27 @@ char *add_expanded(char *arg, t_env *env)
 		i = 0;
 		while(arg[i] != '$' && arg[i])
 			i++;
+		
 		tmp = ft_substr(arg, 0, i);
 		i++;
-		while(is_alphanumeric(arg[i]) && arg[i] || arg[i] == '?')
+		while(arg[i] && is_alphanumeric(arg[i]) || arg[i] == '?')
 			i++;
+	printf("hna\n");
 			// printf("%d", i);
 			// while(is_alphanumeric(arg[i]))
 			// 	i++;
 			expanded = expander(arg, env);
 			if(!expanded)
+			{
+				printf("break\n");
 				break;
+			}
 			rest  = ft_substr(arg, i, ft_strlen(arg));
 			expanded = ft_strjoin(tmp, expanded);
 			arg = ft_strjoin(expanded, rest);
 			// printf("%s", arg);
 	}
+
 	return (arg);
 }
 

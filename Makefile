@@ -1,7 +1,7 @@
 FLAGS = -Wall -Wextra -Werror
 CC = cc
 NAME = minishell
-SRC = parsing/*.c parsing/sanitizer/*.c parsing/analyser/*.c
+SRC = parsing/*.c parsing/sanitizer/*.c parsing/analyser/*.c 
 OBJ = (SRC:.c=.o)
 READLINE_LIB = -lreadline
 
