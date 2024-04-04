@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 05:55:14 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/04 23:00:09 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ int	ft_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
+	if (!s1 || !s2)
+		return (-1);
 	if (ft_strlen(s1) != ft_strlen(s2))
 		return (-1);
-	while (s1[i] && s2[i] && (s1[i] == s2[i]))
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
 }
@@ -111,48 +113,52 @@ void	ft_strcpy(char *dst, char *src, size_t dstsize)
 	dst[i] = '\0';
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+static int	ft_handler(const char *str, int sign)
 {
-	size_t	src_len;
-	size_t	i;
+	int			i;
+	long long	handler;
+	long long	tmp;
 
-	src_len = 0;
-	while (src[src_len] != '\0')
-	{
-		src_len++;
-	}
-	if (dstsize == 0)
-		return (src_len);
 	i = 0;
-	while (src[i] != '\0' && i < (dstsize - 1))
+	handler = 0;
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		dst[i] = src[i];
+		tmp = handler * 10 + (str[i] - 48); 
+		if (tmp < handler && sign == 1)
+			return (-1);
+		if (tmp < handler && sign == -1)
+			return (0);
+		handler = tmp;
 		i++;
 	}
-	dst[i] = '\0';
-	return (src_len);
+	return (1);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+int	ft_atoi(const char *str)
 {
-	char	*res;
-	int		all_length;
-	size_t	i;
-	size_t	j;
+	int			i;
+	int			sign;
+	long long	res;
 
-	if (!s1 || !s2)
-		return (NULL);
-	all_length = ft_strlen(s1) + ft_strlen(s2);
-	res = malloc(sizeof(char) * all_length + 1);
-	if (!res)
-		return (0);
 	i = 0;
-	j = 0;
-	while (s1[j])
-		res[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		res[i++] = s2[j++];
-	res[i] = '\0';
-	return (res);
+	sign = 1;
+	res = 0;
+	while (str[i] && (str[i] == 32 || (str[i] >= 9 && str[i] <= 13)))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	if (ft_handler(&str[i], sign) == -1)
+		return (-1);
+	if (ft_handler(&str[i], sign) == 0)
+		return (0);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + (str[i] - 48);
+		i++;
+	}
+	return (res * sign);
 }

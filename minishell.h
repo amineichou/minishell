@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 22:45:21 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/04 23:00:38 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,17 @@ typedef struct  s_toexec {
 typedef struct t_pipe
 {
 	int		i;
-	int		link_var;
+	int		*ex_stat;
 	int		fd[2];
-	int		step;
+	int		save_fd_in;
+	int		save_fd_out;
 	int		infile;
 	int		outfile;
-	char	*infile_name;
-	char	*outfile_name;
+	int		j;
 	char	*path;
 	char	**cmd;
 	char	*limiter;
+	t_env	*env_dup;
 	char	**env;
 	int		*pids;
 	int		p;
@@ -109,7 +110,7 @@ char		*ft_expand(char *to_expand, t_env *env);
 
 // utils
 int			ft_strlen(char *str);
-char		**ft_split(char const *s, char c);
+char		**ft_split(char *s, char c);
 void		ft_printerror(char *msg);
 int			ft_count_legal_char(char *line, char c);
 char		*ft_strldup(char *s1, int lenght);
@@ -128,14 +129,16 @@ int			ft_isredirection(char c);
 // libft
 char		*ft_strdup(char *s1);
 char		*ft_strchr(char *s, int c);
-int			ft_strlen(char *str);
 int			ft_isspace(char c);
 int			ft_isdigit(char c);
 int			ft_strcmp(char *s1, char *s2);
 void		ft_strcpy(char *dst, char *src, size_t dstsize);
-size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char		*ft_strjoin(char *s1, char *s2);
-int			ft_is_alphanumeric(char c);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_print_error(char *str);
+char* ft_strstr(const char* haystack, const char* needle);
+char	*ft_substr(char *s, unsigned int start, size_t len);
+char *ft_strjoin(char *s1, char *s2);
+size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 char	**free_leaks(char **strs);
 int	ft_atoi(const char *str);
 

@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/03/10 21:35:13 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/03/29 22:17:25 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ void freeList(t_env *head)
 		current = next;
 	}
 }
-void env_print(t_toexec *data)
-{
-	t_env *tmp;
+// void env_print(t_toexec *data)
+// {
+// 	t_env *tmp;
 
-	tmp = data->env;
-	while(tmp)
-	{
-		printf("%s=", tmp->name);
-		printf("%s\n", tmp->var);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = data->env;
+// 	while(tmp)
+// 	{
+// 		printf("%s=", tmp->name);
+// 		printf("%s\n", tmp->var);
+// 		tmp = tmp->next;
+// 	}
+// }
 void ft_unset(t_env **env, char *to_del)
 {
 	t_env *tmp;
@@ -45,6 +45,35 @@ void ft_unset(t_env **env, char *to_del)
 
 	tmp = *env;
 	prev = NULL;
+
+	// if (tmp != NULL && strcmp(tmp->name, to_del) == 0)
+	// {
+	// 	prev = *env;
+	// 	*env = (*env)->next;
+	// 	free(tmp->var);	
+	// 	free(tmp->name);
+	// 	free(prev);
+	// 	// free(tmp);
+	// }
+	// else
+	// {
+	// 	while(tmp && tmp->next)
+	// 	{
+	// 		if(strcmp(tmp->next->name, to_del) == 0)
+	// 		{
+	// 			printf("{{%s}}\n", tmp->next->name);
+	// 			prev = tmp->next;
+	// 			if (tmp && tmp->next && tmp->next->next)
+	// 				tmp = tmp->next->next;
+	// 			else
+	// 				tmp = NULL;
+	// 			free(prev->var);
+	// 			free(prev->name);
+	// 			free(prev);
+	// 		}
+	// 		tmp = tmp->next;
+	// 	}
+	// }
 	if (tmp != NULL && strcmp(tmp->name, to_del) == 0)
 	{
 		prev = *env;
@@ -55,65 +84,79 @@ void ft_unset(t_env **env, char *to_del)
 		// free(tmp);
 	}
 	else
-		while(tmp && tmp->next)
+	{
+		while(tmp)
 		{
-			if(strcmp(tmp->next->name, to_del) == 0)
+			if(tmp->next && (ft_strcmp(tmp->next->name, to_del) == 0))
 			{
+				printf("{{%s}}\n", tmp->next->name);
 				prev = tmp->next;
-				tmp->next = tmp->next->next;
-				free(prev->var);
-				free(prev->name);
-				free(prev);
+				if (tmp->next->next)
+				{
+					tmp->next = tmp->next->next;
+					free(prev->var);
+					free(prev->name);
+					free(prev);
+				}
+				else
+					tmp->next = NULL;
+				break;
 			}
 			tmp = tmp->next;
 		}
-	if(tmp == NULL)
-		return ;
+	}
 }
 
 
 
-int main(int ac, char **av, char **env)
+int unseter(t_toexec *cmd, t_pipe *needs)
 {
-	t_env	*envi = NULL;
-	t_env	*tmp = NULL;
-	char	**arg = NULL;
-	t_toexec data;
+	// t_env	*envi = NULL;
+	// t_env	*tmp = NULL;
+	// char	**arg = NULL;
+	// t_toexec data;
 
-	(void)ac;
-	// (void)av;
-	int i;
+	// (void)ac;
+	// // (void)av;
+	// int i;
 
-	i = 0;
-	while (env[i])
+	// i = 0;
+	// while (env[i])
+	// {
+	// 	t_env *new_env = malloc(sizeof(t_env));
+	// 	if (!new_env)
+	// 	{
+	// 		perror("malloc");
+	// 		exit(EXIT_FAILURE);
+    //     }
+	// 	arg = ft_split(env[i], '=');
+    //     new_env->var = arg[1];
+	// 	new_env->name = arg[0];
+    //     new_env->next = NULL;
+    //     if (envi == NULL)
+    //         envi = new_env;
+	// 	else
+	// 	{
+	// 		tmp = envi;
+    //         while (tmp->next)
+	// 			tmp = tmp->next;
+	// 		tmp->next = new_env;
+	// 	}
+	// 	i++;
+	// }
+	// data.env = envi;
+
+	// // env_print(&data);
+	// // exit(1);
+	// // char *to_unset = ft_strjoin(av[1], "=");
+	int i = 1;
+	while(cmd->args[i])
 	{
-		t_env *new_env = malloc(sizeof(t_env));
-		if (!new_env)
-		{
-			perror("malloc");
-			exit(EXIT_FAILURE);
-        }
-		arg = ft_split(env[i], '=');
-        new_env->var = arg[1];
-		new_env->name = arg[0];
-        new_env->next = NULL;
-        if (envi == NULL)
-            envi = new_env;
-		else
-		{
-			tmp = envi;
-            while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new_env;
-		}
+		ft_unset(&cmd->env, cmd->args[i]);
+		ft_unset(&needs->env_dup, cmd->args[i]);
 		i++;
 	}
-	data.env = envi;
-
+	return(1);
 	// env_print(&data);
-	// exit(1);
-	// char *to_unset = ft_strjoin(av[1], "=");
-	ft_unset(&data.env, av[1]);
-	env_print(&data);
 	// while(1);
 }

@@ -1,0 +1,1 @@
+ clear && cc -g minishell.c  parsing/sanitizer/*.c parsing/*.c parsing/analyser/*.c parsing/test/*.c parsing/tools/*.c exec/ft_echo.c exec/ft_exec.c exec/utilst.c exec/ft_cd.c  exec/ft_env.c exec/ft_export.c exec/ft_pwd.c exec/ft_unset.c exec/ft_exit.c -fsanitize=address  -o minishell  -lreadline && ./minishell
