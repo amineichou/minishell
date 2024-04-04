@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 23:00:38 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/04 23:07:57 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int			ft_isspace(char c);
 int			ft_isdigit(char c);
 int			ft_strcmp(char *s1, char *s2);
 void		ft_strcpy(char *dst, char *src, size_t dstsize);
+int			ft_is_alphanumeric(char c);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_print_error(char *str);
 char* ft_strstr(const char* haystack, const char* needle);
