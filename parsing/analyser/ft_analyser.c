@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 22:29:12 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/05 00:40:20 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	ft_handle_args(t_toexec **node, t_token **lst_token)
 static void	ft_set_default_vals(t_toexec *node)
 {
 	node->input = 0;
-	node->output = 0;
+	node->output = 1;
 	node->args = NULL;
 }
 

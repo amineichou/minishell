@@ -6,28 +6,11 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/05 00:24:31 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/05 00:31:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// #include <termios.h>
-// #include <unistd.h>
-
-// void disableEcho() {
-//     struct termios term;
-//     tcgetattr(STDIN_FILENO, &term);
-//     term.c_lflag &= ~(ECHO);
-//     tcsetattr(STDIN_FILENO, TCSANOW, &term);
-// }
-
-// void enableEcho() {
-//     struct termios term;
-//     tcgetattr(STDIN_FILENO, &term);
-//     term.c_lflag |= ECHO;
-//     tcsetattr(STDIN_FILENO, TCSANOW, &term);
-// }
 
 void lex(void)
 {
@@ -84,13 +67,10 @@ int main(int ac, char **av, char **env)
 	needs.env_dup = NULL;
 	// atexit(lex);
 	// signal(SIGINT, ft_sigkill_handler);
-	// disableEcho();
 	
 
 	while (1)
 	{
-		// line = "\0"
-		// needs.save_fd_out = dup(STDOUT_FILENO);
 		line = readline("minishell$ ");
 		if (!line)
 		{
@@ -116,5 +96,4 @@ int main(int ac, char **av, char **env)
 		}
 	}
 	(void)av;
-	// enableEcho();
 }
