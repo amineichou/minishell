@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 22:59:33 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/05 00:24:31 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ int main(int ac, char **av, char **env)
 			if (sanitize_result)
 			{
 				lst = ft_analyser(sanitize_result);
-				// test_lst(lst);
+				test_lst(lst);
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
 				envl = lst->env;
-	
-				// continue ;
+
+				continue ;
 			}
 			free(line);
 		}

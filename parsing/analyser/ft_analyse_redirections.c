@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_analyse_redirections.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:52:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 23:25:54 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/05 00:28:49 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 static void	ft_hanlde_ed_ap(t_token *lst_token, t_toexec *node)
 {
-	node->output = open(lst_token->next->value, O_RDWR | O_APPEND | O_CREAT, 777);
+	node->output = open(lst_token->next->value, O_RDWR | O_APPEND | O_CREAT, 0777);
 	if (node->output == -1)
 		ft_printerror(FILE_D_ERROR_FAIL);
 }
 
 static void	ft_hanlde_ed_rp(t_token *lst_token, t_toexec *node)
 {
-	node->output = open(lst_token->next->value, O_RDWR | O_TRUNC | O_CREAT, 777);
+	node->output = open(lst_token->next->value, O_RDWR | O_TRUNC | O_CREAT, 0777);
 	if (node->output == -1)
 		ft_printerror(FILE_D_ERROR_FAIL);
 }
 
 static void	ft_hanlde_ed_in(t_token *lst_token, t_toexec *node)
 {
-	node->input = open(lst_token->next->value, O_RDWR, 777);
+	node->input = open(lst_token->next->value, O_RDONLY, 0777);
 	if (node->input == -1)
 		ft_printerror("no such file or directory\n");
 }

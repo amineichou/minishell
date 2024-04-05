@@ -1,7 +1,7 @@
-1
 Makefile
 a
-b
+aii
+amine
 ex.sh
 exec
 expanding
@@ -12,3 +12,4 @@ minishell.dSYM
 minishell.h
 parsing
 test.c
+ttt
