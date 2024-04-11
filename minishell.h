@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 23:07:57 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/07 23:21:50 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "readline/history.h"
-#include "readline/readline.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 
 
 // errors handling
@@ -142,6 +143,7 @@ char *ft_strjoin(char *s1, char *s2);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 char	**free_leaks(char **strs);
 int	ft_atoi(const char *str);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // signal hanldler
 void		ft_sigkill_handler(int signum);

@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 15:11:11 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/02 00:31:07 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/07 23:21:31 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,24 +147,77 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (str);
 }
 
-char *ft_strjoin(char *s1, char *s2)
+static void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-    size_t len1 = strlen(s1);
-    size_t len2 = strlen(s2);
+	unsigned char		*d;
+	const unsigned char	*s;
 
-    char *result = malloc(len1 + len2 + 1);
-    if (result == NULL) {
-        perror("Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
-
-    strcpy(result, s1);
-    strcat(result, s2);
-
-    return result;
+	d = dest;
+	s = src;
+	while (n--)
+		*d++ = *s++;
+	return (dest);
 }
 
+size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	dst_lenth;
+	size_t	src_lenth;
 
+	src_lenth = ft_strlen(src);
+	if (!dst && dstsize == 0 && src)
+		return (src_lenth);
+	dst_lenth = ft_strlen(dst);
+	i = 0;
+	if (dst_lenth >= dstsize)
+		return (dstsize + src_lenth);
+	while (src[i] && i + dst_lenth < dstsize - 1)
+	{
+		dst[dst_lenth + i] = src[i];
+		i++;
+	}
+	dst[i + dst_lenth] = '\0';
+	return (dst_lenth + src_lenth);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*str;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, s1, ft_strlen(s1)+1);
+	ft_strlcat(str, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (str);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
+
+	i = 0;
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (i < n && (str1[i] || str2[i]))
+	{
+		if (str1[i] > str2[i])
+			return (1);
+		else if (str1[i] < str2[i])
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 {
 	size_t	i;
