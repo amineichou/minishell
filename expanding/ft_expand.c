@@ -172,7 +172,7 @@ char	*ft_expand(char *to_expand, t_env *env)
 //         }
 //         i++;
 //     }
-	
+
 // 	char **test = malloc(sizeof(char *) * 8);
 // 	test[0] = ft_strdup("hello world");
 // 	test[1] = ft_strdup("hello $USER !");
