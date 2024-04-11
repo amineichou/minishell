@@ -14,22 +14,19 @@
 
 char *ft_env_list_serch_res(t_env *head, char *to_look)
 {
-    t_env    *tmp;
+	t_env	*tmp;
 
-    if (!head)
-    {
-        printf("Invalid data or data->env is NULL\n");
-        return (NULL);
-    }
+	if (!head)
+		return (NULL);
 
-    tmp = head;
-    while(tmp)
+	tmp = head;
+	while(tmp)
 	{
-       if(ft_strcmp(tmp->name, to_look) == 0)
-            return(ft_strdup(tmp->var));
-       tmp = tmp->next;
-    }
-    return(NULL);
+		if(ft_strcmp(tmp->name, to_look) == 0)
+			return(ft_strdup(tmp->var));
+		tmp = tmp->next;
+	}
+	return(NULL);
 }
 
 static char *ft_get_env_arg(char *to_expand, int *i)
@@ -40,9 +37,7 @@ static char *ft_get_env_arg(char *to_expand, int *i)
 
 	size = 0;
 	start = *i;
-	if (to_expand[*i] == '$')
-		return (NULL);
-	else if (ft_isspace(to_expand[*i]) || ft_isdigit(to_expand[*i]))
+	if (to_expand[*i] == '\0' || to_expand[*i] == '$' || ft_isspace(to_expand[*i]) || ft_isdigit(to_expand[*i]))
 		return (ft_strdup("$")); // TODO : leaks
 	while (to_expand[*i] && ft_is_alphanumeric(to_expand[*i]))
 	{
@@ -82,14 +77,12 @@ static int	ft_get_size(char *to_expand, t_env *env)
 		if (to_expand[i] == '$')
 		{
 			i++;
-			if (to_expand[i] && to_expand[i] == '$')
-				size++;
 			arg = ft_get_env_arg(to_expand, &i);
 			if (arg)
 				ft_add_size_env_arg(arg, &size, env);
 		}
 		else
-		{	
+		{
 			size++;
 			i++;
 		}
@@ -108,6 +101,8 @@ char	*ft_expand(char *to_expand, t_env *env)
 	int		tmp;
 	int		size;
 
+	if (!to_expand)
+		return (NULL);
 	j = 0;
 	size = ft_get_size(to_expand, env);
 	res = malloc(sizeof(char) * (size + 1));
@@ -118,12 +113,6 @@ char	*ft_expand(char *to_expand, t_env *env)
 		if (to_expand[i] == '$')
 		{
 			i++;
-			if (to_expand[i] == '\0')
-			{
-				res[j] = '$';
-				j++;
-				break;
-			}
 			arg = ft_get_env_arg(to_expand, &i);
 			if (arg && ft_strcmp(arg, "$") == 0)
 			{
@@ -134,7 +123,7 @@ char	*ft_expand(char *to_expand, t_env *env)
 			{
 				arg = ft_env_list_serch_res(env, arg);
 				tmp = 0;
-				while (arg[tmp])
+				while (arg && arg[tmp])
 					res[j++] = arg[tmp++];
 			}
 		}
@@ -188,9 +177,9 @@ char	*ft_expand(char *to_expand, t_env *env)
 // 	test[0] = ft_strdup("hello world");
 // 	test[1] = ft_strdup("hello $USER !");
 // 	test[2] = ft_strdup("$$	$		$$");
-// 	test[3] = ft_strdup("$USER is the best   ");
+// 	test[3] = ft_strdup("$zUSER is the best   ");
 // 	test[4] = ft_strdup("$USER & $USER");
-// 	test[5] = ft_strdup("$$$$$$$");
+// 	test[5] = ft_strdup("$$$$$");
 // 	test[6] = ft_strdup("$is the best	$");
 // 	test[7] = NULL;
 
@@ -199,6 +188,6 @@ char	*ft_expand(char *to_expand, t_env *env)
 // 	// 	printf("[%s] => [%s]\n", test[i], ft_expand(test[i], envl));
 // 	// 	usleep(400);
 // 	// }
-// 	char *curr = test[5];
+// 	char *curr = test[7];
 // 	printf("[%s] => [%s]\n", curr, ft_expand(curr, envl));
 // }
