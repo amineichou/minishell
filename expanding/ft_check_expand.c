@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 06:43:50 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 22:20:06 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/12 15:26:58 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,14 @@ static int	ft_check_expand_value(char *str)
 	return (0);
 }
 
-// check if the string will be expanded & expand if it is; returns NULL if malloc failed
-// void ft_check_expand(t_token **lst_token)
+// int main(void)
+// {
+// 	char test[] = "amine ichou 'amine ichou $' ami$ne";
+// 	printf("%d\n", ft_check_expand_value(test));
+// }
+
+//check if the string will be expanded & expand if it is; returns NULL if malloc failed
+// void ft_check_expand(t_token **lst_token, char **env)
 // {
 // 	t_token	*node_token;
 
