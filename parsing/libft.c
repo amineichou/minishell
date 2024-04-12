@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 23:00:09 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/06 23:56:19 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char	*ft_strdup(char *s1)
 	char	*s2;
 
 	i = 0;
+	if(!s1)
+		return NULL;
 	str_length = ft_strlen(s1) + 1;
 	s2 = malloc(sizeof(char) * str_length);
 	if (!s2)
