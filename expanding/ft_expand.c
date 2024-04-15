@@ -202,4 +202,3 @@ char	*ft_expand(char *to_expand, t_env *env)
 // 	char *curr = test[5];
 // 	printf("[%s] => [%s]\n", curr, ft_expand(curr, envl));
 // }
-
