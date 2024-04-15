@@ -108,7 +108,7 @@ int main(int ac, char **av, char **env)
 				executer(lst, &needs);
 				envl = lst->env;
 	
-				// continue ;
+				continue ;
 			}
 			free(line);
 		}

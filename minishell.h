@@ -145,6 +145,11 @@ char	**free_leaks(char **strs);
 int	ft_atoi(const char *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
+// free leaks
+void		ft_free_toexec(t_toexec *head);
+void		ft_free_args(char **args);
+void		ft_free_token(t_token *head);
+
 // signal hanldler
 void		ft_sigkill_handler(int signum);
 

@@ -115,6 +115,25 @@ void	ft_strcpy(char *dst, char *src, size_t dstsize)
 	dst[i] = '\0';
 }
 
+size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
+{
+	size_t	i;
+
+	i = 0;
+	if (!dst && dstsize == 0)
+		return (ft_strlen(src));
+	if (dstsize)
+	{
+		while (i < dstsize - 1 && src[i])
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	return (ft_strlen(src));
+}
+
 static int	ft_handler(const char *str, int sign)
 {
 	int			i;

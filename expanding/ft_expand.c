@@ -138,56 +138,57 @@ char	*ft_expand(char *to_expand, t_env *env)
 	// don't forget to trim spaces before expanding
 }
 
-// int main(int ac, char **av, char **env)
-// {
-//     t_env    *envl = NULL;
-//     t_env    *tmp = NULL;
-//     char    **argument = NULL;
+int main(int ac, char **av, char **env)
+{
+    t_env    *envl = NULL;
+    t_env    *tmp = NULL;
+    char    **argument = NULL;
 
-//     (void)ac;
-//     (void)av;
-//     int i;
+    (void)ac;
+    (void)av;
+    int i;
 
-//     i = 0;
-//     while (env[i])
-//     {
-//         t_env *new_env = malloc(sizeof(t_env));
-//         if (!new_env)
-//         {
-//             perror("malloc");
-//             exit(EXIT_FAILURE);
-//         }
-//         argument = ft_split(env[i], '=');
-//         new_env->var = argument[1];
-//         new_env->name = argument[0];
-//         new_env->next = NULL;
-//         if (envl == NULL)
-//             envl = new_env;
-//         else
-//         {
-//             tmp = envl;
-//             while (tmp->next)
-//                 tmp = tmp->next;
-//             tmp->next = new_env;
-//         }
-//         i++;
-//     }
+    i = 0;
+    while (env[i])
+    {
+        t_env *new_env = malloc(sizeof(t_env));
+        if (!new_env)
+        {
+            perror("malloc");
+            exit(EXIT_FAILURE);
+        }
+        argument = ft_split(env[i], '=');
+        new_env->var = argument[1];
+        new_env->name = argument[0];
+        new_env->next = NULL;
+        if (envl == NULL)
+            envl = new_env;
+        else
+        {
+            tmp = envl;
+            while (tmp->next)
+                tmp = tmp->next;
+            tmp->next = new_env;
+        }
+        i++;
+    }
 
-// 	char **test = malloc(sizeof(char *) * 8);
-// 	test[0] = ft_strdup("hello world");
-// 	test[1] = ft_strdup("hello $USER !");
-// 	test[2] = ft_strdup("$$	$		$$");
-// 	test[3] = ft_strdup("$zUSER is the best   ");
-// 	test[4] = ft_strdup("$USER & $USER");
-// 	test[5] = ft_strdup("$$$$$");
-// 	test[6] = ft_strdup("$is the best	$");
-// 	test[7] = NULL;
+	char **test = malloc(sizeof(char *) * 8);
+	test[0] = ft_strdup("hello world");
+	test[1] = ft_strdup("hello $USER !");
+	test[2] = ft_strdup("$$	$		$$");
+	test[3] = ft_strdup("$zUSER is the best   ");
+	test[4] = ft_strdup("$USER & $USER");
+	test[5] = ft_strdup("$$$$$");
+	test[6] = ft_strdup("$is the best	$");
+	test[7] = NULL;
 
-// 	// for (int i = 0; test[i]; i++)
-// 	// {
-// 	// 	printf("[%s] => [%s]\n", test[i], ft_expand(test[i], envl));
-// 	// 	usleep(400);
-// 	// }
-// 	char *curr = test[7];
-// 	printf("[%s] => [%s]\n", curr, ft_expand(curr, envl));
-// }
+	// for (int i = 0; test[i]; i++)
+	// {
+	// 	printf("[%s] => [%s]\n", test[i], ft_expand(test[i], envl));
+	// 	usleep(400);
+	// }
+	char *curr = test[7];
+	printf("[%s] => [%s]\n", curr, ft_expand(curr, envl));
+	ft_free_args(test);
+}
