@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/08 22:37:36 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/17 15:24:04 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int main(int ac, char **av, char **env)
 			if (sanitize_result)
 			{
 				lst = ft_analyser(sanitize_result);
-				test_lst(lst);
+				// test_lst(lst);
 
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);

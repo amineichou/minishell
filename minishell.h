@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/07 23:21:50 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/17 18:46:16 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ typedef struct  s_toexec {
 	int					output;
 	char				**args;
 	t_env 				*env;
-	struct  s_toexec	*next;
-	struct  s_toexec	*prev;
+	struct s_toexec	*next;
+	struct s_toexec	*prev;
 }	t_toexec;
 
 typedef struct t_pipe

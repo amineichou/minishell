@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 22:20:24 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/17 19:24:09 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ char	*ft_expand(char *to_expand, t_env *env)
 		return (NULL);// TODO : leaks protection
 	while (to_expand[i])
 	{
+		// if (to_expand[i])
 		if (to_expand[i] == '$')
 		{
 			i++;
@@ -199,6 +200,6 @@ char	*ft_expand(char *to_expand, t_env *env)
 // 	// 	printf("[%s] => [%s]\n", test[i], ft_expand(test[i], envl));
 // 	// 	usleep(400);
 // 	// }
-// 	char *curr = test[5];
+// 	char *curr = test[4];
 // 	printf("[%s] => [%s]\n", curr, ft_expand(curr, envl));
 // }

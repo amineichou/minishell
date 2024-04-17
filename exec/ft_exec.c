@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/14 19:44:57 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/17 15:23:17 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void print_open_file_descriptors() {
     // Iterate through possible file descriptors
     for (fd = 0; fd < 256; fd++) { // Adjust the range as per your requirements
         int flags = fcntl(fd, F_GETFD);
-        if (flags != -1) {
-            dprintf(2,"File descriptor %d is open\n", fd);
-        }
+        // if (flags != -1) {
+        //     dprintf(2,"File descriptor %d is open\n", fd);
+        // }
     }
 }
 void ff(void)
@@ -183,7 +183,7 @@ void in_out_handler(t_toexec *cmds, t_pipe *needs)
 	}
 	if(cmds->output != STDOUT_FILENO)
 	{
-		dprintf(2, "|%d|\n\n", cmds->output);
+		// dprintf(2, "|%d|\n\n", cmds->output);
 		dup2(cmds->output, STDOUT_FILENO);
 		close(cmds->output);
 		// close(needs->fd[1]);
@@ -196,7 +196,7 @@ void in_out_handler_multiple(t_toexec *cmds, t_pipe *needs)
 		exit (1);
 	if(cmds->input != STDIN_FILENO)
 	{
-		dprintf(2, "to change fdin = %s\n", cmds->args[0]);
+		// dprintf(2, "to change fdin = %s\n", cmds->args[0]);
 		if (dup2(cmds->input, STDIN_FILENO) == -1)
 			perror("STDIN");
 		close(cmds->input);
@@ -213,7 +213,7 @@ void in_out_handler_multiple(t_toexec *cmds, t_pipe *needs)
 	if(cmds->output != STDOUT_FILENO)
 	{
 		// dprintf(2, "|%d|\n\n", cmds->output);
-		dprintf(2, "to change fd out == %s \n", cmds->args[0]);
+		// dprintf(2, "to change fd out == %s \n", cmds->args[0]);
 		
 		dup2(cmds->output, STDOUT_FILENO);
 		close(cmds->output);
@@ -222,7 +222,7 @@ void in_out_handler_multiple(t_toexec *cmds, t_pipe *needs)
 	}
 	else 
 	{
-		dprintf(2, "just to pipe == %s\n", cmds->args[0]);
+		// dprintf(2, "just to pipe == %s\n", cmds->args[0]);
 		
 		dup2(needs->fd[1], STDOUT_FILENO);
 		close(needs->fd[1]);
@@ -237,7 +237,7 @@ void in_out_handler_last(t_toexec *cmds, t_pipe *needs)
 		exit (1);
 	if(cmds->input != STDIN_FILENO)
 	{
-	dprintf(2, "to change fd in == %s\n", cmds->args[0]);
+	// dprintf(2, "to change fd in == %s\n", cmds->args[0]);
 		
 		if (dup2(cmds->input, STDIN_FILENO) == -1)
 			perror("STDIN");
@@ -260,7 +260,7 @@ void in_out_handler_last(t_toexec *cmds, t_pipe *needs)
 	if(cmds->output != STDOUT_FILENO)
 	{
 		// dprintf(2, "|%d|\n\n", cmds->output);
-		dprintf(2, "to change fd out == %s\n", cmds->args[0]);
+		// dprintf(2, "to change fd out == %s\n", cmds->args[0]);
 		
 		dup2(cmds->output, STDOUT_FILENO);
 		close(cmds->output);
@@ -323,7 +323,7 @@ void	last_child(t_toexec **cmds, t_pipe *needs)
 		error_handler("fork");
 	if (needs->pids[needs->p] == 0)
 	{
-		dprintf(2, "hana last == %d\n", getpid());
+		// dprintf(2, "hana last == %d\n", getpid());
 		close(needs->save_fd_in);
 		close(needs->save_fd_out);
 		// if (-1 == dup2(cmds->output, 1))
@@ -466,7 +466,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	needs->j = 0;
 	while(needs->j <= needs->p)
 	{
-		dprintf(2, "this the child %d\n", needs->pids[needs->j]);
+		// dprintf(2, "this the child %d\n", needs->pids[needs->j]);
 		waitpid(needs->pids[needs->j], needs->ex_stat, 0);
 		// dprintf(2, "{{{pids==%d}}}\n", needs.pids[needs.p]);
 		needs->j++;
