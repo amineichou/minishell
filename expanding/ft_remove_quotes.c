@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_expand_test.c                                   :+:      :+:    :+:   */
+/*   ft_remove_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 18:37:39 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/17 19:23:55 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
+/*   Updated: 2024/04/18 19:18:08 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// typedef struct s_toexec
-// {
-// 	char			*value;
-// 	struct expanded	*next;
-// } t_expanded;
 
 
-// static char	*ft_expand_arg(char *arg)
-// {
-	
-// }
+char	*ft_remove_qoutes(char *str)
+{
+	char	*res;
+	char	*inside_quotes;
+	int		i;
+	int		start;
+	int		length;
 
-// void	ft_expand(t_token *lst_token)
-// {
-// 	while (lst_token)
-// 	{
-// 		lst_token->value = ft_expand_arg(lst_token->value);
-// 		lst_token = lst_token->next;
-// 	}
-// }
+	i = 0;
+	while (str[i])
+	{
+		start = i;
+		if (ft_isquote(str[i + 1]))
+			inside_quotes = ft_get_inside_qoutes(str, &i);
+		
+		i++;
+	}	
+}

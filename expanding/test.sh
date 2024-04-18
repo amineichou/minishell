@@ -1,1 +1,1 @@
-gcc -g ft_expand.c ../parsing/libft.c ../parsing/tools/*.c   ../parsing/ft_split.c ../free_leaks/*.c  && ./a.out
+gcc -g ft_expand_test.c ../parsing/libft.c ../parsing/tools/*.c ../parsing/ft_split.c ../free_leaks/*.c -fsanitize=address  && ./a.out
