@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/19 15:04:40 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:51:19 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ static void	ft_do_not_expand(char *to_expand, int *i)
 			(*i)++;
 			while (to_expand[*i] && ft_isquote(to_expand[*i]) != 1)
 				(*i)++;
-			(*i)++;
 			if (to_expand[*i] == '\0')
 				break;
+			(*i)++;
 		}
 		else
 			(*i)++;
