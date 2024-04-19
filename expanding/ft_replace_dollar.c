@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/19 14:39:06 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:04:40 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,24 @@ static char	*ft_get_to_look(char *str, int *i)
 	return (ft_strldup(&str[start], length)); // TODO : protection
 }
 
+static void	ft_do_not_expand(char *to_expand, int *i)
+{
+	while (to_expand[*i] && to_expand[*i] != '$')
+	{
+		if (to_expand[*i] && ft_isquote(to_expand[*i]) == 1)
+		{
+			(*i)++;
+			while (to_expand[*i] && ft_isquote(to_expand[*i]) != 1)
+				(*i)++;
+			(*i)++;
+			if (to_expand[*i] == '\0')
+				break;
+		}
+		else
+			(*i)++;
+	}
+}
+
 char	*ft_replace_dollar(char *to_expand, t_env *env)
 {
 	char	*res;
@@ -76,20 +94,10 @@ char	*ft_replace_dollar(char *to_expand, t_env *env)
 	while (to_expand[i])
 	{
 		start = i;
+		if (to_expand[i] && ft_isquote(to_expand[i]) == 1)
+			ft_do_not_expand(to_expand, &i);
 		while (to_expand[i] && to_expand[i] != '$')
-		{
-			if (to_expand[i] && ft_isquote(to_expand[i]) == 1)
-			{
-				i++;
-				while (to_expand[i] && ft_isquote(to_expand[i]) != 1)
-					i++;
-				i++;
-				if (to_expand[i] == '\0')
-					break;
-			}
-			else
-				i++;
-		}
+			i++;
 		new_arg = ft_strldup(&to_expand[start], i - start);
 		res = ft_strjoin(res, new_arg);
 		if (to_expand[i] && to_expand[i] == '$')
