@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:37:39 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/18 18:31:12 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:30:20 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,30 +354,6 @@
 
 
 // //////
-
-// // remove the spaces/tabs form the bigg-end if str 
-// char	*ft_trim_spaces(char *str)
-// {
-// 	char	*res;
-// 	int		i;
-// 	int		j;
-
-// 	i = 0;
-// 	if (!str)
-// 		return (NULL);
-// 	j = ft_strlen(str) - 1;
-// 	while (str[i] && ft_isspace(str[i]))
-// 		i++;
-// 	if (i == ft_strlen(str))
-// 		return (NULL);
-// 	while (ft_isspace(str[j]))
-// 		j--;
-// 	j = ft_strlen(str) - j - 1;
-// 	res = ft_strldup(str + i, (ft_strlen(str) - i - j));
-// 	if (!res)
-// 		ft_printerror(MALLOC_ERORR);
-// 	return (res);
-// }
 
 // static void	ft_replace_illegal_tab(char *line)
 // {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/06 23:56:19 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/18 12:12:18 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_strlen(char *str)
 
 	i = 0;
 	if (!str)
-		return (-1);
+		return (0);
 	while (str[i])
 		i++;
 	return (i);
@@ -54,7 +54,7 @@ char	*ft_strdup(char *s1)
 
 	i = 0;
 	if(!s1)
-		return NULL;
+		return (NULL);
 	str_length = ft_strlen(s1) + 1;
 	s2 = malloc(sizeof(char) * str_length);
 	if (!s2)
@@ -182,4 +182,44 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res * sign);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*str;
+
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return (ft_strdup(s2));
+	else if (!s2)
+		return (ft_strdup(s1));
+	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
+	ft_strlcat(str, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (str);
+}
+
+size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	dst_lenth;
+	size_t	src_lenth;
+
+	src_lenth = ft_strlen(src);
+	if (!dst && dstsize == 0 && src)
+		return (src_lenth);
+	dst_lenth = ft_strlen(dst);
+	i = 0;
+	if (dst_lenth >= dstsize)
+		return (dstsize + src_lenth);
+	while (src[i] && i + dst_lenth < dstsize - 1)
+	{
+		dst[dst_lenth + i] = src[i];
+		i++;
+	}
+	dst[i + dst_lenth] = '\0';
+	return (dst_lenth + src_lenth);
 }
