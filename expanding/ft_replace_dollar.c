@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/19 10:38:42 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/19 14:39:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*ft_get_to_look(char *str, int *i)
 			res[j++] = '$';
 		return (res);
 	}
-	else if (ft_isspace(str[*i]))
+	else if (ft_isspace(str[*i]) || str[*i] == '\0')
 		return (ft_strdup("$"));
 	while (str[*i] && ft_is_alphanumeric(str[*i]))
 	{
