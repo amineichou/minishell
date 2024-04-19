@@ -6,7 +6,11 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/05 01:05:48 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/04/19 10:29:01 by moichou          ###   ########.fr       */
+>>>>>>> f4a70f8e88b93c040cea1980cfc00e7e91692795
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +35,7 @@
 
 void lex(void)
 {
-	system("leaks minishell");
+	system("lsof -c minishell");
 }
 void fill_envinlist(t_toexec **head, t_env *env_list)
 {
@@ -54,9 +58,8 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	int i;
-
 	i = 0;
-	while (env[i])
+	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));
 		if (!new_env)
@@ -65,8 +68,8 @@ int main(int ac, char **av, char **env)
 			exit(EXIT_FAILURE);
         }
 		argument = ft_split(env[i], '=');
-        new_env->var = argument[1];
-		new_env->name = argument[0];
+        new_env->var = ft_strdup(argument[1]);
+		new_env->name = ft_strdup(argument[0]);
         new_env->next = NULL;
         if (envl == NULL)
             envl = new_env;
@@ -85,8 +88,6 @@ int main(int ac, char **av, char **env)
 	// atexit(lex);
 	// signal(SIGINT, ft_sigkill_handler);
 	// disableEcho();
-	
-
 	while (1)
 	{
 		// line = "\0"
@@ -101,16 +102,14 @@ int main(int ac, char **av, char **env)
 		if (line && line[0])
 		{
 			add_history(line);
-			sanitize_result = ft_sanitizer(line);
-			if (sanitize_result)
+			lst = ft_parser(line, envl);
+			if (lst)
 			{
-				lst = ft_analyser(sanitize_result);
 				// test_lst(lst);
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
 				envl = lst->env;
-	
-				// continue ;
+				continue ;
 			}
 			free(line);
 		}

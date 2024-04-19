@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/29 01:26:56 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:30:39 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,24 +95,27 @@ char	*ft_strldup(char *s1, int lenght)
 	return (s2);
 }
 
-char	*ft_remove_qoutes(char *str)
+// remove the spaces/tabs form the bigg-end if str 
+char	*ft_trim_spaces(char *str)
 {
 	char	*res;
 	int		i;
-	int		in_quotes;
+	int		j;
 
 	i = 0;
-	in_quotes = 0;
-	if (ft_isquote(str[0]))
-		in_quotes = 1;
-	if (in_quotes)
-	{
-		res = ft_strldup(str + 1, ft_strlen(str) - 2);
-		if (!res)
-			ft_printerror(MALLOC_ERORR);
-	}
-	else
-		return (str);
+	if (!str)
+		return (NULL);
+	j = ft_strlen(str) - 1;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	if (i == ft_strlen(str))
+		return (NULL);
+	while (ft_isspace(str[j]))
+		j--;
+	j = ft_strlen(str) - j - 1;
+	res = ft_strldup(str + i, (ft_strlen(str) - i - j));
+	if (!res)
+		ft_printerror(MALLOC_ERORR);
 	return (res);
 }
 

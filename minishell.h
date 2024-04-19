@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 23:07:57 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:28:15 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "readline/history.h"
-#include "readline/readline.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 
 
 // errors handling
@@ -43,8 +44,8 @@ typedef struct  s_toexec {
 	int					output;
 	char				**args;
 	t_env 				*env;
-	struct  s_toexec	*next;
-	struct  s_toexec	*prev;
+	struct s_toexec	*next;
+	struct s_toexec	*prev;
 }	t_toexec;
 
 typedef struct t_pipe
@@ -88,7 +89,7 @@ typedef struct s_token {
 // #define malloc(x) NULL
 
 // START FUNCTION
-t_toexec	*ft_parser(char *line);
+t_toexec	*ft_parser(char *line, t_env *envl);
 
 // synthax sanitizer
 char		*ft_sanitizer(char *line);
@@ -100,13 +101,15 @@ char		*ft_addspace_illegal_chars(char *line, char *token);
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 
 // analyser
-t_toexec	*ft_analyser(char *sanitize_result);
+t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
 t_token		*ft_make_tokens(char *sanitize_result);
 int			ft_check_valid_tokens(t_token *lst_token);
 
 
 // expanding
-char		*ft_expand(char *to_expand, t_env *env);
+void		ft_expand(t_token *lst_token, t_env *envl);
+char		*ft_replace_dollar(char *to_expand, t_env *env);
+char		*ft_remove_qoutes(char *str);
 
 // utils
 int			ft_strlen(char *str);
@@ -122,7 +125,7 @@ t_toexec	*ft_create_node(char *cmd, char **args);
 void		ft_append_node_t_token(t_token **head, t_token *node);
 void		ft_append_node_t_toexec(t_toexec **head, t_toexec *node);
 // 1
-char		*ft_remove_qoutes(char *str);
+// char		*ft_remove_qoutes(char *str);
 void		ft_skip_quotes(char *str, int *i);
 int			ft_isredirection(char c);
 
@@ -140,8 +143,15 @@ char* ft_strstr(const char* haystack, const char* needle);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char *ft_strjoin(char *s1, char *s2);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
+size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
 char	**free_leaks(char **strs);
 int	ft_atoi(const char *str);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+
+// free leaks
+void		ft_free_toexec(t_toexec *head);
+void		ft_free_args(char **args);
+void		ft_free_token(t_token *head);
 
 // signal hanldler
 void		ft_sigkill_handler(int signum);
@@ -164,3 +174,5 @@ int env_list_serch(t_env **head, char *to_look);
 void ft_unset(t_env **env, char *to_del);
 int ft_exit(char **args);
 #endif
+
+// 'something''something'

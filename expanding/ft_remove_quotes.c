@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_remove_quotes.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
+/*   Updated: 2024/04/19 10:47:52 by moichou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+
+static char	*ft_get_inside_qoutes(char *str, int *i, int type)
+{
+	char	*res;
+	int		start;
+	int		length;
+
+	(*i)++;
+	start = *i;
+	length = 0;
+	while (ft_isquote(str[*i]) != type)
+	{
+		(*i)++;
+		length++;
+	}
+	(*i)++;
+	res = ft_strldup(&str[start], length);
+	return (res);
+}
+
+char	*ft_remove_qoutes(char *str)
+{
+	char	*res;
+	char	*inside_quotes;
+	int		i;
+	int		j;
+	int		x;
+
+	i = 0;
+	x = 0;
+	res = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	// if (!res)
+	// 	return (ft_print_error(MALLOC_ERORR), NULL);
+	while (str[i])
+	{
+		if (str[i] && ft_isquote(str[i]))
+		{
+			inside_quotes = ft_get_inside_qoutes(str, &i, ft_isquote(str[i]));
+			j = 0;
+			while (inside_quotes[j])
+				res[x++] = inside_quotes[j++];
+		}
+		else
+		{
+			res[x] = str[i];
+			x++;
+			i++;
+		}
+	}
+	res[x] = '\0';
+	return (res);
+}
+
+// int main(void)
+// {
+// 	char *test = ft_strdup("'amine'amine $'ichou' world amine");
+// 	char *res = ft_remove_qoutes(test);
+// 	printf("%s\n", res);
+// }

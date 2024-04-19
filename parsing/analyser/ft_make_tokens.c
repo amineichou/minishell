@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 23:10:07 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:25:32 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,5 @@ t_token	*ft_make_tokens(char *sanitize_result)
 		if (sanitize_result[i] == '\0')
 			break ;
 	}
-	// test_tokens(lst_token);
 	return (lst_token);
 }

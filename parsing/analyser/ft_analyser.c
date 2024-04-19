@@ -6,7 +6,11 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/05 00:39:03 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/04/19 10:26:05 by moichou          ###   ########.fr       */
+>>>>>>> f4a70f8e88b93c040cea1980cfc00e7e91692795
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +66,7 @@ static void	ft_set_default_vals(t_toexec *node)
 }
 
 // analyser will analyze tokens and create the t_toexec list
-t_toexec	*ft_analyser(char *sanitize_result)
+t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 {
 	t_token		*lst_token;
 	t_toexec	*lst_toexec;
@@ -70,6 +74,7 @@ t_toexec	*ft_analyser(char *sanitize_result)
 
 	lst_token = ft_make_tokens(sanitize_result);
 	// expanding
+	ft_expand(lst_token, envl);
 	lst_toexec = NULL;
 	while (lst_token)
 	{

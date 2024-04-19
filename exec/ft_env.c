@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:54:51 by zyamli            #+#    #+#             */
-/*   Updated: 2024/03/28 01:40:58 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/07 23:38:33 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int env_print(t_toexec *data)
 	tmp = data->env;
 	while(tmp)
 	{
-		printf("%s=", tmp->name);
-		printf("%s\n", tmp->var);
+	if (tmp->name && tmp->var)
+			printf("%s=%s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
 	return(1);
