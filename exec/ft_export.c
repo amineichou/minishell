@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/03/29 22:26:45 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/21 22:22:39 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,7 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 		}
 	}	
 }
+
 int ft_exporter(t_toexec *cmd, t_pipe *needs)
 {
 	// 	t_env	*envi = NULL;

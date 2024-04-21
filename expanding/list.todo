@@ -1,3 +1,4 @@
- - echo $'USER' => USER
+ - echo $'USER' => USER @done
  - "l"s => ls works @done
- - $'ls' => ls works
+ - $'ls' => ls works @done
+ - echo '"'$USER'"' => "moichou"

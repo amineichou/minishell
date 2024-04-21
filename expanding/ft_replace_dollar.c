@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 21:58:21 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 22:34:35 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static char	*ft_get_to_look(char *str, int *i)
 
 	length = 0;
 	start = *i;
-	if (str[*i] == '$')
-		
+	// if (str[*i] == '$')
+		// hande multiple dollar signes
 	if (str[*i] == '\0')
 		return (ft_strdup("$"));
 	if (str[*i] && str[*i] == '$')
