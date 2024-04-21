@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 22:58:06 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 23:00:00 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static char	*ft_expand_dollar(char *str, t_env *env)
 		{
 			tmp->value = ft_replace_dollar(tmp->value, env);
 		}
-			printf("{%s}\n", tmp->value);
+			// printf("{%s}\n", tmp->value);
 		tmp = tmp->next;
 	}
 	tmp = lst_expand;
