@@ -1,4 +1,5 @@
  - echo $'USER' => USER @done
  - "l"s => ls works @done
  - $'ls' => ls works @done
- - echo '"'$USER'"' => "moichou"
+ - echo '"'$USER'"' => "moichou" @done
+ - ls '|'"|" j
