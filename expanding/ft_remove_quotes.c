@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 21:22:00 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 23:21:26 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ static char	*ft_get_inside_qoutes(char *str, int *i, int type)
 	(*i)++;
 	start = *i;
 	length = 0;
-	while (ft_isquote(str[*i]) != type)
+	while (str[*i] && ft_isquote(str[*i]) != type)
 	{
 		(*i)++;
 		length++;
 	}
-	(*i)++;
+	if (str[*i])
+		(*i)++;
 	res = ft_strldup(&str[start], length);
 	return (res);
 }
