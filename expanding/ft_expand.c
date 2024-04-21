@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 21:37:55 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 22:58:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,23 @@ static char	*ft_get_between_quotes(char *str, int *i, int type)
 	(*i)++;
 	while (str[*i] && ft_isquote(str[*i]) != type)
 		(*i)++;
-	// (*i)++;
+	(*i)++;
 	res = ft_strldup(&str[start], (*i) - start);
 	return (res);
 }
 static bool	ft_is_expand(char *str)
 {
 	int	i;
-	int	is_dollar;
 
-	is_dollar = 0;
 	i = 0;
-	if (ft_isquote(str[0]) == 1)
-		return (false);
+	// if (ft_isquote(str[0]) == 1)
+	// 	return (false);
 	while (str[i])
 	{
 		if (str[i] == '$')
-		{
-			is_dollar = 1;
-			break ;
-		}
+			return (true);
 		i++;
 	}
-	if (is_dollar == 1)
-		return (true);
 	return (false);
 }
 
@@ -55,13 +48,18 @@ static t_expand	*ft_create_expand_list(char *str)
 	char		*res;
 	int			i;
 	int			start;
+	bool		is_expand;
 
 	i = 0;
 	lst_expand = NULL;
 	while (str[i])
 	{
+		is_expand = true;
 		if (str[i] && ft_isquote(str[i]) == 1)
+		{
 			res = ft_get_between_quotes(str, &i, 1);
+			is_expand = false;
+		}
 		else if (str[i] && ft_isquote(str[i]) == 2)
 			res = ft_get_between_quotes(str, &i, 2);
 		else
@@ -70,10 +68,10 @@ static t_expand	*ft_create_expand_list(char *str)
 			while (str[i] && !ft_isquote(str[i]))
 				i++;
 			if (start != i)
-				res = ft_strldup(str, i - start);
+				res = ft_strldup(&str[start], i - start);
 		}
 		node = ft_create_expand_node(res);
-		node->is_expand = ft_is_expand(res);
+		node->is_expand = is_expand;
 		ft_append_node_expand(&lst_expand, node);
 	}
 	return (lst_expand);
@@ -91,7 +89,10 @@ static char	*ft_expand_dollar(char *str, t_env *env)
 	while (tmp)
 	{
 		if (tmp->is_expand)
+		{
 			tmp->value = ft_replace_dollar(tmp->value, env);
+		}
+			printf("{%s}\n", tmp->value);
 		tmp = tmp->next;
 	}
 	tmp = lst_expand;
