@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 10:13:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 11:35:32 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 14:45:36 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_expand	*ft_create_expand_node(char *str)
 
 	node = malloc(sizeof(t_expand));
 	if (!node)
-		return (ft_print_error(MALLOC_ERORR), NULL);
+		return (ft_printerror(MALLOC_ERORR), NULL);
 	node->value = str;
 	node->is_expand = true;
 	node->next = NULL;

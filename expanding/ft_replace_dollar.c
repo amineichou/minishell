@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 12:45:49 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 18:47:28 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*ft_env_list_serch_res(t_env *head, char *to_look)
 			return(ft_strdup(tmp->var));
 		tmp = tmp->next;
 	}
-	return(NULL);
+	return (NULL);
 }
 
 static char	*ft_get_to_look(char *str, int *i)
@@ -38,31 +38,42 @@ static char	*ft_get_to_look(char *str, int *i)
 	int		j;
 
 	length = 0;
+	// if (str[*i] == '$')
+	// {
+	// 	while (str[*i] && str[(*i) + 1] && str[(*i) + 1] == '$')
+	// 	{
+	// 		length++;
+	// 		(*i)++;
+	// 	}
+	// 	res = ft_strldup(&str[start], (length / 2) + 1);
+	// 	j = 0;
+	// 	while (res[j])
+	// 		res[j++] = '$';
+	// 	return (res);
+	// }
+	// else if (ft_isspace(str[*i]) || str[*i] == '\0')
+	// 	return (ft_strdup("$"));
+	// else if (ft_isquote(str[*i]))
+	// 	return (str);
 	start = *i;
-	if (str[*i] == '$')
+	if (str[*i] == '\0')
+		return (ft_strdup("$"));
+	if (str[*i] && str[*i] == '$')
 	{
-		while (str[*i] && str[(*i) + 1] && str[(*i) + 1] == '$')
-		{
-			length++;
+		while (str[(*i)] && str[(*i)] == '$')
 			(*i)++;
-		}
-		res = ft_strldup(&str[start], (length / 2) + 1);
-		j = 0;
-		while (res[j])
-			res[j++] = '$';
+		res = ft_strldup(&str[start], (*i) - start);
+		// printf("res : %s\n", res);
 		return (res);
 	}
-	else if (ft_isspace(str[*i]) || str[*i] == '\0')
-		return (ft_strdup("$"));
 	while (str[*i] && ft_is_alphanumeric(str[*i]))
 	{
 		(*i)++;
 		length++;
 	}
-	return (ft_strldup(&str[start], length)); // TODO : protection
+	res = ft_strldup(&str[start], length); // TODO : protection
+	return (res);
 }
-
-
 
 static char	*ft_fill_arg(char *str, int start, int *i, t_env *env)
 {
@@ -71,17 +82,14 @@ static char	*ft_fill_arg(char *str, int start, int *i, t_env *env)
 
 	(*i)++;
 	to_look = ft_get_to_look(str, i);
+	// printf("res : %s\n", to_look);
 	res = ft_env_list_serch_res(env, to_look);
-	printf("res : %s\n", res);
 	return (res);
 }
 
 char	*ft_replace_dollar(char *str, t_env *env)
 {
 	char	*res;
-	char	*to_look;
-	char	*looked_arg;
-	char	*rest;
 	int		i;
 	int		start;
 
@@ -107,22 +115,6 @@ char	*ft_replace_dollar(char *str, t_env *env)
 	}
 	return (res);
 }
-
-// char	*ft_replace_dollar(char *to_expand, t_env *env)
-// {
-// 	char	*res;
-// 	char	*new_arg;
-// 	int		i;
-// 	int		start;
-
-// 	i = 0;
-// 	res = NULL;
-// 	while (to_expand[i])
-// 	{
-		
-// 	}
-// 	return (res);
-// }
 
 // int main(int ac, char **av, char **env)
 // {
@@ -170,7 +162,7 @@ char	*ft_replace_dollar(char *str, t_env *env)
 // 	test[7] = NULL;
 
 // 	for (int i = 0; test[i]; i++)
-// 		printf("[%s] => [%s]\n", test[i], ft_replace_dollar_env(test[i], envl));
+// 		printf("[%s] => [%s]\n", test[i], ft_replace_dollar(test[i], envl));
 // 	// char *curr = test[1];
 // 	// printf("[%s] => [%s]\n", curr, ft_replace_dollar_env(curr, envl));
 // }
