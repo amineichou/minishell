@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/19 10:47:52 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 21:22:00 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ char	*ft_remove_qoutes(char *str)
 
 	i = 0;
 	x = 0;
+	if (!str)
+		return (NULL);
 	res = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
-	// if (!res)
-	// 	return (ft_print_error(MALLOC_ERORR), NULL);
+	if (!res)
+		return (ft_printerror(MALLOC_ERORR), NULL);
 	while (str[i])
 	{
 		if (str[i] && ft_isquote(str[i]))
@@ -66,7 +68,7 @@ char	*ft_remove_qoutes(char *str)
 
 // int main(void)
 // {
-// 	char *test = ft_strdup("'amine'amine $'ichou' world amine");
+// 	char *test = NULL;
 // 	char *res = ft_remove_qoutes(test);
 // 	printf("%s\n", res);
 // }
