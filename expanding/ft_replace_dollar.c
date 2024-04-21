@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 20:05:00 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 21:58:21 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static char	*ft_env_list_serch_res(t_env *head, char *to_look)
 	if (!head)
 		return (NULL);
 	tmp = head;
-	if (to_look[0] == '$')
-		return (to_look);
+	// if (to_look[0] == '$')
+	// 	return (to_look);
 	while(tmp)
 	{
 		if(ft_strcmp(tmp->name, to_look) == 0)
@@ -38,24 +38,9 @@ static char	*ft_get_to_look(char *str, int *i)
 	int		j;
 
 	length = 0;
-	// if (str[*i] == '$')
-	// {
-	// 	while (str[*i] && str[(*i) + 1] && str[(*i) + 1] == '$')
-	// 	{
-	// 		length++;
-	// 		(*i)++;
-	// 	}
-	// 	res = ft_strldup(&str[start], (length / 2) + 1);
-	// 	j = 0;
-	// 	while (res[j])
-	// 		res[j++] = '$';
-	// 	return (res);
-	// }
-	// else if (ft_isspace(str[*i]) || str[*i] == '\0')
-	// 	return (ft_strdup("$"));
-	// else if (ft_isquote(str[*i]))
-	// 	return (str);
 	start = *i;
+	if (str[*i] == '$')
+		
 	if (str[*i] == '\0')
 		return (ft_strdup("$"));
 	if (str[*i] && str[*i] == '$')
@@ -63,7 +48,6 @@ static char	*ft_get_to_look(char *str, int *i)
 		while (str[(*i)] && str[(*i)] == '$')
 			(*i)++;
 		res = ft_strldup(&str[start], (*i) - start);
-		// printf("res : %s\n", res);
 		return (res);
 	}
 	while (str[*i] && ft_is_alphanumeric(str[*i]))
