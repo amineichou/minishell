@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:13:47 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/04 02:53:04 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/21 16:30:15 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int ft_cd(char *dir, t_env *env, t_pipe *needs)
 	//     perror("cd ");
 	//     return (0);
 	// }
+	char *home;
 	char *oldpwd = env_list_find_var(&env, "PWD");
 	if (dir == NULL)
 	{
@@ -47,6 +48,16 @@ int ft_cd(char *dir, t_env *env, t_pipe *needs)
 			perror("cd");
 			return (0);
 		}
+	}
+	if (!dir || !ft_strcmp(dir, "~"))
+	{
+		home = ft_strjoin("/Users/",env_list_find_var(&env, "USER"));
+		if (chdir(home) < 0)
+		{
+			perror("chdir");
+			return (0);
+		}
+		free(home);
 	}
 	else if (chdir(dir) != 0)
 	{
