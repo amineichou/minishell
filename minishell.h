@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/19 10:28:15 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/21 10:18:44 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <readline/history.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <sys/wait.h>
@@ -32,6 +33,12 @@
 #define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `>'\n"
 #define SYNTAX_ERROR_REDIRECTION_2 "syntax error near unexpected token `>>'\n"
 #define FILE_D_ERROR_FAIL "faild to open fd\n"
+
+typedef struct s_expand {
+	bool			is_expand;
+	char			*value;
+	struct s_expand	*next;
+}	t_expand;
 
 typedef struct s_env {
 	char			*var;
@@ -122,8 +129,10 @@ int			ft_isquote(char c);
 
 // tools
 t_toexec	*ft_create_node(char *cmd, char **args);
+t_expand	*ft_create_expand_node(char *str);
 void		ft_append_node_t_token(t_token **head, t_token *node);
 void		ft_append_node_t_toexec(t_toexec **head, t_toexec *node);
+void		ft_append_node_expand(t_expand **head, t_expand *node);
 // 1
 // char		*ft_remove_qoutes(char *str);
 void		ft_skip_quotes(char *str, int *i);
