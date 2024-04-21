@@ -1,0 +1,1 @@
+gcc -g ft_replace_dollar.c ../parsing/libft.c ../parsing/tools/*.c ../parsing/ft_split.c ../free_leaks/*.c -fsanitize=address && ./a.out

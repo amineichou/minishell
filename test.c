@@ -381,3 +381,27 @@ char **ft_expand(char *str)
 // 		}
 // 	// }
 // }
+
+static char	*ft_fill_arg(char *str, int start, int i, t_env *env)
+{
+	char	*rest;
+	char	*res;
+	char	*to_look;
+	char	*looked_arg;
+
+	res = NULL;
+	if (str[i] && str[i] == '$')
+	{
+		i++;
+		to_look = ft_get_to_look(str, &i);
+		looked_arg = ft_env_list_serch_res(env, to_look);
+		res = ft_strjoin(res, looked_arg);
+	}
+	else
+	{
+		rest = ft_strldup(&str[start], i - start); // TODO : protect
+		res = ft_strjoin(res, rest);
+	}
+	free(rest);
+	return (res);
+}

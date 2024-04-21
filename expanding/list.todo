@@ -1,0 +1,3 @@
+ - echo $'USER' => USER
+ - "l"s => ls works @done
+ - $'ls' => ls works
