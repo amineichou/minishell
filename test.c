@@ -167,18 +167,19 @@ static char		**ft_reallocate_copy(char **old_res, char *new)
 	}
 	return (res);
 }
-int main(void)
-{
-	char *tests[] = {"hello world 1", "hello world 2", "hello world 3", NULL};
-	char *test = strdup("hello world 4");
-	char **res = ft_reallocate_copy(tests, test);
 
-    for (int i = 0; res[i]; i++)
-	{
-		printf("%s\n", res[i]);
-	}
+// int main(void)
+// {
+// 	char *tests[] = {"hello world 1", "hello world 2", "hello world 3", NULL};
+// 	char *test = strdup("hello world 4");
+// 	char **res = ft_reallocate_copy(tests, test);
+
+//     for (int i = 0; res[i]; i++)
+// 	{
+// 		printf("%s\n", res[i]);
+// 	}
 	
-}
+// }
 
 
 // static void	ft_skip_quotess(char *str, int *i, int *size)

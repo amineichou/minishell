@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 23:41:11 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/22 18:54:53 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,6 @@ static char	*ft_get_between_quotes(char *str, int *i, int type)
 	res = ft_strldup(&str[start], (*i) - start);
 	return (res);
 }
-static bool	ft_is_expand(char *str)
-{
-	int	i;
-
-	i = 0;
-	// if (ft_isquote(str[0]) == 1)
-	// 	return (false);
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (true);
-		i++;
-	}
-	return (false);
-}
 
 static t_expand	*ft_create_expand_list(char *str)
 {
@@ -56,6 +41,7 @@ static t_expand	*ft_create_expand_list(char *str)
 	while (str[i])
 	{
 		is_expand = true;
+		res = NULL;
 		if (str[i] && ft_isquote(str[i]) == 1)
 		{
 			res = ft_get_between_quotes(str, &i, 1);
@@ -90,10 +76,7 @@ static char	*ft_expand_dollar(char *str, t_env *env)
 	while (tmp)
 	{
 		if (tmp->is_expand)
-		{
 			tmp->value = ft_replace_dollar(tmp->value, env);
-		}
-			// printf("{%s}\n", tmp->value);
 		tmp = tmp->next;
 	}
 	tmp = lst_expand;
@@ -116,6 +99,7 @@ void	ft_expand(t_token *lst_token, t_env *envl)
 		{
 			// tmp->value = ft_replace_dollar(tmp->value, envl);
 			tmp->value = ft_expand_dollar(tmp->value, envl);
+			// printf("%s\n", tmp->value);
 			tmp->value = ft_remove_qoutes(tmp->value);
 			// printf("%s\n", tmp->value);
 		}

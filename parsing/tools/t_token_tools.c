@@ -6,22 +6,11 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 03:30:26 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/23 03:23:54 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/22 23:30:19 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-t_toexec	*ft_create_node(char *cmd, char **args)
-{
-	t_toexec	*node;
-
-	node = malloc(sizeof(t_toexec));
-	if (!node)
-		return (ft_printerror(MALLOC_ERORR) ,NULL);
-	node->args = args;
-	return (node);
-}
 
 void	ft_append_node_t_token(t_token **head, t_token *node)
 {

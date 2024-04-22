@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/18 12:12:18 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/22 23:34:56 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,4 +222,29 @@ size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
 	}
 	dst[i + dst_lenth] = '\0';
 	return (dst_lenth + src_lenth);
+}
+
+char	*ft_substr(char *s, int start, int len)
+{
+	char	*str;
+	int		i;
+
+	if (s == NULL)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	i = 0;
+	if (ft_strlen(&s[start]) < len)
+		len = ft_strlen(&s[start]);
+	str = (char *)malloc(sizeof(char) * len + 1);
+	if (!str)
+		return (NULL);
+	while (s[start] && i < len)
+	{
+		str[i] = s[start];
+		i++;
+		start++;
+	}
+	str[i] = '\0';
+	return (str);
 }

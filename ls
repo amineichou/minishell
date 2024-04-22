@@ -1,0 +1,13 @@
+Makefile
+ex.sh
+exec
+expanding
+free_leaks
+list.todo
+ls
+minishell
+minishell.c
+minishell.dSYM
+minishell.h
+parsing
+test.c

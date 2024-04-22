@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 22:34:35 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/22 23:31:19 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ static char	*ft_env_list_serch_res(t_env *head, char *to_look)
 {
 	t_env	*tmp;
 
-	if (!head)
+	if (!head || !to_look)
 		return (NULL);
 	tmp = head;
-	// if (to_look[0] == '$')
-	// 	return (to_look);
 	while(tmp)
 	{
 		if(ft_strcmp(tmp->name, to_look) == 0)
@@ -35,12 +33,9 @@ static char	*ft_get_to_look(char *str, int *i)
 	char	*res;
 	int		length;
 	int		start;
-	int		j;
 
 	length = 0;
 	start = *i;
-	// if (str[*i] == '$')
-		// hande multiple dollar signes
 	if (str[*i] == '\0')
 		return (ft_strdup("$"));
 	if (str[*i] && str[*i] == '$')
@@ -48,6 +43,7 @@ static char	*ft_get_to_look(char *str, int *i)
 		while (str[(*i)] && str[(*i)] == '$')
 			(*i)++;
 		res = ft_strldup(&str[start], (*i) - start);
+		printf("%s\n", res);
 		return (res);
 	}
 	while (str[*i] && ft_is_alphanumeric(str[*i]))
@@ -59,7 +55,7 @@ static char	*ft_get_to_look(char *str, int *i)
 	return (res);
 }
 
-static char	*ft_fill_arg(char *str, int start, int *i, t_env *env)
+static char	*ft_fill_arg(char *str, int *i, t_env *env)
 {
 	char	*res;
 	char	*to_look;
@@ -95,7 +91,7 @@ char	*ft_replace_dollar(char *str, t_env *env)
 				res = ft_strjoin(res, ft_strldup(&str[start], i - start));
 		}
 		if (str[i] && str[i] == '$')
-			res = ft_strjoin(res, ft_fill_arg(str, start, &i, env));
+			res = ft_strjoin(res, ft_fill_arg(str, &i, env));
 	}
 	return (res);
 }
