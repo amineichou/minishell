@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/22 16:03:35 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/22 23:34:28 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,14 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+// void malloc(x) {
+// 	static int i;
 
+// 	if (i > 0)
+// 		return NULL;
+// 	else
+// 		return malloc(x);
+// }
 // errors handling
 #define MALLOC_ERORR "allocation failed\n"
 #define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
@@ -149,7 +156,7 @@ int			ft_is_alphanumeric(char c);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_print_error(char *str);
 char* ft_strstr(const char* haystack, const char* needle);
-char	*ft_substr(char *s, unsigned int start, size_t len);
+char	*ft_substr(char *s, int start, int len);
 char *ft_strjoin(char *s1, char *s2);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, char *src, size_t dstsize);

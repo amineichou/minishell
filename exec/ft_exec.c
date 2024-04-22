@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/19 14:41:38 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/22 23:32:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void print_open_file_descriptors() {
     
     // Iterate through possible file descriptors
     for (fd = 0; fd < 256; fd++) { // Adjust the range as per your requirements
-        int flags = fcntl(fd, F_GETFD);
+        // int flags = fcntl(fd, F_GETFD);
         // if (flags != -1) {
         //     dprintf(2,"File descriptor %d is open\n", fd);
         // }
@@ -50,7 +50,7 @@ void	free_leaks_arr(char **strs)
 char	*find_commands(char *av, char **pathes)
 {
 	char	*result;
-	char	**command;
+	// char	**command;
 	char	*path;
 	int		i;
 	// command = ft_split(av, ' ');
@@ -169,6 +169,7 @@ char **env_tolist(t_env **env_list)
 }
 void in_out_handler(t_toexec *cmds, t_pipe *needs)
 {
+	(void)needs;
 		// dprintf(2, "%d\n\n\n", cmds->input);
 	if(cmds->input == -1 || cmds->output == -1)
 		exit (1);

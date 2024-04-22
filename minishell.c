@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/22 16:21:03 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/22 23:43:49 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int main(int ac, char **av, char **env)
 {
 	t_toexec	*lst;
 	char		*line;
-	char		*sanitize_result;
 	t_env	*envl = NULL;
 	t_env	*tmp = NULL;
 	char	**argument = NULL;
@@ -59,10 +58,7 @@ int main(int ac, char **av, char **env)
 	{
 		t_env *new_env = malloc(sizeof(t_env));
 		if (!new_env)
-		{
-			perror("malloc");
-			exit(EXIT_FAILURE);
-        }
+			return (ft_printerror(MALLOC_ERORR), 0);
 		argument = ft_split(env[i], '=');
         new_env->var = ft_strdup(argument[1]);
 		new_env->name = ft_strdup(argument[0]);
@@ -101,7 +97,7 @@ int main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				test_lst(lst);
+				// test_lst(lst);
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
 				envl = lst->env;

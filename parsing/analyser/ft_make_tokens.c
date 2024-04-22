@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/22 16:17:51 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/22 23:29:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	ft_check_token_val(char *str, int *i)
 	{
 		if (ft_isquote(str[*i]))
 			ft_skip_quotes(str, i);
-		if (str[*i] && ft_isspecialchars(str[*i])
-			|| str[*i] && ft_isspace(str[*i])
+		if ((str[*i] && ft_isspecialchars(str[*i]))
+			|| (str[*i] && ft_isspace(str[*i]))
 			|| str[*i] == '\0')
 			break;
 		(*i)++;
