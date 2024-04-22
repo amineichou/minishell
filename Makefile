@@ -18,10 +18,12 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(READLINE_LIB) -o $(NAME)
+	@ $(CC) $(FLAGS) $(OBJ) $(READLINE_LIB) -o $(NAME)
+	@ echo "DONE!"
+
 
 %.o: %.c minishell.h
-	$(CC) $(FLAGS) -c $< -o $@
+	@ $(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
