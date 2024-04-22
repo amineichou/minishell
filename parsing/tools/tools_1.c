@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/19 10:30:39 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/22 16:17:59 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_printerror(char *msg)
 	}
 }
 
-// returns 1 if it is
+// returns 1 if it is > < |
 int	ft_isspecialchars(char c)
 {
 	if (c == '>' || c == '<' || c == '|')
@@ -137,8 +137,8 @@ void	ft_skip_quotes(char *str, int *i)
 			
 		}
 		if (str[*i] == '\0')
-				break ;
-		(*i)++;
+			break ;
+		// (*i)++;
 		break ;
 	}
 }
