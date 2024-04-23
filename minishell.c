@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 10:22:34 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 16:14:13 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	int i;
 	i = 0;
+	rl_catch_signals = 0;
 	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));

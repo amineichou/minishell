@@ -2,6 +2,8 @@ FLAGS = -Wall -Wextra -Werror
 CC = cc
 NAME = minishell
 READLINE_LIB = -lreadline
+READLINE_L = $(shell brew --prefix readline)/lib
+READLINE_I = $(shell brew --prefix readline)/include
 SRC = minishell.c parsing/ft_parser.c parsing/ft_split.c parsing/libft.c parsing/signal_handlers.c \
 	parsing/analyser/ft_analyse_redirections.c parsing/analyser/ft_analyser.c \
 	parsing/analyser/ft_make_tokens.c parsing/analyser/ft_valid_tokens.c \
@@ -19,12 +21,11 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	@ $(CC) $(FLAGS) $(OBJ) $(READLINE_LIB) -o $(NAME)
+	@ $(CC) $(FLAGS) $(OBJ) $(READLINE_LIB) -L $(READLINE_L) -o $(NAME)
 	@ echo "DONE!"
 
-
 %.o: %.c minishell.h
-	@ $(CC) $(FLAGS) -c $< -o $@
+	@ $(CC) $(FLAGS) -I $(READLINE_I) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
