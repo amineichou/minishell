@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/21 22:22:39 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/23 11:55:40 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,32 +305,53 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 	{
 		if(ft_strstr(av, "+=") != NULL)
 		{
-		printf("1");
+		// printf("1");
 			env_search_and_add(data->env, &to_add[1][1], to_add[0]);
 			env_search_and_add(needs->env_dup, &to_add[1][1], to_add[0]);
 		}
 		else if(ft_strstr(av, "=") != NULL)
 		{
-			printf("2\n");
+			// printf("2\n");
 			env_search_replace(data->env, to_add[1], to_add[0]);
 			env_search_replace(needs->env_dup, to_add[1], to_add[0]);
 			// printf("{%s . %s}\n", to_replace[1], to_replace[0]);
 		}
-		else{
-			printf("3\n");
-			ft_export(av, "", data->env, needs);}
+		else
+		{
+			// printf("3\n");
+			ft_export(av, "", data->env, needs);
+		}
 	}
 	else if(!env_list_serch(&data->env, to_add[0]))
 	{
 		if(ft_strstr(av, "+=") != NULL)
-		{printf("4\n");
+		{
+			// printf("4\n");
 			ft_export(to_add[0], &to_add[1][1],data->env, needs);
 		}
-		else if(ft_strstr(av, "=") != NULL){
-		// {printf("%s     %s\n",to_add[0], to_add[1]);
+		else if(ft_strstr(av, "=") != NULL)
+		{
+			// printf("%s     %s\n",to_add[0], to_add[1]);
 			ft_export(to_add[0], to_add[1],data->env, needs);
 		}
-	}	
+	
+	}
+}
+
+int check_ifvalid(char *cmd)
+{
+	int i;
+
+	i = 0;
+	if(cmd[0] == '=')
+		return (0);
+	if(ft_isdigit(cmd[i]))
+		return (0);
+	while(cmd[i] && cmd[i] != '+')
+		i++;
+	if(cmd[i] == '+' && cmd[i + 1] != '=')
+		return (0);
+	return (1);
 }
 
 int ft_exporter(t_toexec *cmd, t_pipe *needs)
@@ -369,10 +390,21 @@ int ft_exporter(t_toexec *cmd, t_pipe *needs)
 	// }
 	// data.env = envi;
 	int k = 1;
+	
 	if(!cmd->args[k])
+	{
 		exporter(cmd->args[k], cmd, needs);
+	}
 	while(cmd->args[k])
 	{
+		if(!check_ifvalid(cmd->args[k]))
+			{
+				ft_putstr_fd("minishell: export: ",2);
+				ft_putstr_fd(cmd->args[k],2);
+				ft_putstr_fd(" : not a valid identifier\n",2);
+				k++;
+				continue;
+			}
 		exporter(cmd->args[k], cmd, needs);
 		k++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/22 23:32:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:27:50 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,8 @@ void in_out_handler(t_toexec *cmds, t_pipe *needs)
 {
 	(void)needs;
 		// dprintf(2, "%d\n\n\n", cmds->input);
-	if(cmds->input == -1 || cmds->output == -1)
-		exit (1);
+	if(cmds->input == - 1 || cmds->output == -1)
+		return ;
 	if(cmds->input != STDIN_FILENO)
 	{
 		if (dup2(cmds->input, STDIN_FILENO) == -1)
@@ -439,7 +439,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 				}
 				needs->pids[needs->p] = fork();
 				if(needs->pids[needs->p] == -1)
-					perror("forkk");
+					perror("fork");
 				
 				if(needs->pids[needs->p] == 0)
 				{
