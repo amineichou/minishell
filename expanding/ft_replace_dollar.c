@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/22 23:31:19 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:28:44 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,6 @@ static char	*ft_get_to_look(char *str, int *i)
 
 	length = 0;
 	start = *i;
-	if (str[*i] == '\0')
-		return (ft_strdup("$"));
-	if (str[*i] && str[*i] == '$')
-	{
-		while (str[(*i)] && str[(*i)] == '$')
-			(*i)++;
-		res = ft_strldup(&str[start], (*i) - start);
-		printf("%s\n", res);
-		return (res);
-	}
 	while (str[*i] && ft_is_alphanumeric(str[*i]))
 	{
 		(*i)++;
@@ -59,11 +49,15 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env)
 {
 	char	*res;
 	char	*to_look;
+	int		start;
 
 	(*i)++;
+	start = *i;
+	if (str[*i] == '\0')
+		return (ft_strdup("$"));
 	to_look = ft_get_to_look(str, i);
-	// printf("res : %s\n", to_look);
 	res = ft_env_list_serch_res(env, to_look);
+	// printf_test(res);
 	return (res);
 }
 

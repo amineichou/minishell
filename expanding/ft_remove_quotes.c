@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 23:21:26 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:04:00 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ char	*ft_remove_qoutes(char *str)
 		return (ft_printerror(MALLOC_ERORR), NULL);
 	while (str[i])
 	{
+		if (str[i] == '$')
+		{
+			if (ft_isquote(str[i + 1]))
+				i++;
+		}
 		if (str[i] && ft_isquote(str[i]))
 		{
 			inside_quotes = ft_get_inside_qoutes(str, &i, ft_isquote(str[i]));
@@ -58,9 +63,9 @@ char	*ft_remove_qoutes(char *str)
 		}
 		else
 		{
-			res[x] = str[i];
-			x++;
-			i++;
+				res[x] = str[i];
+				x++;
+				i++;
 		}
 	}
 	res[x] = '\0';

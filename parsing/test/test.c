@@ -64,3 +64,8 @@ void test_tokens(t_token *lst_token_input)
 		lst_token = lst_token->next;
 	}
 }
+
+void	printf_test(char *str)
+{
+	printf("\033[0;31m%s\n\033[0;0m", str);
+}

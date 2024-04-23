@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 11:37:40 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/23 12:30:37 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-// void malloc(x) {
-// 	static int i;
 
-// 	if (i > 0)
-// 		return NULL;
-// 	else
-// 		return malloc(x);
-// }
-// errors handling
 #define MALLOC_ERORR "allocation failed\n"
 #define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
 #define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
@@ -175,6 +167,7 @@ void		ft_sigkill_handler(int signum);
 // tests start
 void test_tokens(t_token *lst_token_input);
 void	test_lst(t_toexec *lst);
+void	printf_test(char *str);
 // test end
 void executer(t_toexec *cmds, t_pipe *needs);
 int ft_cd (char *dir, t_env *env, t_pipe *needs);

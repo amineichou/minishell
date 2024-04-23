@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 12:23:28 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/23 12:30:30 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int main(int ac, char **av, char **env)
 	{
 		// line = "\0"
 		// needs.save_fd_out = dup(STDOUT_FILENO);
-		line = readline("minishell$ ");
+		line = readline("\033[0;32mminishell$ \033[0;0m");
 		if (!line)
 		{
 			printf("exit\n");
