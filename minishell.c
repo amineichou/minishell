@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 16:14:13 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 16:40:55 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main(int ac, char **av, char **env)
 	t_pipe needs;
 	needs.env_dup = NULL;
 	// atexit(lex);
-	// signal(SIGINT, ft_sigkill_handler);
+	signal(SIGINT, ft_sigkill_handler);
 	// disableEcho();
 	while (1)
 	{
