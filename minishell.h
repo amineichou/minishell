@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 11:50:32 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:37:41 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "readline/readline.h"
+#include "readline/history.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdbool.h>
