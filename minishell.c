@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 16:40:55 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 16:57:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int main(int ac, char **av, char **env)
 		line = readline("\033[0;32mminishell$ \033[0;0m");
 		if (!line)
 		{
-			printf("exit\n");
 			exit (0);
 		}
 		line = ft_trim_spaces(line); //TODO : protect
