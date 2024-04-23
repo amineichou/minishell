@@ -6,22 +6,25 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/22 18:58:01 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/23 18:28:50 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <string.h>
 
-void freeList(t_env *head)
+void freeList(t_env **head)
 {
-	t_env *current = head;
+	t_env *current;
 	t_env *next;
 
-	current = head;
+	current = *head;
 	while (current != NULL)
 	{
+
 		next = current->next;
+		free(current->name);
+		free(current->var);
 		free(current);
 		current = next;
 	}
@@ -76,9 +79,10 @@ void ft_unset(t_env **env, char *to_del)
 	// }
 	if (tmp != NULL && ft_strcmp(tmp->name, to_del) == 0)
 	{
+
 		prev = *env;
 		*env = (*env)->next;
-		free(tmp->var);	
+		free(tmp->var);
 		free(tmp->name);
 		free(prev);
 		// free(tmp);
@@ -89,14 +93,16 @@ void ft_unset(t_env **env, char *to_del)
 		{
 			if(tmp->next && (ft_strcmp(tmp->next->name, to_del) == 0))
 			{
-				printf("{{%s}}\n", tmp->next->name);
 				prev = tmp->next;
 				if (tmp->next->next)
 				{
 					tmp->next = tmp->next->next;
 					free(prev->var);
+					prev->var = NULL;
 					free(prev->name);
+					prev->name = NULL;
 					free(prev);
+					prev = NULL;
 				}
 				else
 					tmp->next = NULL;
@@ -153,7 +159,6 @@ int unseter(t_toexec *cmd, t_pipe *needs)
 	while(cmd->args[i])
 	{
 		ft_unset(&cmd->env, cmd->args[i]);
-		ft_unset(&needs->env_dup, cmd->args[i]);
 		i++;
 	}
 	return(1);

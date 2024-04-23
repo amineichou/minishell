@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 12:30:30 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/23 17:03:57 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int main(int ac, char **av, char **env)
 		argument = ft_split(env[i], '=');
         new_env->var = ft_strdup(argument[1]);
 		new_env->name = ft_strdup(argument[0]);
+		free_leaks(argument);
         new_env->next = NULL;
         if (envl == NULL)
             envl = new_env;

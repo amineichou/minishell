@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/23 12:27:50 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/23 16:13:21 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,8 +271,7 @@ void in_out_handler_last(t_toexec *cmds, t_pipe *needs)
 }
 int check_builtin(t_toexec *cmd, t_pipe *needs)
 {
-	if(!needs->env_dup)
-		needs->env_dup = duplicate_list(cmd->env);
+
 	int res = 0;
 	if(ft_strcmp(cmd->args[0], "echo") == 0)
 		res = ft_echo(cmd);
