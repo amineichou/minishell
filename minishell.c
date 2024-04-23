@@ -6,28 +6,11 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 18:13:03 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:25:40 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// #include <termios.h>
-// #include <unistd.h>
-
-// void disableEcho() {
-//     struct termios term;
-//     tcgetattr(STDIN_FILENO, &term);
-//     term.c_lflag &= ~(ECHO);
-//     tcsetattr(STDIN_FILENO, TCSANOW, &term);
-// }
-
-// void enableEcho() {
-//     struct termios term;
-//     tcgetattr(STDIN_FILENO, &term);
-//     term.c_lflag |= ECHO;
-//     tcsetattr(STDIN_FILENO, TCSANOW, &term);
-// }
 
 void lex(void)
 {
@@ -80,15 +63,12 @@ int main(int ac, char **av, char **env)
 	needs.env_dup = NULL;
 	// atexit(lex);
 	signal(SIGINT, ft_sigkill_handler);
-	// disableEcho();
 	while (1)
 	{
-		// line = "\0"
-		// needs.save_fd_out = dup(STDOUT_FILENO);
 		line = readline("\033[0;32mminishell$ \033[0;0m");
 		if (!line)
 		{
-			printf("exit\n");
+			write(1, "exit\n", 6);
 			exit (0);
 		}
 		line = ft_trim_spaces(line); //TODO : protect
@@ -108,5 +88,4 @@ int main(int ac, char **av, char **env)
 		}
 	}
 	(void)av;
-	// enableEcho();
 }
