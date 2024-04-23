@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/23 18:28:50 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/23 18:44:55 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int unseter(t_toexec *cmd, t_pipe *needs)
 	// // env_print(&data);
 	// // exit(1);
 	// // char *to_unset = ft_strjoin(av[1], "=");
+	(void)needs;
 	int i = 1;
 	while(cmd->args[i])
 	{
