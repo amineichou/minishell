@@ -1,7 +1,0 @@
-{
-	"files.associations": {
-		"minishell.h": "c",
-		"chrono": "c",
-		"fcntl.h": "c"
-	}
-}

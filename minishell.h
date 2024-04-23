@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 18:37:41 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:40:50 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+// #define malloc(x) talloc(x)
+// #define _MAL_CALL_INFO() \
+//     printf("\t\t\tFile: \033[35m%s\033[0m, Line: \033[35m%d\033[0m, Function: \033[35m%s\033[0m\n", __FILE__, __LINE__, __func__)
 
 #define MALLOC_ERORR "allocation failed\n"
 #define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
@@ -155,6 +158,7 @@ size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
 char	**free_leaks(char **strs);
 int	ft_atoi(const char *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
+void freeList(t_env **head);
 
 // free leaks
 void		ft_free_toexec(t_toexec *head);
@@ -176,7 +180,7 @@ int env_print(t_toexec *data);
 int ft_exporter(t_toexec *cmd, t_pipe *needs);
 int ft_pwd(void);
 int unseter(t_toexec *cmd, t_pipe *needs);
-t_env *duplicate_list(t_env *head);
+t_env *duplicate_list(t_env **head);
 void ft_export(char *name, char *var, t_env *head, t_pipe *needs);
 void env_search_replace(t_env *head, char *to_replace, char *to_look);
 int env_list_serch(t_env **head, char *to_look);

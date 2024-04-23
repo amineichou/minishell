@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 18:39:02 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:41:01 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int main(int ac, char **av, char **env)
 		argument = ft_split(env[i], '=');
         new_env->var = ft_strdup(argument[1]);
 		new_env->name = ft_strdup(argument[0]);
+		free_leaks(argument);
         new_env->next = NULL;
         if (envl == NULL)
             envl = new_env;
@@ -78,6 +79,7 @@ int main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
+				// test_lst(lst);
 				// test_lst(lst);
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);

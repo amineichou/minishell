@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/22 23:34:56 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 15:10:51 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,4 +247,14 @@ char	*ft_substr(char *s, int start, int len)
 	}
 	str[i] = '\0';
 	return (str);
+}
+void	*talloc(size_t __size)
+{
+	void	*__ptr;
+
+	__ptr = malloc(__size);
+	if (__ptr == NULL)
+		return (NULL);
+	printf("pointer \033[32m%p\033[0m was allocated, size : \033[32m%ld\033[0m\n", __ptr, __size);
+	return (__ptr);
 }

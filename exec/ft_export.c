@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/03/29 22:26:45 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/23 18:33:55 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,24 @@ void lst_add(t_env **lst, t_env *new)
 t_env *env_new(char *var, char *name)
 {
     t_env *newnode = (t_env *)malloc(sizeof(t_env));
-    if (newnode == NULL) {
+    if (newnode == NULL)
+	{
         perror("malloc");
-        exit(EXIT_FAILURE);
+        return(NULL);
     }
     newnode->var = ft_strdup(var);
     newnode->name = ft_strdup(name);
     newnode->next = NULL;
-    return newnode;
+    return (newnode);
 }
 
 
-t_env *duplicate_list(t_env *head)
+t_env *duplicate_list(t_env **head)
 {
 	if (head == NULL)
 		return NULL;
 
-	t_env *tmp = head; 
+	t_env *tmp = *head; 
 	t_env *newlist = NULL;
 	t_env *tmpnew = NULL;
 	t_env *newnode;
@@ -166,7 +167,10 @@ void export_env_print(t_toexec *data)
     tmp = data->env; // Initialize tmp to point to the first node of the linked list
     while (tmp) {
         printf("declare -x %s=", tmp->name);
-        printf("\"%s\"\n", tmp->var);
+		if(tmp->var)
+        	printf("\"%s\"\n", tmp->var);
+		else
+			printf("\"\"\n");
         tmp = tmp->next;
     }
 }
@@ -184,7 +188,7 @@ void swap(t_env *a, t_env *b)
     b->name = temp_name;
 }
 
-void env_sort(t_env *start)
+void env_sort(t_env **start)
 {
 	int swapped;
 	t_env *ptr1;
@@ -196,10 +200,12 @@ void env_sort(t_env *start)
 	while (1)
 	{
 		swapped = 0;
-		ptr1 = start;
+		ptr1 = *start;
 		while (ptr1->next != lptr)
 		{
-			if (ft_strcmp(ptr1->name, ptr1->next->name) > 0)
+			
+			if (ft_strncmp(ptr1->name, ptr1->next->name,
+				ft_strlen(ptr1->name) + ft_strlen(ptr1->next->name)) > 0)
 			{
 				swap(ptr1, ptr1->next);
 				swapped = 1;
@@ -216,36 +222,40 @@ void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
 {
 	t_toexec data;
 	t_env *newnode;
-	t_env *newnode_sec;
+	// t_env *newnode_sec;
 		// printf("{%s .   %s}\n",head->var, head->next->var);
-
 	if (name == NULL)
 	{
-		// printf("{{{{{{hello}}}}}}\n");
-		env_sort(needs->env_dup);
+		needs->env_dup = duplicate_list(&head);
+		env_sort(&needs->env_dup);
 		data.env = needs->env_dup;
+		
 		export_env_print(&data);
-
+		freeList(&needs->env_dup);
+		needs->env_dup = NULL;
 	}
 	else if (name && var && *var)
 	{
 		// printf("{%s .   %s}\n",head->var, head->next->var);
 		newnode = env_new(var, name);
-		newnode_sec = env_new(var, name);
+		// newnode_sec = env_new(var, name);
 		lst_add(&head ,newnode);
-	if(!env_list_serch(&needs->env_dup, name))
-		lst_add(&needs->env_dup ,newnode_sec);
-	else{
-		env_search_replace(needs->env_dup, var, name);
-		}
+		// if(!env_list_serch(&needs->env_dup, name))
+		// 	lst_add(&needs->env_dup ,newnode_sec);
+		// else{
+		// 	env_search_replace(needs->env_dup, var, name);
+		// 	}
 	}
-	else if(*var == '\0')
+	else if(var == NULL || *var == '\0')
 	{
+		// printf("name == %p\n", name);
 		newnode = env_new(var, name);
+		// newnode_sec = env_new(var, name);
 		// data.env = needs->env_dup;
-		
-		if(!env_list_serch(&needs->env_dup, name))
-			lst_add(&needs->env_dup ,newnode);
+		if(!env_list_serch(&head, name))
+			lst_add(&head ,newnode);
+		// if(!env_list_serch(&needs->env_dup, name))
+		// 	lst_add(&needs->env_dup ,newnode);
 	}
 	// data.env = exported_env;	
 	// env_print(&data);
@@ -258,6 +268,12 @@ char **split_env(char *arg)
 	i = 0;
 	while(arg[i] != '=' && arg[i])
 		i++;
+	// if(arg[i] == '=' && arg[i + 1] == '\0')
+	// {
+	// 	res[0] = ft_substr(arg, 0, i);
+	// 	res[1] = NULL;
+	// 	return(res);
+	// }
 	if(arg[i] == '=')
 	{
 		res[0] = ft_substr(arg, 0, i);
@@ -273,7 +289,19 @@ char **split_env(char *arg)
 	}
 	return(NULL);
 }
+int look_for(char *str, char c)
+{
+	int	i;
 
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 void exporter(char *av, t_toexec *data,t_pipe *needs)
 {
 
@@ -287,15 +315,16 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 		ft_export(NULL, NULL, data->env, needs);
 		return ;
 	}
-	if(ft_strstr(av, "=") == NULL)
-	{
-		ft_export(av, "", data->env, needs);
-		return ;
-	}
 	if(ft_strstr(av, "+=") != NULL)
 	{
 		to_add = ft_split(av, '+');
 	}
+	// else if(look_for(av, '='))
+	// {
+	// 	printf("hna\n");
+	// 	ft_export(av, "", data->env, needs);
+	// 	return ;
+	// }
 	else
 	{
 		to_add = split_env(av);
@@ -305,33 +334,53 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 	{
 		if(ft_strstr(av, "+=") != NULL)
 		{
-		printf("1");
-			env_search_and_add(data->env, &to_add[1][1], to_add[0]);
-			env_search_and_add(needs->env_dup, &to_add[1][1], to_add[0]);
+		// printf("1");
+			env_search_and_add(data->env, ft_strdup(&to_add[1][1]), ft_strdup(to_add[0]));
+			// env_search_and_add(needs->env_dup, ft_strdup(&to_add[1][1]), ft_strdup(to_add[0]));
 		}
 		else if(ft_strstr(av, "=") != NULL)
 		{
-			printf("2\n");
-			env_search_replace(data->env, to_add[1], to_add[0]);
-			env_search_replace(needs->env_dup, to_add[1], to_add[0]);
+			env_search_replace(data->env, ft_strdup(to_add[1]), ft_strdup(to_add[0]));
+			// env_search_replace(needs->env_dup, ft_strdup(to_add[1]), ft_strdup(to_add[0]));
 			// printf("{%s . %s}\n", to_replace[1], to_replace[0]);
 		}
-		else{
-			printf("3\n");
-			ft_export(av, "", data->env, needs);}
+		else
+		{
+
+			ft_export(ft_strdup(av), NULL, data->env, needs);
+		}
 	}
 	else if(!env_list_serch(&data->env, to_add[0]))
 	{
 		if(ft_strstr(av, "+=") != NULL)
-		{printf("4\n");
-			ft_export(to_add[0], &to_add[1][1],data->env, needs);
+		{
+			// printf("4\n");
+			ft_export(ft_strdup(to_add[0]), ft_strdup(&to_add[1][1]),data->env, needs);
 		}
-		else if(ft_strstr(av, "=") != NULL){
-		// {printf("%s     %s\n",to_add[0], to_add[1]);
-			ft_export(to_add[0], to_add[1],data->env, needs);
-		}
-	}	
+		else
+			ft_export(ft_strdup(to_add[0]), ft_strdup(to_add[1]),data->env, needs);
+			// printf("%s     %s\n",to_add[0], to_add[1]);
+			// printf("{{{%s}}}", to_add[1]);
+	
+	}
 }
+
+int check_ifvalid(char *cmd)
+{
+	int i;
+
+	i = 0;
+	if(cmd[0] == '=')
+		return (0);
+	if(ft_isdigit(cmd[i]))
+		return (0);
+	while(cmd[i] && cmd[i] != '+')
+		i++;
+	if(cmd[i] == '+' && cmd[i + 1] != '=')
+		return (0);
+	return (1);
+}
+
 int ft_exporter(t_toexec *cmd, t_pipe *needs)
 {
 	// 	t_env	*envi = NULL;
@@ -368,10 +417,21 @@ int ft_exporter(t_toexec *cmd, t_pipe *needs)
 	// }
 	// data.env = envi;
 	int k = 1;
+	
 	if(!cmd->args[k])
+	{
 		exporter(cmd->args[k], cmd, needs);
+	}
 	while(cmd->args[k])
 	{
+		if(!check_ifvalid(cmd->args[k]))
+			{
+				ft_putstr_fd("minishell: export: ",2);
+				ft_putstr_fd(cmd->args[k],2);
+				ft_putstr_fd(" : not a valid identifier\n",2);
+				k++;
+				continue;
+			}
 		exporter(cmd->args[k], cmd, needs);
 		k++;
 	}
