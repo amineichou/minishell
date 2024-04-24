@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 12:28:44 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/24 21:34:46 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,13 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env)
 	start = *i;
 	if (str[*i] == '\0')
 		return (ft_strdup("$"));
+	if (str[*i] == '?')
+	{
+		(*i)++;
+		return (ft_itoa(0));
+	}
 	to_look = ft_get_to_look(str, i);
 	res = ft_env_list_serch_res(env, to_look);
-	// printf_test(res);
 	return (res);
 }
 
