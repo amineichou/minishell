@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/24 21:34:46 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/24 21:37:36 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env)
 
 	(*i)++;
 	start = *i;
-	if (str[*i] == '\0')
+	if (str[*i] == '\0' || ft_isquote(str[*i]))
 		return (ft_strdup("$"));
 	if (str[*i] == '?')
 	{

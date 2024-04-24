@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 18:41:01 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/24 21:29:31 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int main(int ac, char **av, char **env)
 	int i;
 	i = 0;
 	rl_catch_signals = 0;
+	signal(SIGINT, ft_sigkill_handler);
 	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));
@@ -59,17 +60,15 @@ int main(int ac, char **av, char **env)
 		}
 		i++;
 	}
-	
 	t_pipe needs;
 	needs.env_dup = NULL;
 	// atexit(lex);
-	signal(SIGINT, ft_sigkill_handler);
 	while (1)
 	{
-		line = readline("\033[0;32mminishell$ \033[0;0m");
+		line = readline("minishell$ ");
 		if (!line)
 		{
-			write(1, "exit\n", 6);
+			printf("exit\n");
 			exit (0);
 		}
 		line = ft_trim_spaces(line); //TODO : protect
@@ -79,7 +78,6 @@ int main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				// test_lst(lst);
 				// test_lst(lst);
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/22 18:54:53 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:40:04 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,8 @@ void	ft_expand(t_token *lst_token, t_env *envl)
 	{
 		if (tmp->token == WORD)
 		{
-			// tmp->value = ft_replace_dollar(tmp->value, envl);
 			tmp->value = ft_expand_dollar(tmp->value, envl);
-			// printf("%s\n", tmp->value);
 			tmp->value = ft_remove_qoutes(tmp->value);
-			// printf("%s\n", tmp->value);
 		}
 		tmp = tmp->next;
 	}

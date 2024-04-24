@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 18:40:50 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/24 21:34:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,14 @@ int			ft_sanitize_pipes(char *line);
 int			ft_sanitize_quotes(char *line);
 int			ft_sanitize_redirections(char *line);
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
-char		*ft_addspace_illegal_chars(char *line, char *token);
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
+int			ft_sanitize_herdoc(char *line);
 
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
 t_token		*ft_make_tokens(char *sanitize_result);
 int			ft_check_valid_tokens(t_token *lst_token);
-
+void	heredoc_handler(t_pipe *needs);
 
 // expanding
 void		ft_expand(t_token *lst_token, t_env *envl);
@@ -148,6 +148,7 @@ int			ft_isdigit(char c);
 int			ft_strcmp(char *s1, char *s2);
 void		ft_strcpy(char *dst, char *src, size_t dstsize);
 int			ft_is_alphanumeric(char c);
+char		*ft_itoa(int n);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_print_error(char *str);
 char* ft_strstr(const char* haystack, const char* needle);
