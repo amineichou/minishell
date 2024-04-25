@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 18:00:15 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 18:12:33 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int main(int ac, char **av, char **env)
 			{
 				test_lst(lst);
 				fill_envinlist(&lst, envl);
-				// executer(lst, &needs);
+				executer(lst, &needs);
 				envl = lst->env;
 				exit_status = *(needs.ex_stat);
 				continue ;
