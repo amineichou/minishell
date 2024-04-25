@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 10:48:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 18:05:18 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ static void	ft_handle_args(t_toexec **node, t_token **lst_token)
 	char	**joined;
 
 	joined = NULL;
+	if ((*lst_token)->value == NULL)
+	{
+		(*node)->args = NULL;
+		(*lst_token) = (*lst_token)->next;
+		return ;
+	}
 	while ((*lst_token) && (*lst_token)->token == WORD)
 	{
 		joined = ft_reallocate_copy(joined, (*lst_token)->value); // TODO : leaks
@@ -71,6 +77,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 	lst_token = ft_make_tokens(sanitize_result);
 	// expanding
 	ft_expand(lst_token, envl, ex_sta);
+	test_tokens(lst_token);
 	lst_toexec = NULL;
 	while (lst_token)
 	{
