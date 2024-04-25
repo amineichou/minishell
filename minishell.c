@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 10:50:53 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:53:57 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	int i;
 	i = 0;
-	exit_status = 0;
 	rl_catch_signals = 0;
+	exit_status = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	while (env[i] != NULL)
 	{
