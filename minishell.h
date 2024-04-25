@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 18:40:50 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:57:03 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct  s_toexec {
 typedef struct t_pipe
 {
 	int		i;
-	int		*ex_stat;
+	int		ex_stat[1];
 	int		fd[2];
 	int		save_fd_in;
 	int		save_fd_out;

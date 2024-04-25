@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 18:41:01 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/24 18:49:24 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int main(int ac, char **av, char **env)
 	signal(SIGINT, ft_sigkill_handler);
 	while (1)
 	{
-		line = readline("\033[0;32mminishell$ \033[0;0m");
+		line = readline("\033[0;32m➡ minishell$ \033[0;0m");
 		if (!line)
 		{
 			write(1, "exit\n", 6);

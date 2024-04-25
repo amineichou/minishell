@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/23 16:13:21 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/25 11:00:55 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ char	**extract_paths(char **env)
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH", 4) == 0)
-		{	printf("%s", env[i]);
+		{
+			// printf("%s", env[i]);
 			return (ft_split(env[i] + 5, ':'));}
 		i++;
 	}
@@ -421,7 +422,6 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	// 	dprintf(2, "%s  == %s\n", cmds->env->name, cmds->env->var);
 	// dprintf(2, "hna\n");
 	// needs.save_fd_in = cmds->save_fd_in;
-	needs->ex_stat = malloc(sizeof(int));
 	needs->save_fd_in = dup(STDIN_FILENO);
 	needs->save_fd_out = dup(STDOUT_FILENO);
 		if(lst_size(cmds) == 1)
