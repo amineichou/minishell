@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 18:12:33 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 18:16:32 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl, exit_status);
 			if (lst)
 			{
-				test_lst(lst);
+				// test_lst(lst);
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
 				envl = lst->env;
