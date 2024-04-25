@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/24 10:57:46 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:47:08 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_check_valid_fd(t_toexec *head)
 	return (1);
 }
 
-t_toexec	*ft_parser(char *line, t_env *envl)
+t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta)
 {
 	char		*sanitize_result;
 	t_toexec	*lst_toexec;
@@ -35,7 +35,7 @@ t_toexec	*ft_parser(char *line, t_env *envl)
 	if (!sanitize_result)
 		return (NULL); // TODO : free
 	
-	lst_toexec = ft_analyser(sanitize_result, envl);
+	lst_toexec = ft_analyser(sanitize_result, envl, ex_sta);
 	if (!lst_toexec)
 		return (NULL);
 	if (ft_check_valid_fd(lst_toexec) == -1)

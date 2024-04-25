@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/24 21:29:31 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:50:53 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ int main(int ac, char **av, char **env)
 	t_env	*envl = NULL;
 	t_env	*tmp = NULL;
 	char	**argument = NULL;
+	int		exit_status;
 
 	(void)ac;
 	(void)av;
 	int i;
 	i = 0;
+	exit_status = 0;
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	while (env[i] != NULL)
@@ -75,13 +77,14 @@ int main(int ac, char **av, char **env)
 		if (line && line[0])
 		{
 			add_history(line);
-			lst = ft_parser(line, envl);
+			lst = ft_parser(line, envl, exit_status);
 			if (lst)
 			{
 				// test_lst(lst);
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
 				envl = lst->env;
+				exit_status = *(needs.ex_stat);
 				continue ;
 			}
 			free(line);
