@@ -6,3 +6,9 @@
  - echo "$"HOME
  - echo ^$^$HOME
  - e'''''c'ho a
+
+
+
+
+
+ - echo $ | $HOME       exec

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 15:58:12 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 19:54:41 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,20 @@ int			ft_sanitize_quotes(char *line);
 int			ft_sanitize_redirections(char *line);
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
-int			ft_sanitize_herdoc(char *line);
 
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta);
 t_token		*ft_make_tokens(char *sanitize_result);
 int			ft_check_valid_tokens(t_token *lst_token);
-void	heredoc_handler(t_pipe *needs);
 
 // expanding
 void		ft_expand(t_token *lst_token, t_env *envl, int ex_sta);
 char		*ft_replace_dollar(char *to_expand, t_env *env, int ex_sta);
 char		*ft_remove_qoutes(char *str);
+
+// herdoc
+void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
+void	ft_heredoc_handler(t_pipe *needs, t_env *env);
 
 // utils
 int			ft_strlen(char *str);
