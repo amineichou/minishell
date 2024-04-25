@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 12:28:44 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:50:36 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*ft_get_to_look(char *str, int *i)
 	return (res);
 }
 
-static char	*ft_fill_arg(char *str, int *i, t_env *env)
+static char	*ft_fill_arg(char *str, int *i, t_env *env, int ex_sta)
 {
 	char	*res;
 	char	*to_look;
@@ -53,15 +53,19 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env)
 
 	(*i)++;
 	start = *i;
-	if (str[*i] == '\0')
+	if (str[*i] == '\0' || ft_isquote(str[*i]))
 		return (ft_strdup("$"));
+	if (str[*i] == '?')
+	{
+		(*i)++;
+		return (ft_itoa(ex_sta));
+	}
 	to_look = ft_get_to_look(str, i);
 	res = ft_env_list_serch_res(env, to_look);
-	// printf_test(res);
 	return (res);
 }
 
-char	*ft_replace_dollar(char *str, t_env *env)
+char	*ft_replace_dollar(char *str, t_env *env, int ex_sta)
 {
 	char	*res;
 	int		i;
@@ -85,7 +89,7 @@ char	*ft_replace_dollar(char *str, t_env *env)
 				res = ft_strjoin(res, ft_strldup(&str[start], i - start));
 		}
 		if (str[i] && str[i] == '$')
-			res = ft_strjoin(res, ft_fill_arg(str, &i, env));
+			res = ft_strjoin(res, ft_fill_arg(str, &i, env, ex_sta));
 	}
 	return (res);
 }

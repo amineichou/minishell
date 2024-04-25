@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:32:21 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 12:32:25 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/23 18:59:14 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ void ft_free_toexec(t_toexec *head)
 	tmp = head;
 	while (tmp)
 	{
-		tmp = tmp->next;
 		ft_free_args(tmp->args);
 		free(tmp);
+		tmp = tmp->next;
 	}
-	ft_free_args(head->args);
-	free(head);
 	head = NULL;
 }
 

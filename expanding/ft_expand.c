@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/22 18:54:53 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:49:29 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_expand	*ft_create_expand_list(char *str)
 	return (lst_expand);
 }
 
-static char	*ft_expand_dollar(char *str, t_env *env)
+static char	*ft_expand_dollar(char *str, t_env *env, int ex_sta)
 {
 	t_expand	*lst_expand;
 	t_expand	*tmp;
@@ -76,7 +76,7 @@ static char	*ft_expand_dollar(char *str, t_env *env)
 	while (tmp)
 	{
 		if (tmp->is_expand)
-			tmp->value = ft_replace_dollar(tmp->value, env);
+			tmp->value = ft_replace_dollar(tmp->value, env, ex_sta);
 		tmp = tmp->next;
 	}
 	tmp = lst_expand;
@@ -88,7 +88,7 @@ static char	*ft_expand_dollar(char *str, t_env *env)
 	return (res);
 }
 
-void	ft_expand(t_token *lst_token, t_env *envl)
+void	ft_expand(t_token *lst_token, t_env *envl, int ex_sta)
 {
 	t_token	*tmp;
 
@@ -97,11 +97,8 @@ void	ft_expand(t_token *lst_token, t_env *envl)
 	{
 		if (tmp->token == WORD)
 		{
-			// tmp->value = ft_replace_dollar(tmp->value, envl);
-			tmp->value = ft_expand_dollar(tmp->value, envl);
-			// printf("%s\n", tmp->value);
+			tmp->value = ft_expand_dollar(tmp->value, envl, ex_sta);
 			tmp->value = ft_remove_qoutes(tmp->value);
-			// printf("%s\n", tmp->value);
 		}
 		tmp = tmp->next;
 	}

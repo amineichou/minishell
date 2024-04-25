@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/24 18:49:24 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/25 11:04:44 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ int main(int ac, char **av, char **env)
 	t_env	*envl = NULL;
 	t_env	*tmp = NULL;
 	char	**argument = NULL;
+	int		exit_status;
 
 	(void)ac;
 	(void)av;
 	int i;
 	i = 0;
 	rl_catch_signals = 0;
+	exit_status = 0;
+	signal(SIGINT, ft_sigkill_handler);
 	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));
@@ -59,31 +62,29 @@ int main(int ac, char **av, char **env)
 		}
 		i++;
 	}
-	
 	t_pipe needs;
 	needs.env_dup = NULL;
 	// atexit(lex);
-	signal(SIGINT, ft_sigkill_handler);
 	while (1)
 	{
-		line = readline("\033[0;32m➡ minishell$ \033[0;0m");
+		line = readline("minishell$ ");
 		if (!line)
 		{
-			write(1, "exit\n", 6);
+			printf("exit\n");
 			exit (0);
 		}
 		line = ft_trim_spaces(line); //TODO : protect
 		if (line && line[0])
 		{
 			add_history(line);
-			lst = ft_parser(line, envl);
+			lst = ft_parser(line, envl, exit_status);
 			if (lst)
 			{
-				// test_lst(lst);
 				// test_lst(lst);
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
 				envl = lst->env;
+				exit_status = *(needs.ex_stat);
 				continue ;
 			}
 			free(line);

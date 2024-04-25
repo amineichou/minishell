@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 10:57:03 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/25 11:04:29 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_token {
 // #define malloc(x) NULL
 
 // START FUNCTION
-t_toexec	*ft_parser(char *line, t_env *envl);
+t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta);
 
 // synthax sanitizer
 char		*ft_sanitizer(char *line);
@@ -106,18 +106,18 @@ int			ft_sanitize_pipes(char *line);
 int			ft_sanitize_quotes(char *line);
 int			ft_sanitize_redirections(char *line);
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
-char		*ft_addspace_illegal_chars(char *line, char *token);
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
+int			ft_sanitize_herdoc(char *line);
 
 // analyser
-t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
+t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta);
 t_token		*ft_make_tokens(char *sanitize_result);
 int			ft_check_valid_tokens(t_token *lst_token);
-
+void	heredoc_handler(t_pipe *needs);
 
 // expanding
-void		ft_expand(t_token *lst_token, t_env *envl);
-char		*ft_replace_dollar(char *to_expand, t_env *env);
+void		ft_expand(t_token *lst_token, t_env *envl, int ex_sta);
+char		*ft_replace_dollar(char *to_expand, t_env *env, int ex_sta);
 char		*ft_remove_qoutes(char *str);
 
 // utils
@@ -148,6 +148,7 @@ int			ft_isdigit(char c);
 int			ft_strcmp(char *s1, char *s2);
 void		ft_strcpy(char *dst, char *src, size_t dstsize);
 int			ft_is_alphanumeric(char c);
+char		*ft_itoa(int n);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_print_error(char *str);
 char* ft_strstr(const char* haystack, const char* needle);

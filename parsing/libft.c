@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 15:10:51 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/24 21:33:47 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,4 +257,52 @@ void	*talloc(size_t __size)
 		return (NULL);
 	printf("pointer \033[32m%p\033[0m was allocated, size : \033[32m%ld\033[0m\n", __ptr, __size);
 	return (__ptr);
+}
+
+
+
+// itoi
+
+static int	ft_count_dig(long int n)
+{
+	int	counter;
+
+	counter = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		n *= -1;
+	while (n > 0)
+	{
+		n /= 10;
+		counter++;
+	}
+	return (counter);
+}
+
+char	*ft_itoa(int n)
+{
+	char		*converted_number;
+	int			digit_count;
+	long int	number;
+
+	number = n;
+	digit_count = ft_count_dig(number);
+	if (number < 0)
+	{
+		number *= -1;
+		digit_count++;
+	}
+	converted_number = malloc(sizeof(char) * (digit_count + 1));
+	if (!converted_number)
+		return (0);
+	converted_number[digit_count] = '\0';
+	while (digit_count--)
+	{
+		converted_number[digit_count] = (number % 10) + '0';
+		number /= 10;
+	}
+	if (n < 0)
+		converted_number[0] = '-';
+	return (converted_number);
 }
