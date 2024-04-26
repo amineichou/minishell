@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/24 18:49:13 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/26 09:48:37 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 // synthax health check and fix it's structure
 char	*ft_sanitizer(char *line)
 {
-	line = ft_trim_spaces(line); // TODO : leaks + protection
+	line = ft_trim_spaces(line);
+	if (!line)
+		return (NULL);
 	if (ft_sanitize_quotes(line) == -1
 		|| ft_sanitize_pipes(line) == -1
 		|| ft_sanitize_redirections(line) == -1)

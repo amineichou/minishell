@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 15:28:42 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/26 15:46:53 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-// #define malloc(x) talloc(x)
-// #define _MAL_CALL_INFO() \
-//     printf("\t\t\tFile: \033[35m%s\033[0m, Line: \033[35m%d\033[0m, Function: \033[35m%s\033[0m\n", __FILE__, __LINE__, __func__)
+#ifndef IS_KILL_ON
+#define IS_KILL_ON
+	int IS_KILL_ON_VAL;
+#endif
 
 #define MALLOC_ERORR "allocation failed\n"
 #define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
@@ -107,18 +108,20 @@ int			ft_sanitize_quotes(char *line);
 int			ft_sanitize_redirections(char *line);
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
-int			ft_sanitize_herdoc(char *line);
 
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta);
 t_token		*ft_make_tokens(char *sanitize_result);
 int			ft_check_valid_tokens(t_token *lst_token);
-void	heredoc_handler(t_pipe *needs);
 
 // expanding
 void		ft_expand(t_token *lst_token, t_env *envl, int ex_sta);
 char		*ft_replace_dollar(char *to_expand, t_env *env, int ex_sta);
 char		*ft_remove_qoutes(char *str);
+
+// herdoc
+void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
+void	ft_heredoc_handler(t_pipe *needs, t_env *env);
 
 // utils
 int			ft_strlen(char *str);

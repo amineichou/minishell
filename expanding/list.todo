@@ -2,7 +2,13 @@
  - "l"s => ls works @done
  - $'ls' => ls works @done
  - echo '"'$USER'"' => "moichou" @done
- - ls '|'"|" j @done
+ - echo'|'"|" j @done
  - echo "$"HOME
- - echo ^$^$HOME dolar sign katkhtafi
- - e'''''c'ho a  (list exex
+ - echo ^$^$HOME
+ - e'''''c'ho a
+
+
+
+
+
+ - echo $ | $HOME       exec
