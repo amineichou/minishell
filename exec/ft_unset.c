@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/23 19:04:01 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/25 15:32:15 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int unseter(t_toexec *cmd, t_pipe *needs)
 		ft_unset(&cmd->env, cmd->args[i]);
 		i++;
 	}
+	*(needs->ex_stat) = 0;
 	return(1);
 	// env_print(&data);
 	// while(1);

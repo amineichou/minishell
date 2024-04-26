@@ -16,7 +16,7 @@ int flag_check(char *str)
     return (1);
 }
 
-int ft_echo(t_toexec *cmd)
+int ft_echo(t_toexec *cmd, t_pipe *needs)
 {
     int    step;
     int    i;
@@ -37,5 +37,6 @@ int ft_echo(t_toexec *cmd)
 		if (!step)
 			printf("\n");
 	}
+	*(needs->ex_stat) = 0;
 	return (1);
 }

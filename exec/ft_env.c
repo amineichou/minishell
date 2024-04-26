@@ -6,14 +6,14 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:54:51 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/07 23:38:33 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/25 15:27:04 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <string.h>
 
-int env_print(t_toexec *data)
+int env_print(t_toexec *data, t_pipe *needs)
 {
 	t_env *tmp;
 
@@ -24,6 +24,7 @@ int env_print(t_toexec *data)
 			printf("%s=%s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
+	*(needs->ex_stat) = 0;
 	return(1);
 }
 

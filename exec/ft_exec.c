@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/25 11:00:55 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/26 15:44:54 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*find_commands(char *av, char **pathes)
 	{
 		result = ft_strjoin(pathes[i], path);
 		// dprintf(2,"%s\n", result);
-		if (access(result, F_OK) == 0 || access(result, X_OK) == 0)
+		if (access(result, F_OK | X_OK) == 0)
 		{
 			return (free(path), result);
 		}
@@ -158,6 +158,8 @@ char **env_tolist(t_env **env_list)
 	{
         length = ft_strlen(current->name) + ft_strlen(current->var) + 2;
         result[i] = (char *)malloc(length);
+		if(!result[i])
+			return(perror("malloc"), NULL);
 		tmp = ft_strjoin(current->name, "=");
 		result[i] = ft_strjoin(tmp, current->var);
         current = current->next;
@@ -217,7 +219,8 @@ void in_out_handler_multiple(t_toexec *cmds, t_pipe *needs)
 		// dprintf(2, "|%d|\n\n", cmds->output);
 		// dprintf(2, "to change fd out == %s \n", cmds->args[0]);
 		
-		dup2(cmds->output, STDOUT_FILENO);
+		if(dup2(cmds->output, STDOUT_FILENO) == -1)
+			perror("dup2");
 		close(cmds->output);
 		close(needs->fd[1]);
 		close(needs->fd[0]);
@@ -226,7 +229,8 @@ void in_out_handler_multiple(t_toexec *cmds, t_pipe *needs)
 	{
 		// dprintf(2, "just to pipe == %s\n", cmds->args[0]);
 		
-		dup2(needs->fd[1], STDOUT_FILENO);
+		if(dup2(needs->fd[1], STDOUT_FILENO) == -1)
+			perror("dup2");
 		close(needs->fd[1]);
 		close(needs->fd[0]);
 	}
@@ -264,7 +268,8 @@ void in_out_handler_last(t_toexec *cmds, t_pipe *needs)
 		// dprintf(2, "|%d|\n\n", cmds->output);
 		// dprintf(2, "to change fd out == %s\n", cmds->args[0]);
 		
-		dup2(cmds->output, STDOUT_FILENO);
+		if(dup2(cmds->output, STDOUT_FILENO) == -1)
+			perror("dup2");
 		close(cmds->output);
 		close(needs->fd[1]);
 		// ff();
@@ -275,13 +280,13 @@ int check_builtin(t_toexec *cmd, t_pipe *needs)
 
 	int res = 0;
 	if(ft_strcmp(cmd->args[0], "echo") == 0)
-		res = ft_echo(cmd);
+		res = ft_echo(cmd, needs);
 	if(ft_strcmp(cmd->args[0], "pwd") == 0)
-		res = ft_pwd();
+		res = ft_pwd(needs);
 	if(ft_strcmp(cmd->args[0], "cd") == 0)
 		res = ft_cd(cmd->args[1], cmd->env, needs);
 	if(ft_strcmp(cmd->args[0], "env") == 0)
-		res = env_print(cmd);
+		res = env_print(cmd, needs);
 	if(ft_strcmp(cmd->args[0], "export") == 0)
 		res = ft_exporter(cmd, needs);
 	if(ft_strcmp(cmd->args[0], "unset") == 0)
@@ -300,12 +305,46 @@ void	ft_execution(t_toexec *cmd, t_pipe *needs)
 	needs->path = find_path(cmd->args[0], needs->env);
 	if (!needs->path)
 	{
-		if(!needs->path && ft_strchr(cmd->args[0], '/') != NULL)
-			needs->path = cmd->args[0];
+		if(ft_strchr(cmd->args[0], '/') != NULL)
+		{
+			if (access(cmd->args[0], F_OK | X_OK) == 0)
+				needs->path = cmd->args[0];
+			else if(access(cmd->args[0], F_OK) != 0)
+			{
+				ft_putstr_fd( "minishell: ",2);
+				ft_putstr_fd(cmd->args[0], 2);
+				ft_putstr_fd(": No such file or directory\n", 2);
+				exit(127);
+			}
+			else if (access(cmd->args[0], X_OK) != 0)
+			{
+				ft_putstr_fd( "minishell: ",2);
+				ft_putstr_fd(cmd->args[0], 2);
+				ft_putstr_fd(": Permission denied\n", 2);
+				exit(126);
+			}
+		}
 		else
 			ft_print_error("command not found\n");
 	}
-	
+	// if (access(cmd->args[0], F_OK) == 0)
+	// 	needs->path = cmd->args[0];
+		
+	if(access(needs->path, X_OK) != 0)
+	{
+		ft_putstr_fd( "minishell: ",2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		exit(126);
+	}
+			// else
+			// {
+			// 	ft_putstr_fd( "minishell: ",2);
+			// 	ft_putstr_fd(cmd->args[0], 2);
+			// 	ft_putstr_fd(": No such file or directory\n", 2);
+			// 	exit(127);
+			// }
+	// dprintf(needs->path);
 		// system("lsof -c minishell");
 
 
@@ -338,6 +377,7 @@ void	last_child(t_toexec **cmds, t_pipe *needs)
 		{
 			if(check_builtin((*cmds), needs))
 				exit(0) ;
+			
 			// print_open_file_descriptors();
 			ft_execution((*cmds), needs);
 		}
@@ -432,6 +472,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 				in_out_handler(cmds, needs);
 				if(check_builtin(cmds, needs))
 				{
+					
 					(dup2(needs->save_fd_in, STDIN_FILENO) ,close(needs->save_fd_in));
 					(dup2(needs->save_fd_out, STDOUT_FILENO) ,close(needs->save_fd_out));
 					return ;
@@ -465,10 +506,12 @@ void executer(t_toexec *cmds, t_pipe *needs)
 			close(fds++);
 		}
 	needs->j = 0;
+	int x;
 	while(needs->j <= needs->p)
 	{
 		// dprintf(2, "this the child %d\n", needs->pids[needs->j]);
-		waitpid(needs->pids[needs->j], needs->ex_stat, 0);
+		waitpid(needs->pids[needs->j], &x, 0);
+		*(needs->ex_stat) = WEXITSTATUS(x);
 		// dprintf(2, "{{{pids==%d}}}\n", needs.pids[needs.p]);
 		needs->j++;
 	}

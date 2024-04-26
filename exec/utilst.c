@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 15:11:11 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/22 23:35:31 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/25 11:26:07 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char* ft_strstr(const char* haystack, const char* needle)
 void	ft_print_error(char *str)
 {
 	ft_putstr_fd(str, 2);
-	exit (1);
+	exit (127);
 }
 void	ft_putstr_fd(char *s, int fd)
 {

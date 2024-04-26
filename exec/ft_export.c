@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/23 18:33:55 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/25 16:04:23 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,12 +370,16 @@ int check_ifvalid(char *cmd)
 	int i;
 
 	i = 0;
-	if(cmd[0] == '=')
+	if(cmd[0] == '=' || ft_isdigit(cmd[0]))
 		return (0);
-	if(ft_isdigit(cmd[i]))
-		return (0);
-	while(cmd[i] && cmd[i] != '+')
+	while(cmd[i])
+	{
+		if(cmd[i] == '+' || cmd[i] == '=')
+			break ;
+		if(!ft_is_alphanumeric(cmd[i]))
+			return (0);
 		i++;
+	}
 	if(cmd[i] == '+' && cmd[i + 1] != '=')
 		return (0);
 	return (1);
@@ -429,13 +433,14 @@ int ft_exporter(t_toexec *cmd, t_pipe *needs)
 				ft_putstr_fd("minishell: export: ",2);
 				ft_putstr_fd(cmd->args[k],2);
 				ft_putstr_fd(" : not a valid identifier\n",2);
+				*(needs->ex_stat) = 1;
 				k++;
 				continue;
 			}
 		exporter(cmd->args[k], cmd, needs);
 		k++;
 	}
-	return(1);
+	return (1);
 	// env_print(&data);
 }
 
