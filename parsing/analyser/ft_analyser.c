@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 20:45:33 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/26 09:42:21 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 
 	lst_token = ft_make_tokens(sanitize_result);
 	// expanding
+	// test_tokens(lst_token);
 	ft_expand(lst_token, envl, ex_sta);
 	lst_toexec = NULL;
 	while (lst_token)

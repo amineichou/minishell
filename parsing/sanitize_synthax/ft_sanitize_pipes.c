@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:24:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/01 02:08:06 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/26 09:46:26 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static int	ft_red_before_pipe(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] && ft_isquote(str[i]))
+			ft_skip_quotes(str, &i);
 		if (ft_isredirection(str[i]))
 		{
 			i++;
@@ -78,8 +80,8 @@ static int	ft_red_before_pipe(char *str)
 int	ft_sanitize_pipes(char *line)
 {
 	if (ft_first_last_pipe(line)
-		|| ft_sequential_pipes(line)
-		|| ft_red_before_pipe(line))
+		|| ft_red_before_pipe(line)
+		|| ft_sequential_pipes(line))
 	{
 		ft_printerror(SYNTAX_ERROR_PIPE);
 		return (-1);
