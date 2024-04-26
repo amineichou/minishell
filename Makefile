@@ -21,23 +21,24 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
+	@ clear
 	@ $(CC) $(FLAGS) $(OBJ) $(READLINE_LIB) -L $(READLINE_L) -o $(NAME)
-	@ echo "DONE!"
+	@ echo "DONE! minishell is successfully created."
 
 %.o: %.c minishell.h
 	@ $(CC) $(FLAGS) -I $(READLINE_I) -c $< -o $@
 	@ clear
-	@ echo "Making objects..."
+	@ echo "Making objects...\033[0;35m" $< "\033[0;0m"
 
 clean:
-	@ echo "Removing object files...Please Wait"
+	@ printf "Removing object files..."
 	@ rm -f $(OBJ)
-	@ echo "Removing object files....DONE!"
+	@ echo "DONE!"
 
 fclean: clean
-	@ echo "Removing minishell...Please Wait"
+	@ printf "Removing minishell..."
 	@ rm -f $(NAME)
-	@ echo "Removing minishell....DONE!"
+	@ echo "DONE!"
 
 re: fclean all
 
