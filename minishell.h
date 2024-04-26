@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 19:54:41 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/26 10:35:01 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-// #define malloc(x) talloc(x)
-// #define _MAL_CALL_INFO() \
-//     printf("\t\t\tFile: \033[35m%s\033[0m, Line: \033[35m%d\033[0m, Function: \033[35m%s\033[0m\n", __FILE__, __LINE__, __func__)
+#ifndef IS_KILL_ON
+#define IS_KILL_ON
+	int IS_KILL_ON_VAL;
+#endif
 
 #define MALLOC_ERORR "allocation failed\n"
 #define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"

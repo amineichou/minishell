@@ -16,7 +16,7 @@ SRC = minishell.c parsing/ft_parser.c parsing/ft_split.c parsing/libft.c parsing
 	exec/ft_cd.c exec/ft_echo.c exec/ft_env.c exec/ft_exec.c exec/ft_exit.c exec/ft_export.c exec/ft_pwd.c \
 	exec/ft_unset.c exec/utilst.c
 #remove test
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRC:.c=.o)∆
 
 all : $(NAME)
 
@@ -26,12 +26,18 @@ $(NAME) : $(OBJ)
 
 %.o: %.c minishell.h
 	@ $(CC) $(FLAGS) -I $(READLINE_I) -c $< -o $@
+	@ clear
+	@ echo "Making objects..."
 
 clean:
-	rm -f $(OBJ)
+	@ echo "Removing object files...Please Wait"
+	@ rm -f $(OBJ)
+	@ echo "Removing object files....DONE!"
 
 fclean: clean
-	rm -f $(NAME)
+	@ echo "Removing minishell...Please Wait"
+	@ rm -f $(NAME)
+	@ echo "Removing minishell....DONE!"
 
 re: fclean all
 
