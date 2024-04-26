@@ -16,7 +16,7 @@ SRC = minishell.c parsing/ft_parser.c parsing/ft_split.c parsing/libft.c parsing
 	exec/ft_cd.c exec/ft_echo.c exec/ft_env.c exec/ft_exec.c exec/ft_exit.c exec/ft_export.c exec/ft_pwd.c \
 	exec/ft_unset.c exec/utilst.c
 #remove test
-OBJ = $(SRC:.c=.o)∆
+OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
