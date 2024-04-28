@@ -6,26 +6,37 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:24:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/26 10:20:07 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/27 16:45:41 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static int	ft_first_last_pipe(char *str)
+static int	ft_first_last_pipe(char *str, int *where)
 {
 	int	i;
 
 	i = 0;
 	if (str[i] == '|')
+	{
+		if (i < *where || *where == -1)
+			*where = i;
 		return (1);
+	}
 	i = ft_strlen(str) - 1;
 	if (str[i] == '|')
+	{
+		if (i < *where || *where == -1)
+		{
+			printf("test %d\n", *where);
+		}
+			*where = i;
 		return (1);
+	}
 	return (0);
 }
 
-static int	ft_sequential_pipes(char *str)
+static int	ft_sequential_pipes(char *str, int *where)
 {
 	int	i;
 
@@ -38,7 +49,11 @@ static int	ft_sequential_pipes(char *str)
 			while (str[i] && ft_isspace(str[i]))
 				i++;
 			if (str[i] && str[i] == '|')
+			{
+				if (i < *where || *where == -1)
+					*where = i;
 				return (1);
+			}
 		}
 		if (ft_isquote(str[i]))
 			ft_skip_quotes(str, &i);
@@ -50,7 +65,7 @@ static int	ft_sequential_pipes(char *str)
 	return (0);
 }
 
-static int	ft_red_before_pipe(char *str)
+static int	ft_red_before_pipe(char *str, int *where)
 {
 	int	i;
 
@@ -67,7 +82,11 @@ static int	ft_red_before_pipe(char *str)
 			while (str[i] && ft_isspace(str[i]))
 				i++;
 			if (str[i] && str[i] == '|')
+			{
+				if (i < *where || *where == -1)
+					*where = i;
 				return (1);
+			}
 		}
 		if (str[i] == '\0')
 			break ;
@@ -77,11 +96,11 @@ static int	ft_red_before_pipe(char *str)
 	return (0);
 }
 
-int	ft_sanitize_pipes(char *line)
+int	ft_sanitize_pipes(char *line, int *where)
 {
-	if (ft_first_last_pipe(line)
-		|| ft_red_before_pipe(line)
-		|| ft_sequential_pipes(line))
+	if (ft_first_last_pipe(line, where)
+		|| ft_red_before_pipe(line, where)
+		|| ft_sequential_pipes(line, where))
 	{
 		ft_printerror(SYNTAX_ERROR_PIPE);
 		return (-1);

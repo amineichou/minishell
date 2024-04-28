@@ -6,10 +6,10 @@ READLINE_L = $(shell brew --prefix readline)/lib
 READLINE_I = $(shell brew --prefix readline)/include
 SRC = minishell.c parsing/ft_parser.c parsing/ft_split.c parsing/libft.c parsing/signal_handlers.c \
 	parsing/analyser/ft_analyse_redirections.c parsing/analyser/ft_analyser.c \
-	parsing/analyser/ft_make_tokens.c parsing/analyser/ft_valid_tokens.c \
-	parsing/sanitize_synthax/ft_sanitize_pipes.c parsing/sanitize_synthax/ft_sanitize_quotes.c \
-	parsing/sanitize_synthax/ft_sanitize_redirections.c parsing/sanitize_synthax/ft_sanitizer.c \
-	parsing/tools/t_expand_tools.c parsing/tools/t_toexec_tools.c parsing/tools/t_token_tools.c \
+	parsing/analyser/ft_make_tokens.c \
+	parsing/sanitize_syntax/ft_sanitize_pipes.c parsing/sanitize_syntax/ft_sanitize_quotes.c \
+	parsing/sanitize_syntax/ft_sanitize_redirections.c parsing/sanitize_syntax/ft_sanitizer.c \
+	parsing/tools/t_expand_tools.c parsing/tools/t_toexec_tools.c parsing/tools/t_token_tools.c parsing/tools/t_herdoc_tools.c\
 	free_leaks/ft_linked_lists.c \
 	parsing/tools/tools_1.c parsing/test/test.c \
 	expanding/ft_expand.c expanding/ft_remove_quotes.c expanding/ft_replace_dollar.c \

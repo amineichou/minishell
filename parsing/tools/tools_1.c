@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 19:01:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/28 11:24:47 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,19 @@ void	ft_skip_quotes(char *str, int *i)
 		// (*i)++;
 		break ;
 	}
+}
+
+void	ft_put_syntaxerror(char *msg, char c)
+{
+	int	i;
+
+	i = 0;
+	while (msg[i])
+	{
+		write (2, &msg[i], 1);
+		i++;
+	}
+	write (2, "`", 1);
+	write (2, &c, 1);
+	write (2, "`\n", 2);
 }
