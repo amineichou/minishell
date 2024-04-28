@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 13:10:34 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/28 13:26:37 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,27 +103,28 @@ static char	*ft_get_herdoc_del(char *line, int *i)
 	int	start;
 	int	length;
 
-	*i = *i + 2;
-	start = *i;
+	*i += 2;
 	length = 0;
 	while (line[*i] && ft_isspace(line[*i]))
 		(*i)++;
+	start = *i;
 	while (line[*i] && !ft_isspace(line[*i]))
 	{
 		(*i)++;
 		length++;
 	}
+	printf("%d\n", length);
 	if (length)
 		return (ft_strldup(&line[start], length));
 	return (NULL);
 }
 
-static t_herdoc	*ft_create_herdocft_runpast_herdoc(char *line, int stop)
+static t_herdoc	*ft_createpast_herdoc(char *line, int stop)
 {
 	t_herdoc	*herdoc_lst;
 	t_herdoc	*node;
-	char	*del;
-	int		i;
+	char		*del;
+	int			i;
 
 	i = 0;
 	herdoc_lst = NULL;
@@ -140,11 +141,23 @@ static t_herdoc	*ft_create_herdocft_runpast_herdoc(char *line, int stop)
 	return (herdoc_lst);
 }
 
+static void	ft_runpast_herdoclst(t_herdoc *head)
+{
+	t_herdoc	*tmp;
+
+	tmp = head;
+	while (tmp)
+	{
+		printf("%s\n", tmp->del);
+		tmp = tmp->next;
+	}
+}
+
 char	*ft_sanitizer(char *line)
 {
 	t_herdoc	*herdoc_lst;
-	t_toexec	*lst_toexec;
-	t_toexec	*node;
+	// t_toexec	*lst_toexec;
+	// t_toexec	*node;
 	int			syntax_error_where;
 
 	syntax_error_where = -1;
@@ -155,9 +168,8 @@ char	*ft_sanitizer(char *line)
 	{
 		if (syntax_error_where > 1)
 		{
-			herdoc_lst = ft_create_herdocft_runpast_herdoc(line, syntax_error_where);
-			// ft_run_herdoclst(herdoc_lst);
-			printf("fucking herdoc\n");
+			herdoc_lst = ft_createpast_herdoc(line, syntax_error_where);
+			ft_runpast_herdoclst(herdoc_lst);
 		}
 		return (NULL);
 	}

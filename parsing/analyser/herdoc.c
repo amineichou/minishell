@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 20:15:38 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/28 13:13:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	ft_heredoc_handler(t_toexec *node, t_env *env, char *delemiter)
 		line = readline("> ");
 		if (!line)
 			break ;
-		// if(ft_check_quotes())
-		// 	ft_replace_dollar(line, env, needs->ex_stat);
 		if (!ft_strncmp(line, delemiter, ft_strlen(delemiter)))
 			break ;
 		ft_putstr_fd(line, fl);
