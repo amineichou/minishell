@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 13:26:37 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/28 16:58:33 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int	ft_check_red_syntax(char *line, char red, int *i, int *where)
 	int	last_index;
 
 	last_index = ft_strlen(line) - 1;
-	if (ft_isredirection(line[last_index]))
-		return (ft_put_syntaxerror("syntax error near unexpected token `newline", 0), -1);
+	// if (ft_isredirection(line[last_index]))
+	// 	return (ft_put_syntaxerror("syntax error near unexpected token `newline", 0), -1);
 	(*i)++;
 	if (line[*i] == red)
 		(*i)++;
@@ -58,10 +58,22 @@ static int	ft_check_red_syntax(char *line, char red, int *i, int *where)
 		(*i)++;
 	if (ft_isquote(line[*i]) || line[*i] == '\0')
 		return (1);
-	if (line[*i] == '\0' || line[*i] == '|' || ft_isredirection(line[*i]))
+	if (line[*i] == '\0')
 	{
 		*where = *i;
-		ft_put_syntaxerror("syntax error near unexpected token ", red);
+		ft_printerror("syntax error near unexpected token `newline`\n");
+		return (-1);
+	}
+	if (ft_isredirection(line[*i]))
+	{
+		*where = *i;
+		ft_put_syntaxerror("syntax error near unexpected token ", line[*i]);
+		return (-1);
+	}
+	if (line[*i] == '|')
+	{
+		*where = *i;
+		ft_printerror("syntax error near unexpected token `|`\n");
 		return (-1);
 	}
 	return (1);
@@ -107,13 +119,14 @@ static char	*ft_get_herdoc_del(char *line, int *i)
 	length = 0;
 	while (line[*i] && ft_isspace(line[*i]))
 		(*i)++;
+	if (line[*i] && ft_isquote(line[*i]))
+		return (ft_get_inside_quotes(line, i, line[*i]));
 	start = *i;
-	while (line[*i] && !ft_isspace(line[*i]))
+	while (line[*i] && !ft_isspace(line[*i]) && !ft_isspecialchars(line[*i]))
 	{
 		(*i)++;
 		length++;
 	}
-	printf("%d\n", length);
 	if (length)
 		return (ft_strldup(&line[start], length));
 	return (NULL);
@@ -128,36 +141,37 @@ static t_herdoc	*ft_createpast_herdoc(char *line, int stop)
 
 	i = 0;
 	herdoc_lst = NULL;
-	while (line[i] && i < stop)
+	while (i < stop)
 	{
 		if (line[i] && line[i + 1] && line[i] == '<' && line[i + 1] == '<')
 		{
 			del = ft_get_herdoc_del(line, &i);
-			node = ft_create_herdoc_node(del);
-			ft_append_node_herdoc(&herdoc_lst, node);
+			if (del)
+			{
+				node = ft_create_herdoc_node(del);
+				ft_append_node_herdoc(&herdoc_lst, node);
+			}
 		}
 		i++;
 	}
 	return (herdoc_lst);
 }
 
-static void	ft_runpast_herdoclst(t_herdoc *head)
+static void	ft_runpast_herdoclst(t_herdoc *head, t_env *env)
 {
 	t_herdoc	*tmp;
 
 	tmp = head;
 	while (tmp)
 	{
-		printf("%s\n", tmp->del);
+		ft_heredoc_handler_syn(env, tmp->del);
 		tmp = tmp->next;
 	}
 }
 
-char	*ft_sanitizer(char *line)
+t_toexec	*ft_sanitizer(char *line, t_env *env, int ex_sta)
 {
 	t_herdoc	*herdoc_lst;
-	// t_toexec	*lst_toexec;
-	// t_toexec	*node;
 	int			syntax_error_where;
 
 	syntax_error_where = -1;
@@ -169,10 +183,11 @@ char	*ft_sanitizer(char *line)
 		if (syntax_error_where > 1)
 		{
 			herdoc_lst = ft_createpast_herdoc(line, syntax_error_where);
-			ft_runpast_herdoclst(herdoc_lst);
+			if (!herdoc_lst)
+				return (NULL);
+			ft_runpast_herdoclst(herdoc_lst, env);
 		}
 		return (NULL);
 	}
-	return (line);
+	return (ft_analyser(line, env, ex_sta));
 }
-

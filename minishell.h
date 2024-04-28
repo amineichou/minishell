@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 12:23:11 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/28 16:23:18 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct s_herdoc {
 t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta);
 
 // syntax sanitizer
-char		*ft_sanitizer(char *line);
+t_toexec	*ft_sanitizer(char *line, t_env *env, int ex_sta);
 int			ft_sanitize_pipes(char *line, int *where);
 int			ft_sanitize_quotes(char *line, int *where);
 int			ft_sanitize_redirections(char *line, int *where);
@@ -124,9 +124,9 @@ char		*ft_replace_dollar(char *to_expand, t_env *env, int ex_sta);
 char		*ft_remove_qoutes(char *str);
 
 // herdoc
-void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
-void	ft_heredoc_handler(t_pipe *needs, t_env *env);
-
+// void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
+void	ft_heredoc_handler_exec(t_toexec *node, t_env *env, char *delemiter);
+void	ft_heredoc_handler_syn(t_env *env, char *delemiter);
 // utils
 int			ft_strlen(char *str);
 char		**ft_split(char *s, char c);
@@ -149,6 +149,7 @@ void		ft_append_node_expand(t_expand **head, t_expand *node);
 // char		*ft_remove_qoutes(char *str);
 void		ft_skip_quotes(char *str, int *i);
 int			ft_isredirection(char c);
+char		*ft_get_inside_quotes(char *in_quotes, int *i, char q_type);
 
 // libft
 char		*ft_strdup(char *s1);

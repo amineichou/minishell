@@ -2,4 +2,7 @@
 - check all synthax errors .
 - leaks .
 - Makefile .
-<< ls|
+<< "ls|"
+
+<< | ls
+<< "ls|" '

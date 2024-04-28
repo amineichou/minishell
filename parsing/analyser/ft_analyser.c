@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/27 16:09:38 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/28 16:32:58 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 			ft_append_node_t_toexec(&lst_toexec, node);
 			continue;
 		}
-		// if (lst_token->token == HEREDOC)
-		// 	ft_open_herdoc(&lst_token, needs, env);
+		if (lst_token->token == HEREDOC)
+			lst_token = lst_token->next->next;
 	}
 	return (lst_toexec);
 }

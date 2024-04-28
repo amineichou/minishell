@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 11:24:47 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/28 16:50:07 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void	ft_put_syntaxerror(char *msg, char c)
 	int	i;
 
 	i = 0;
+	write (2, "minishell: ", 11);
 	while (msg[i])
 	{
 		write (2, &msg[i], 1);
@@ -157,3 +158,26 @@ void	ft_put_syntaxerror(char *msg, char c)
 	write (2, &c, 1);
 	write (2, "`\n", 2);
 }
+
+// get the value in quotes (quotes r not included)
+char	*ft_get_inside_quotes(char *in_quotes, int *i, char q_type)
+{
+	char	*res;
+	int		start;
+	int		length;
+
+	(*i)++;
+	start = *i;
+	length = 0;
+	while (in_quotes[*i] && in_quotes[*i] != q_type)
+	{
+		length++;
+		(*i)++;
+	}
+	(*i)++;
+	res = ft_strldup(&in_quotes[start], length);
+	if (!res)
+		return (NULL);
+	return (res);
+}
+
