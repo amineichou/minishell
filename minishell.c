@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/26 15:46:56 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/28 22:19:33 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int main(int ac, char **av, char **env)
 	exit_status = 0;
 	IS_KILL_ON_VAL = 0;
 	signal(SIGINT, ft_sigkill_handler);
+	signal(SIGQUIT, ft_sigquit_handler);
 	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 16:23:18 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:27:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_token {
 
 typedef struct s_herdoc {
 	char			*del;
+	bool			is_expand;
 	struct s_herdoc	*next;
 }	t_herdoc;
 
@@ -125,8 +126,10 @@ char		*ft_remove_qoutes(char *str);
 
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
-void	ft_heredoc_handler_exec(t_toexec *node, t_env *env, char *delemiter);
+void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta);
 void	ft_heredoc_handler_syn(t_env *env, char *delemiter);
+
+
 // utils
 int			ft_strlen(char *str);
 char		**ft_split(char *s, char c);
@@ -145,6 +148,7 @@ void		ft_append_node_herdoc(t_herdoc **head, t_herdoc *node);
 void		ft_append_node_t_token(t_token **head, t_token *node);
 void		ft_append_node_t_toexec(t_toexec **head, t_toexec *node);
 void		ft_append_node_expand(t_expand **head, t_expand *node);
+void		ft_pop_node_t_token(t_token **head, t_token *to_pop);
 // 1
 // char		*ft_remove_qoutes(char *str);
 void		ft_skip_quotes(char *str, int *i);
@@ -179,6 +183,7 @@ void		ft_free_token(t_token *head);
 
 // signal hanldler
 void		ft_sigkill_handler(int signum);
+void		ft_sigquit_handler(int signum);
 
 // tests start
 void test_tokens(t_token *lst_token_input);

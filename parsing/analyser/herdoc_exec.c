@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 16:19:34 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/29 20:46:03 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // 	}
 // }
 
-void	ft_heredoc_handler_exec(t_toexec *node, t_env *env, char *delemiter)
+void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 {
 	char	*line;
 	int		fl;
@@ -40,10 +40,12 @@ void	ft_heredoc_handler_exec(t_toexec *node, t_env *env, char *delemiter)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (!ft_strncmp(line, delemiter, ft_strlen(delemiter)))
+		if (!ft_strncmp(line, herdoc_node->del, ft_strlen(herdoc_node->del)))
 			break ;
+		if (herdoc_node->is_expand)
+			herdoc_node->del = ft_replace_dollar(herdoc_node->del, node->env, ex_sta);
 		ft_putstr_fd(line, fl);
 		free(line);
 	}
-	(free(delemiter), free(line), close(fl));
+	(free(herdoc_node->del), free(line), close(fl));
 }

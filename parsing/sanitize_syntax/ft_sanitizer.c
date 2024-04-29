@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 16:58:33 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/29 18:55:47 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ static int	ft_check_red_syntax(char *line, char red, int *i, int *where)
 	int	last_index;
 
 	last_index = ft_strlen(line) - 1;
-	// if (ft_isredirection(line[last_index]))
-	// 	return (ft_put_syntaxerror("syntax error near unexpected token `newline", 0), -1);
+	if (ft_isredirection(line[last_index]))
+	{
+		*where = last_index;
+		return (ft_put_syntaxerror("syntax error near unexpected token `newline", 0), -1);
+	}
 	(*i)++;
 	if (line[*i] == red)
 		(*i)++;
