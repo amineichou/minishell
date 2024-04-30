@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 12:36:05 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:30:57 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,29 +103,30 @@ static char *ft_ckeck_herdoc_del(char *del, t_herdoc *node)
 	return (res);
 }
 
-static t_herdoc	*ft_go_for_herdoc(t_token *head)
+static t_herdoc	*ft_go_for_herdoc(t_token **head)
 {
 	t_token		*tmp;
 	t_herdoc	*lst_herdoc;
 	t_herdoc	*herdoc_node;
 	t_token		*pop_it;
 
-	tmp = head;
+	tmp = *head;
 	lst_herdoc = NULL;
+	// cat << ls
 	while (tmp && tmp->token != PIPE)
 	{
 		if (tmp && tmp->token == HEREDOC)
 		{
 			pop_it = tmp;
 			tmp = tmp->next;
-			ft_pop_node_t_token(&head, pop_it);
+			ft_pop_node_t_token(head, pop_it);
 			herdoc_node = malloc(sizeof(t_herdoc));
 			herdoc_node->del = ft_ckeck_herdoc_del(tmp->value, herdoc_node);
 			herdoc_node->next = NULL;
 			ft_append_node_herdoc(&lst_herdoc, herdoc_node);
 			pop_it = tmp;
 			tmp = tmp->next;
-			ft_pop_node_t_token(&head, pop_it);
+			ft_pop_node_t_token(head, pop_it);
 		}
 		else
 			tmp = tmp->next;
@@ -171,13 +172,12 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 		if (!node)
 			return (ft_printerror(MALLOC_ERORR), NULL);
 		ft_set_default_vals(node);
-		lst_herdoc = ft_go_for_herdoc(lst_token);
+		lst_herdoc = ft_go_for_herdoc(&lst_token);
 		if (lst_herdoc)
-		{
 			ft_run_for_herdoc(lst_herdoc, node, ex_sta);
-			// test_tokens(lst_token);
-		}
-		if (lst_token->token == WORD)
+		// if (lst_token == NULL)
+		// 	break ;
+		if (lst_token && lst_token->token == WORD)
 		{
 			ft_handle_args(&node, &lst_token);
 			if (lst_token == NULL)
@@ -186,7 +186,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 				break;
 			}
 		}
-		if (lst_token->token == RD_AP || lst_token->token == RD_RP || lst_token->token == RD_IN)
+		if (lst_token && (lst_token->token == RD_AP || lst_token->token == RD_RP || lst_token->token == RD_IN))
 		{
 			ft_handle_redirections(&lst_token, node);
 			if (lst_token == NULL)
@@ -204,12 +204,14 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 				}
 			}
 		}
-		if (lst_token->token == PIPE)
+		if (lst_token && lst_token->token == PIPE)
 		{
 			lst_token = lst_token->next;
 			ft_append_node_t_toexec(&lst_toexec, node);
 			continue;
 		}
+		// if (lst_token && lst_token->token == HEREDOC)
+		// 	lst_token == lst_token->next->next;
 	}
 	return (lst_toexec);
 }
