@@ -1,0 +1,4 @@
+21:24  up  2:23, 2 users, load averages: 2.47 2.43 2.18
+USER     TTY      FROM              LOGIN@  IDLE WHAT
+zyamli   console  -                19:38    1:45 -
+zyamli   s014     -                21:16       3 bash

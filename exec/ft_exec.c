@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/30 18:44:12 by moichou          ###   ########.fr       */
-=======
-/*   Updated: 2024/04/30 16:12:36 by zyamli           ###   ########.fr       */
->>>>>>> 52851129b44902c75ba1d15e6cc16ed2ef33490f
+/*   Updated: 2024/04/30 19:56:53 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -472,6 +468,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	// needs.save_fd_in = cmds->save_fd_in;
 	needs->save_fd_in = dup(STDIN_FILENO);
 	needs->save_fd_out = dup(STDOUT_FILENO);
+	tcgetattr(STDIN_FILENO, &needs->term);
 		if(lst_size(cmds) == 1)
 		{
 			needs->pids = malloc(sizeof(int));
@@ -490,7 +487,6 @@ void executer(t_toexec *cmds, t_pipe *needs)
 				if(needs->pids[needs->p] == -1)
 					perror("fork");
 				
-				tcgetattr(STDIN_FILENO, &needs->term);
 				if(needs->pids[needs->p] == 0)
 					ft_execution(cmds, needs);
 					
