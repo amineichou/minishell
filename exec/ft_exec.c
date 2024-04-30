@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/04/30 18:44:12 by moichou          ###   ########.fr       */
+=======
 /*   Updated: 2024/04/30 16:12:36 by zyamli           ###   ########.fr       */
+>>>>>>> 52851129b44902c75ba1d15e6cc16ed2ef33490f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,7 +384,7 @@ void	last_child(t_toexec **cmds, t_pipe *needs)
 			if(check_builtin((*cmds), needs))
 				exit(0) ;
 			
-			// print_open_file_descriptors();
+			// print_open_file_descriptors();			
 			ft_execution((*cmds), needs);
 		}
 		else
@@ -461,6 +465,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	// t_pipe needs;
 	needs->p = 0;
 	needs->env = env_tolist(&cmds->env);
+	
 	// for(cmds->env; cmds->env != NULL; cmds->env = cmds->env->next)
 	// 	dprintf(2, "%s  == %s\n", cmds->env->name, cmds->env->var);
 	// dprintf(2, "hna\n");
@@ -485,10 +490,11 @@ void executer(t_toexec *cmds, t_pipe *needs)
 				if(needs->pids[needs->p] == -1)
 					perror("fork");
 				
+				tcgetattr(STDIN_FILENO, &needs->term);
 				if(needs->pids[needs->p] == 0)
-				{
 					ft_execution(cmds, needs);
-				}
+					
+				
 			}
 		}
 		else if(lst_size(cmds) > 1)
@@ -515,10 +521,11 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	{
 		// dprintf(2, "this the child %d\n", needs->pids[needs->j]);
 		waitpid(needs->pids[needs->j], &x, 0);
-		*(needs->ex_stat) = WEXITSTATUS(x);
+		// *(needs->ex_stat) = WEXITSTATUS(x);
 		// dprintf(2, "{{{pids==%d}}}\n", needs.pids[needs.p]);
 		needs->j++;
 	}
+	*(needs->ex_stat)= ft_update_status(x, &needs->term);
 
 }
 

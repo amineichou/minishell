@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 16:37:51 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 18:34:30 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int main(int ac, char **av, char **env)
 			write(1, "exit\n", 6);
 			exit (0);
 		}
-		g_inexec = 0;
 		line = ft_trim_spaces(line); //TODO : protect
 		if (line && line[0])
 		{
@@ -101,6 +100,7 @@ int main(int ac, char **av, char **env)
 				executer(lst, &needs);
 				envl = lst->env;
 				exit_status = *(needs.ex_stat);
+				g_inexec = 0;
 				continue ;
 			}
 			free(line);

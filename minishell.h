@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 16:36:42 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 18:43:50 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <stdbool.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <termios.h>
 #include <sys/wait.h>
 
 extern int g_inexec;
@@ -72,6 +73,7 @@ typedef struct t_pipe
 	char	**env;
 	int		*pids;
 	int		p;
+	struct termios term;
 }	t_pipe;
 
 typedef enum token {
@@ -182,6 +184,7 @@ void		ft_free_token(t_token *head);
 // signal hanldler
 void		ft_sigkill_handler(int signum);
 void		ft_sigquit_handler(int signum);
+int	ft_update_status(int status, struct termios *term);
 
 // tests start
 void test_tokens(t_token *lst_token_input);
