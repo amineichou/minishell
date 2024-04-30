@@ -1,57 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_linked_lists.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 21:35:18 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/12 15:26:30 by moichou          ###   ########.fr       */
+/*   Created: 2024/04/23 12:32:21 by moichou           #+#    #+#             */
+/*   Updated: 2024/04/23 18:59:14 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_strlen(char *str)
+void ft_free_args(char **args)
 {
 	int	i;
 
+	if (!args)
+		return ;
 	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void	ft_printerror(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
+	while (args[i])
 	{
-		write (2, &str[i], 1);
+		free(args[i]);
 		i++;
 	}
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+void ft_free_toexec(t_toexec *head)
 {
-	size_t	src_len;
-	size_t	i;
+	t_toexec	*tmp;
 
-	src_len = 0;
-	while (src[src_len] != '\0')
+	tmp = head;
+	while (tmp)
 	{
-		src_len++;
+		ft_free_args(tmp->args);
+		free(tmp);
+		tmp = tmp->next;
 	}
-	if (dstsize == 0)
-		return (src_len);
-	i = 0;
-	while (src[i] != '\0' && i < (dstsize - 1))
+	head = NULL;
+}
+
+void	ft_free_token(t_token *head)
+{
+	t_token	*tmp;
+
+	tmp = head;
+	while (tmp)
 	{
-		dst[i] = src[i];
-		i++;
+		tmp = tmp->next;
+		free(tmp->value);
+		free(tmp);
 	}
-	dst[i] = '\0';
-	return (src_len);
+	free(head->value);
+	free(head);
 }

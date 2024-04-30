@@ -1,0 +1,13 @@
+- expanding .
+- check all synthax errors .
+- leaks .
+- Makefile .
+- make a function that pops up a node from toexec (free) and do it to herdoc | run herdoc
+<< "ls|"
+
+<< | ls
+<< "ls|" '
+
+ls >
+
+<< amine << " bug in 52-56 ft_sanitizer.c

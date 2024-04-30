@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sanitizer.c                                     :+:      :+:    :+:   */
+/*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 15:16:32 by moichou           #+#    #+#             */
-/*   Updated: 2024/03/13 02:04:08 by moichou          ###   ########.fr       */
+/*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
+/*   Updated: 2024/04/30 12:35:41 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-char	**ft_sanitizer(char *line)
+static int	ft_check_valid_fd(t_toexec *head)
 {
-	char **sanitize_result;
+	t_toexec	*tmp;
 
-	if (ft_sanitize_pipes(line) == -1 
-		|| ft_sanitize_quotes(line) == -1
-		|| ft_sanitize_redirections(line) == -1)
+	tmp = head;
+	while (tmp)
+	{
+		if (tmp->output == -1)
+			return (-1);
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta)
+{
+	t_toexec	*lst_toexec;
+
+	lst_toexec = ft_sanitizer(line, envl, ex_sta);
+	if (ft_check_valid_fd(lst_toexec) == -1)
 		return (NULL);
-	sanitize_result = ft_remove_split_spaces(line);
-	return (sanitize_result);
+	// test_lst(lst_toexec);
+	return (lst_toexec);
 }

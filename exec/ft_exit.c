@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 15:14:31 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/25 15:29:55 by zyamli           ###   ########.fr       */
+/*   Created: 2024/04/04 03:04:31 by zyamli            #+#    #+#             */
+/*   Updated: 2024/04/05 00:50:17 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_pwd(t_pipe *needs)
+int	str_isnum(char *str)
 {
-	char	buff[1024];
-	if(getcwd(buff, 1024) == NULL)
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str)
 	{
-		*(needs->ex_stat) = 1;
-		perror("pwd");
-	}
-	else
-	{
-		printf("%s\n", buff);
-		*(needs->ex_stat) = 0;
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
 	}
 	return (1);
+}
+
+int ft_exit(char **args)
+{
+	if (!args[1])
+		exit(0);
+	if(args[2])
+		ft_printerror("exit: too many arguments");
+	if (args[1] && !str_isnum(args[1]))
+	{
+		ft_print_error("numeric argument required");
+		exit (255);
+	}
+	else
+		exit(ft_atoi(args[1]) % 256);
 }
