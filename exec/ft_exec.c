@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/26 15:44:54 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/29 16:14:35 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,12 @@ char **env_tolist(t_env **env_list)
     while (current != NULL)
 	{
         length = ft_strlen(current->name) + ft_strlen(current->var) + 2;
-        result[i] = (char *)malloc(length);
-		if(!result[i])
-			return(perror("malloc"), NULL);
+        // result[i] = (char *)malloc(length);
+		// if(!result[i])
+		// 	return(perror("malloc"), NULL);
 		tmp = ft_strjoin(current->name, "=");
 		result[i] = ft_strjoin(tmp, current->var);
+		free(tmp);
         current = current->next;
         i++;
     }
@@ -302,6 +303,7 @@ void	ft_execution(t_toexec *cmd, t_pipe *needs)
 {
 	// dprintf(2, "%s=  %s", cmd->env->name, cmd->env->var);
 	// needs->env = env_tolist(&cmd->env);
+	
 	needs->path = find_path(cmd->args[0], needs->env);
 	if (!needs->path)
 	{
@@ -440,6 +442,7 @@ void	first_cmd(t_toexec **cmds, t_pipe *needs)
 	needs->env = env_tolist(&(*cmds)->env);
 	// dup2(cmds->input, 0);
 	// dprintf(2, "%d\n", needs->i);
+	env_search_replace((*cmds)->env, ft_strdup(" "), "_");
 	needs->pids = malloc(sizeof(int) * needs->i);
 	if(!needs->pids)
 		return ; 
@@ -469,6 +472,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 			needs->pids = malloc(sizeof(int));
 			if(cmds->args)
 			{
+				env_search_replace(cmds->env, ft_strdup(cmds->args[0]), "_");
 				in_out_handler(cmds, needs);
 				if(check_builtin(cmds, needs))
 				{

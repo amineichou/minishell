@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/25 16:04:23 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/27 16:52:33 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void env_search_replace(t_env *head, char *to_replace, char *to_look)
 
 	if (!head) 
 	{
-		printf("Invalid data or data->env is NULL\n");
+		printf("Invalid data or env is NULL\n");
 		return;
 	}
-	printf("%s= = =%s\n", to_replace, to_look);
+	// printf("%s= = =%s\n", to_replace, to_look);
 	tmp = head;
 	while(tmp)
 		{
@@ -99,7 +99,7 @@ int env_list_serch(t_env **head, char *to_look)
 
 	if (!(*head)) 
 	{
-		printf("Invalid data or data->env is NULL\n");
+		printf("Invalid data or env is NULL\n");
 		return (0);
 	}
 	tmp = *head;
@@ -118,7 +118,7 @@ void env_search_and_add(t_env *head, char *to_add, char *to_look)
 
 	if (!head) 
 	{
-		printf("Invalid data or data->env is NULL\n");
+		printf("Invalid data or env is NULL\n");
 		return;
 	}
 
@@ -160,7 +160,7 @@ void export_env_print(t_toexec *data)
     t_env *tmp;
 
     if (!data || !data->env) {
-        printf("Invalid data or data->env is NULL\n");
+        printf("Invalid data or env is NULL\n");
         return;
     }
 	

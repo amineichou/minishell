@@ -29,7 +29,7 @@ int ft_echo(t_toexec *cmd, t_pipe *needs)
 			step = 1;
 		while (cmd->args[i])
 		{
-			printf("%s", cmd->args[i]);
+			ft_putstr(cmd->args[i]);
 			i++;
 			if (cmd->args[i])
 				printf(" ");
