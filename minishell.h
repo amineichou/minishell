@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/29 15:46:40 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/04/29 19:27:06 by moichou          ###   ########.fr       */
+>>>>>>> b46fa8112481bf767d8c2001921ff9203d00501f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,23 +98,28 @@ typedef struct s_token {
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_herdoc {
+	char			*del;
+	bool			is_expand;
+	struct s_herdoc	*next;
+}	t_herdoc;
+
 // #define malloc(x) NULL
 
 // START FUNCTION
 t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta);
 
-// synthax sanitizer
-char		*ft_sanitizer(char *line);
-int			ft_sanitize_pipes(char *line);
-int			ft_sanitize_quotes(char *line);
-int			ft_sanitize_redirections(char *line);
+// syntax sanitizer
+t_toexec	*ft_sanitizer(char *line, t_env *env, int ex_sta);
+int			ft_sanitize_pipes(char *line, int *where);
+int			ft_sanitize_quotes(char *line, int *where);
+int			ft_sanitize_redirections(char *line, int *where);
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta);
 t_token		*ft_make_tokens(char *sanitize_result);
-int			ft_check_valid_tokens(t_token *lst_token);
 
 // expanding
 void		ft_expand(t_token *lst_token, t_env *envl, int ex_sta);
@@ -118,13 +127,16 @@ char		*ft_replace_dollar(char *to_expand, t_env *env, int ex_sta);
 char		*ft_remove_qoutes(char *str);
 
 // herdoc
-void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
-void	ft_heredoc_handler(t_pipe *needs, t_env *env);
+// void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
+void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta);
+void	ft_heredoc_handler_syn(t_env *env, char *delemiter);
+
 
 // utils
 int			ft_strlen(char *str);
 char		**ft_split(char *s, char c);
 void		ft_printerror(char *msg);
+void		ft_put_syntaxerror(char *msg, char c);
 int			ft_count_legal_char(char *line, char c);
 char		*ft_strldup(char *s1, int lenght);
 int			ft_isspecialchars(char c);
@@ -133,13 +145,17 @@ int			ft_isquote(char c);
 // tools
 t_toexec	*ft_create_node(char *cmd, char **args);
 t_expand	*ft_create_expand_node(char *str);
+t_herdoc	*ft_create_herdoc_node(char *del);
+void		ft_append_node_herdoc(t_herdoc **head, t_herdoc *node);
 void		ft_append_node_t_token(t_token **head, t_token *node);
 void		ft_append_node_t_toexec(t_toexec **head, t_toexec *node);
 void		ft_append_node_expand(t_expand **head, t_expand *node);
+void		ft_pop_node_t_token(t_token **head, t_token *to_pop);
 // 1
 // char		*ft_remove_qoutes(char *str);
 void		ft_skip_quotes(char *str, int *i);
 int			ft_isredirection(char c);
+char		*ft_get_inside_quotes(char *in_quotes, int *i, char q_type);
 
 // libft
 char		*ft_strdup(char *s1);
@@ -170,6 +186,7 @@ void		ft_free_token(t_token *head);
 
 // signal hanldler
 void		ft_sigkill_handler(int signum);
+void		ft_sigquit_handler(int signum);
 
 // tests start
 void test_tokens(t_token *lst_token_input);

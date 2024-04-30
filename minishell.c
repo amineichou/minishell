@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 15:32:00 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:33:43 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int main(int ac, char **av, char **env)
 	rl_catch_signals = 0;
 	exit_status = 0;
 	signal(SIGINT, ft_sigkill_handler);
+	signal(SIGQUIT, ft_sigquit_handler);
 	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));
