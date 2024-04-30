@@ -6,7 +6,11 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/30 18:44:12 by moichou          ###   ########.fr       */
+=======
+/*   Updated: 2024/04/30 16:12:36 by zyamli           ###   ########.fr       */
+>>>>>>> 52851129b44902c75ba1d15e6cc16ed2ef33490f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +367,7 @@ void	last_child(t_toexec **cmds, t_pipe *needs)
 	// needs->p++;
 	needs->pids[needs->p] = fork();
 	if (needs->pids[needs->p] == -1)
-		error_handler("fork");
+		return(perror("fork"));
 	if (needs->pids[needs->p] == 0)
 	{
 		// dprintf(2, "hana last == %d\n", getpid());
@@ -394,7 +398,7 @@ void	last_child(t_toexec **cmds, t_pipe *needs)
 void cmds_executer(t_toexec *cmds, t_pipe *needs)
 {
 	if (pipe(needs->fd) == -1)
-		error_handler("pipe");
+		return(perror("pipe"));
 	needs->pids[needs->p] = fork();
 	if (needs->pids[needs->p] == -1)
 		return (perror("fork"));
@@ -423,7 +427,7 @@ void cmds_executer(t_toexec *cmds, t_pipe *needs)
 	{
 		// dprintf(2, "%d === 0;;;%d .   1;;;%d\n", needs->p, needs->fd[0], needs->fd[1]);
 		if (-1 == dup2(needs->fd[0], STDIN_FILENO))
-			error_handler("dup2");
+			return(perror("dup2"));
 		(close(needs->fd[0]), close(needs->fd[1]));
 		if(cmds->input != STDIN_FILENO)
 			close(cmds->input);
