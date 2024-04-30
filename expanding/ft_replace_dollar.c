@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace_dollar.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/25 17:54:56 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:46:12 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*ft_env_list_serch_res(t_env *head, char *to_look)
+char	*ft_env_list_serch_res(t_env *head, char *to_look)
 {
 	t_env	*tmp;
 

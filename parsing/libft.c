@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/24 21:33:47 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/27 15:13:40 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,4 +305,18 @@ char	*ft_itoa(int n)
 	if (n < 0)
 		converted_number[0] = '-';
 	return (converted_number);
+}
+
+void	ft_putstr(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write (1, &s[i], 1);
+		i++;
+	}
 }

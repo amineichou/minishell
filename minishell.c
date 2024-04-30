@@ -6,11 +6,13 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/26 15:46:56 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:32:00 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_spot = 0;
 
 void lex(void)
 {
@@ -25,6 +27,16 @@ void fill_envinlist(t_toexec **head, t_env *env_list)
         current = current->next;
     }
 }
+
+void update_env(t_env *envl)
+{
+	char *to_replace;
+
+	to_replace = ft_env_list_serch_res(envl, "SHLVL");
+	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1), "SHLVL");
+	env_search_replace(envl, ft_strdup("/bin/minishell"), "SHELL");
+}
+
 int main(int ac, char **av, char **env)
 {
 	t_toexec	*lst;
@@ -40,7 +52,6 @@ int main(int ac, char **av, char **env)
 	i = 0;
 	rl_catch_signals = 0;
 	exit_status = 0;
-	IS_KILL_ON_VAL = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	while (env[i] != NULL)
 	{
@@ -65,6 +76,7 @@ int main(int ac, char **av, char **env)
 	}
 	t_pipe needs;
 	needs.env_dup = NULL;
+	update_env(envl);
 	// atexit(lex);
 	while (1)
 	{

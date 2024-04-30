@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/26 15:46:53 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/29 15:46:40 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-#ifndef IS_KILL_ON
-#define IS_KILL_ON
-	int IS_KILL_ON_VAL;
-#endif
+
+int g_spot;
 
 #define MALLOC_ERORR "allocation failed\n"
 #define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
@@ -153,6 +151,7 @@ void		ft_strcpy(char *dst, char *src, size_t dstsize);
 int			ft_is_alphanumeric(char c);
 char		*ft_itoa(int n);
 void	ft_putstr_fd(char *s, int fd);
+void	ft_putstr(char *s);
 void	ft_print_error(char *str);
 char* ft_strstr(const char* haystack, const char* needle);
 char	*ft_substr(char *s, int start, int len);
@@ -190,6 +189,7 @@ void env_search_replace(t_env *head, char *to_replace, char *to_look);
 int env_list_serch(t_env **head, char *to_look);
 void ft_unset(t_env **env, char *to_del);
 int ft_exit(char **args);
+char	*ft_env_list_serch_res(t_env *head, char *to_look);
 #endif
 
 // 'something''something'
