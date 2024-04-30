@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/29 20:46:03 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 12:37:11 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 	char	*line;
 	int		fl;
 
-	node->output = open("tempfile", O_CREAT | O_RDWR, 0777);
+	node->input = open("tempfile", O_CREAT | O_RDWR, 0777);
 	fl = open("tempfile", O_CREAT | O_RDWR, 0777);
-	if (node->output == -1 || fl == -1)
+	if (node->input == -1 || fl == -1)
 		ft_printerror("here_doc");
 	if (-1 == unlink("tempfile"))
 		(perror("unlink"));
-	if (node->output == -1)
+	if (node->input == -1)
 		ft_printerror("here_doc");
 	while (1)
 	{
@@ -45,6 +45,7 @@ void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 		if (herdoc_node->is_expand)
 			herdoc_node->del = ft_replace_dollar(herdoc_node->del, node->env, ex_sta);
 		ft_putstr_fd(line, fl);
+		ft_putstr_fd("\n", fl);
 		free(line);
 	}
 	(free(herdoc_node->del), free(line), close(fl));

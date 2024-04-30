@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 03:30:26 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/29 14:53:22 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 11:01:31 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ void	ft_pop_node_t_token(t_token **head, t_token *to_pop)
 {
 	t_token	*prev;
 
+	if ((*head) == NULL)
+		return ;
 	prev = (*head);
-	if (prev == to_pop)
+	if ((*head) == to_pop)
 	{
 		(*head) = to_pop->next;
 		free(to_pop->value);
@@ -45,12 +47,14 @@ void	ft_pop_node_t_token(t_token **head, t_token *to_pop)
 	while (prev)
 	{
 		if (prev->next == to_pop)
+		{
+			prev->next = to_pop->next;
+			free(to_pop->value);
+			free(to_pop);
 			break;
+		}
 		prev = prev->next;
 	}
-	prev->next = to_pop->next;
-	free(to_pop->value);
-	free(to_pop);
 }
 
 // int main(void)
@@ -78,9 +82,14 @@ void	ft_pop_node_t_token(t_token **head, t_token *to_pop)
 // 		test = test->next;
 // 	}
 
+// 	ft_pop_node_t_token(&head, head);
+// 	ft_pop_node_t_token(&head, node1);
+// 	ft_pop_node_t_token(&head, node2);
 // 	ft_pop_node_t_token(&head, node3);
+// 	ft_pop_node_t_token(&head, node4);
+// 	ft_pop_node_t_token(&head, node5);
 // 	t_token *last = head;
-// 	while (last->next)
+// 	while (last)
 // 	{
 // 		printf("%d\n", last->order);
 // 		last = last->next;

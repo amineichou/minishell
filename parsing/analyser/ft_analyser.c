@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/29 21:34:22 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 12:36:05 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,16 @@ static void	ft_set_default_vals(t_toexec *node)
 
 static char *ft_ckeck_herdoc_del(char *del, t_herdoc *node)
 {
+	char	*res;
+
 	if (ft_isquote(del[0]))
 	{
 		node->is_expand = false;
 		return (ft_strldup(&del[1], ft_strlen(del) - 2));
 	}
 	node->is_expand = true;
-	return (del);
+	res = ft_strdup(del);
+	return (res);
 }
 
 static t_herdoc	*ft_go_for_herdoc(t_token *head)
@@ -105,7 +108,7 @@ static t_herdoc	*ft_go_for_herdoc(t_token *head)
 	t_token		*tmp;
 	t_herdoc	*lst_herdoc;
 	t_herdoc	*herdoc_node;
-	// t_token		*pop_it;
+	t_token		*pop_it;
 
 	tmp = head;
 	lst_herdoc = NULL;
@@ -113,13 +116,16 @@ static t_herdoc	*ft_go_for_herdoc(t_token *head)
 	{
 		if (tmp && tmp->token == HEREDOC)
 		{
-			// pop_it = tmp;
-			// tmp = tmp->next;
-			ft_pop_node_t_token(&head, tmp);
+			pop_it = tmp;
+			tmp = tmp->next;
+			ft_pop_node_t_token(&head, pop_it);
 			herdoc_node = malloc(sizeof(t_herdoc));
 			herdoc_node->del = ft_ckeck_herdoc_del(tmp->value, herdoc_node);
+			herdoc_node->next = NULL;
 			ft_append_node_herdoc(&lst_herdoc, herdoc_node);
-			ft_pop_node_t_token(&head, tmp);
+			pop_it = tmp;
+			tmp = tmp->next;
+			ft_pop_node_t_token(&head, pop_it);
 		}
 		else
 			tmp = tmp->next;
@@ -142,7 +148,6 @@ static void	ft_run_for_herdoc(t_herdoc *head, t_toexec *node, int ex_sta)
 	{
 		ft_heredoc_handler_exec(node, tmp, ex_sta);
 		tmp = tmp->next;
-			printf("SIGFAULT\n");
 	}
 }
 
@@ -168,7 +173,10 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 		ft_set_default_vals(node);
 		lst_herdoc = ft_go_for_herdoc(lst_token);
 		if (lst_herdoc)
+		{
 			ft_run_for_herdoc(lst_herdoc, node, ex_sta);
+			// test_tokens(lst_token);
+		}
 		if (lst_token->token == WORD)
 		{
 			ft_handle_args(&node, &lst_token);
@@ -202,8 +210,6 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 			ft_append_node_t_toexec(&lst_toexec, node);
 			continue;
 		}
-		// if (lst_token->token == HEREDOC)
-		// 	lst_token = lst_token->next->next;
 	}
 	return (lst_toexec);
 }

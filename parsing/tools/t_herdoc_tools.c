@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:34:29 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 12:34:51 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 12:00:57 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	ft_append_node_herdoc(t_herdoc **head, t_herdoc *node)
 	while (last->next)
 		last = last->next;
 	last->next = node;
-	node->next = NULL;
+	// node->next = NULL;
 }
