@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 15:33:43 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/04/30 16:37:51 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_spot = 0;
+int	g_inexec = 0;
 
 void lex(void)
 {
@@ -87,6 +87,7 @@ int main(int ac, char **av, char **env)
 			write(1, "exit\n", 6);
 			exit (0);
 		}
+		g_inexec = 0;
 		line = ft_trim_spaces(line); //TODO : protect
 		if (line && line[0])
 		{
@@ -95,6 +96,7 @@ int main(int ac, char **av, char **env)
 			if (lst)
 			{
 				// test_lst(lst);
+				g_inexec = 1;
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
 				envl = lst->env;

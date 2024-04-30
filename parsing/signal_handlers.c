@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:33:14 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 22:21:03 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 16:48:36 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_sigkill_handler(int signum)
 {
-	if (signum == 2)
+	if (signum == 2 && !g_inexec)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
