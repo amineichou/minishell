@@ -1,9 +1,14 @@
 {
 	"files.associations": {
+		"minishell.h": "c",
 <<<<<<< HEAD
-		"bitset": "c"
+		"array": "c",
+		"iterator": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c"
 =======
-		"minishell.h": "c"
->>>>>>> 508aeafdc13dd3a3c0b84db1ff1c87721abda5bc
+		"chrono": "c"
+>>>>>>> b46fa8112481bf767d8c2001921ff9203d00501f
 	}
 }
