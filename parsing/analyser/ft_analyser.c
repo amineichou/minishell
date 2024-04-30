@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 15:44:51 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 22:38:00 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,8 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 	t_herdoc	*lst_herdoc;
 
 	lst_token = ft_make_tokens(sanitize_result);
-	// test_tokens(lst_token);
 	// expanding
-	ft_expand(lst_token, envl, ex_sta);
+	// test_tokens(lst_token);
 	lst_toexec = NULL;
 	lst_herdoc = NULL;
 	while (lst_token)
@@ -176,6 +175,8 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 		lst_herdoc = ft_go_for_herdoc(&lst_token);
 		if (lst_herdoc)
 			ft_run_for_herdoc(lst_herdoc, node, ex_sta);
+		else
+			ft_expand(lst_token, envl, ex_sta);
 		// if (lst_token == NULL)
 		// 	break ;
 		if (lst_token && lst_token->token == WORD)
@@ -214,5 +215,6 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 		// if (lst_token && lst_token->token == HEREDOC)
 		// 	lst_token == lst_token->next->next;
 	}
+	// test_lst(lst_toexec);
 	return (lst_toexec);
 }
