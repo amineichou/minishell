@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 15:21:42 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:44:19 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 		if (!ft_strncmp(line, herdoc_node->del, ft_strlen(herdoc_node->del)))
 			break ;
 		if (herdoc_node->is_expand)
-			herdoc_node->del = ft_replace_dollar(herdoc_node->del, node->env, ex_sta);
+			line = ft_replace_dollar(line, node->env, ex_sta);
 		ft_putstr_fd(line, fl);
 		ft_putstr_fd("\n", fl);
 		free(line);

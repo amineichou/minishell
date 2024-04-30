@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 15:30:57 by moichou          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:44:51 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ char	*ft_get_herdoc_del(char *line, int *i)
 	return (NULL);
 }
 
-static void	ft_set_default_vals(t_toexec *node)
+static void	ft_set_default_vals(t_toexec *node, t_env *envl)
 {
 	node->input = 0;
 	node->output = 1;
 	node->args = NULL;
+	node->env = envl;
 }
 
 static char *ft_ckeck_herdoc_del(char *del, t_herdoc *node)
@@ -171,7 +172,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 		node = malloc(sizeof(t_toexec));
 		if (!node)
 			return (ft_printerror(MALLOC_ERORR), NULL);
-		ft_set_default_vals(node);
+		ft_set_default_vals(node, envl);;
 		lst_herdoc = ft_go_for_herdoc(&lst_token);
 		if (lst_herdoc)
 			ft_run_for_herdoc(lst_herdoc, node, ex_sta);
