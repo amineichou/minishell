@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:53:37 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:02:38 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,13 @@ void update_env(t_env *envl)
 	env_search_replace(envl, NULL, "OLDPWD");
 	
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 static void	ft_catch_signal(void)
 {
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
 }
 
-int main(int ac, char **av, char **env)
-=======
->>>>>>> 75dff208c799167fe5e1802af455d52ee3c6f605
 t_env *set_env(char **env)
 {
 	t_env	*envl = NULL;
@@ -60,11 +56,6 @@ t_env *set_env(char **env)
 
 	int i;
 	i = 0;
-<<<<<<< HEAD
-	rl_catch_signals = 0;
-	exit_status = 0;
-=======
->>>>>>> 75dff208c799167fe5e1802af455d52ee3c6f605
 	while (env[i] != NULL)
 	{
 		t_env *new_env = nyalloc(sizeof(t_env), 'a');

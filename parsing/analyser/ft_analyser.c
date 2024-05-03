@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_analyser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:53:58 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:05:25 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static t_herdoc	*ft_go_for_herdoc(t_token **head)
 			pop_it = tmp;
 			tmp = tmp->next;
 			ft_pop_node_t_token(head, pop_it);
-			herdoc_node = malloc(sizeof(t_herdoc));
+			herdoc_node = zyalloc(sizeof(t_herdoc), 'a');
 			herdoc_node->del = ft_ckeck_herdoc_del(tmp->value, herdoc_node);
 			herdoc_node->next = NULL;
 			ft_append_node_herdoc(&lst_herdoc, herdoc_node);

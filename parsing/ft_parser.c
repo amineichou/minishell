@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:46:37 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:02:59 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,8 @@ t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta)
 
 	lst_toexec = ft_sanitizer(line, envl, ex_sta);
 	if (ft_check_valid_fd(lst_toexec) == -1)
-		return (NULL);
+		return (free(line), NULL);
 	// test_lst(lst_toexec);
+	free(line);
 	return (lst_toexec);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:54:18 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:00:16 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_token	*ft_make_tokens(char *sanitize_result)
 	lst_token = NULL;
 	while (sanitize_result[i])
 	{
-		node = malloc(sizeof(t_token));
+		node = zyalloc(sizeof(t_token), 'a');
 		if (!node)
 			return (ft_printerror(MALLOC_ERORR),  NULL);
 		start = i;
