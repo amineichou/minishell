@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/22 23:29:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:47:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ static char	*ft_get_toknen_val(char *str, int start, int i)
 
 	res = ft_strldup(&str[start], i - start);
 	if (!res)
-		return (NULL); // TODO : leaks
+		return (NULL);
 	return (res);
 }
-
 
 t_token	*ft_make_tokens(char *sanitize_result)
 {
@@ -78,15 +77,18 @@ t_token	*ft_make_tokens(char *sanitize_result)
 	lst_token = NULL;
 	while (sanitize_result[i])
 	{
-		node = malloc(sizeof(t_token));// TODO : malloc protection
+		node = malloc(sizeof(t_token));
+		if (!node)
+			return (ft_printerror(MALLOC_ERORR),  NULL);
 		start = i;
 		ft_check_token_val(sanitize_result, &i);
 		if (start == i)
 			ft_handle_spcecial_tokens(sanitize_result, &i);
 		while (sanitize_result[i] && ft_isspace(sanitize_result[i]))
 			i++;
-		// doing this just temporary to fix some bugs in execution
-		node->value = ft_trim_spaces(ft_get_toknen_val(sanitize_result, start, i));// TODO : malloc protection
+		node->value = ft_trim_spaces(ft_get_toknen_val(sanitize_result, start, i));
+		if (node->value == NULL)
+			return ( NULL);
 		node->token = ft_check_token_type(node->value);
 		ft_append_node_t_token(&lst_token, node);
 		if (sanitize_result[i] == '\0')

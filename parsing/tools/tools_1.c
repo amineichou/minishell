@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 16:50:07 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:48:34 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ char	*ft_trim_spaces(char *str)
 	j = ft_strlen(str) - j - 1;
 	res = ft_strldup(str + i, (ft_strlen(str) - i - j));
 	if (!res)
-		return (ft_printerror(MALLOC_ERORR),NULL);
+		return (ft_printerror(MALLOC_ERORR), NULL);
+	// free (str), str = NULL, 
 	return (res);
 }
 

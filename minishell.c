@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 18:34:30 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:48:50 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void update_env(t_env *envl)
 	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1), "SHLVL");
 	env_search_replace(envl, ft_strdup("/bin/minishell"), "SHELL");
 }
+static void	ft_catch_signal(void)
+{
+	signal(SIGINT, ft_sigkill_handler);
+	signal(SIGQUIT, ft_sigquit_handler);
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -52,8 +57,6 @@ int main(int ac, char **av, char **env)
 	i = 0;
 	rl_catch_signals = 0;
 	exit_status = 0;
-	signal(SIGINT, ft_sigkill_handler);
-	signal(SIGQUIT, ft_sigquit_handler);
 	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));
@@ -78,6 +81,7 @@ int main(int ac, char **av, char **env)
 	t_pipe needs;
 	needs.env_dup = NULL;
 	update_env(envl);
+	ft_catch_signal();
 	// atexit(lex);
 	while (1)
 	{
@@ -101,9 +105,9 @@ int main(int ac, char **av, char **env)
 				envl = lst->env;
 				exit_status = *(needs.ex_stat);
 				g_inexec = 0;
+				// ft_free_toexec(lst);
 				continue ;
 			}
-			free(line);
 		}
 	}
 	(void)av;
