@@ -57,9 +57,7 @@ static void	ft_catch_signal(void)
 }
 
 int main(int ac, char **av, char **env)
-=======
 t_env *set_env(char **env)
->>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
 {
 	t_env	*envl = NULL;
 	t_env	*tmp = NULL;
@@ -67,11 +65,8 @@ t_env *set_env(char **env)
 
 	int i;
 	i = 0;
-<<<<<<< HEAD
 	rl_catch_signals = 0;
 	exit_status = 0;
-=======
->>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
 	while (env[i] != NULL)
 	{
 		t_env *new_env = nyalloc(sizeof(t_env), 'a');
