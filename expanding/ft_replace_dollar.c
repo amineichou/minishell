@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace_dollar.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/03 17:02:20 by moichou          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/02 18:15:06 by zyamli           ###   ########.fr       */
+>>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +62,7 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env, int ex_sta)
 	if (str[*i] == '?')
 	{
 		(*i)++;
-		return (ft_itoa(ex_sta));
+		return (ft_itoa(ft_set_status(0, 0)));
 	}
 	if (str[*i] == '\0' || !ft_is_alphanumeric(str[*i]))
 		return (ft_strdup("$"));

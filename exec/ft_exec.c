@@ -3,25 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/30 22:21:08 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 16:52:31 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "head.h"
 #include "../minishell.h"
 #include <fcntl.h> 
-void print_open_file_descriptors() {
-    int fd;
+void print_open_file_descriptors()
+{
+   int fd;
+    char path[256];
     
-    // Iterate through possible file descriptors
-    for (fd = 0; fd < 256; fd++) { // Adjust the range as per your requirements
-        // int flags = fcntl(fd, F_GETFD);
-        // if (flags != -1) {
-        //     dprintf(2,"File descriptor %d is open\n", fd);
-        // }
+    for(fd = 0; fd < 2500; fd++) {
+        if (fcntl(fd, F_GETFD) != -1) {
+            if (fcntl(fd, F_GETPATH, path) != -1) {
+                printf("File descriptor %d is referencing: %s\n", fd, path);
+            } else {
+                printf("File descriptor %d is not associated with an open file.\n", fd);
+            }
+        }
     }
 }
 void ff(void)
@@ -86,7 +90,7 @@ char	**extract_paths(char **env)
 	
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], "PATH", 4) == 0)
+		if (ft_strncmp(env[i], "PATH=", 4) == 0)
 		{
 			// printf("%s", env[i]);
 			return (ft_split(env[i] + 5, ':'));}
@@ -327,7 +331,10 @@ void	ft_execution(t_toexec *cmd, t_pipe *needs)
 			}
 		}
 		else
-			ft_print_error("command not found\n");
+		{
+			ft_printerror(cmd->args[0]);
+			ft_print_error(": command not found\n");
+		}
 	}
 	// if (access(cmd->args[0], F_OK) == 0)
 	// 	needs->path = cmd->args[0];
@@ -339,6 +346,9 @@ void	ft_execution(t_toexec *cmd, t_pipe *needs)
 		ft_putstr_fd(": Permission denied\n", 2);
 		exit(126);
 	}
+	if(!cmd->args[0][0])
+		ft_print_error("minishell: : command not found\n");
+		
 			// else
 			// {
 			// 	ft_putstr_fd( "minishell: ",2);
@@ -348,7 +358,6 @@ void	ft_execution(t_toexec *cmd, t_pipe *needs)
 			// }
 	// dprintf(needs->path);
 		// system("lsof -c minishell");
-
 
 	// dprintf(2,"%s===== %s ======= %s\n", needs->path, cmd->args[0], cmd->args[1]);
 	// printf("hna  %s   %s\n", needs->path, cmd->args[0]);
@@ -443,7 +452,7 @@ void	first_cmd(t_toexec **cmds, t_pipe *needs)
 	// dup2(cmds->input, 0);
 	// dprintf(2, "%d\n", needs->i);
 	env_search_replace((*cmds)->env, ft_strdup(" "), "_");
-	needs->pids = malloc(sizeof(int) * needs->i);
+	needs->pids = zyalloc(sizeof(int) * needs->i, 'a');
 	if(!needs->pids)
 		return ; 
 	while (needs->i > 1)
@@ -468,9 +477,10 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	// needs.save_fd_in = cmds->save_fd_in;
 	needs->save_fd_in = dup(STDIN_FILENO);
 	needs->save_fd_out = dup(STDOUT_FILENO);
+	tcgetattr(STDIN_FILENO, &needs->term);
 		if(lst_size(cmds) == 1)
 		{
-			needs->pids = malloc(sizeof(int));
+			needs->pids = zyalloc(sizeof(int), 'a');
 			if(cmds->args)
 			{
 				env_search_replace(cmds->env, ft_strdup(cmds->args[0]), "_");
@@ -486,7 +496,6 @@ void executer(t_toexec *cmds, t_pipe *needs)
 				if(needs->pids[needs->p] == -1)
 					perror("fork");
 				
-				tcgetattr(STDIN_FILENO, &needs->term);
 				if(needs->pids[needs->p] == 0)
 					ft_execution(cmds, needs);
 					
@@ -521,7 +530,9 @@ void executer(t_toexec *cmds, t_pipe *needs)
 		// dprintf(2, "{{{pids==%d}}}\n", needs.pids[needs.p]);
 		needs->j++;
 	}
+	ft_set_status(WEXITSTATUS(x), 1);
 	*(needs->ex_stat)= ft_update_status(x, &needs->term);
+	
 
 }
 
