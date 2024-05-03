@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/03 16:53:36 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/03 16:56:28 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void lst_add(t_env **lst, t_env *new)
 
 t_env *env_new(char *var, char *name)
 {
-    t_env *newnode = (t_env *)zyalloc(sizeof(t_env));
+    t_env *newnode = (t_env *)zyalloc(sizeof(t_env), 'a');
     if (newnode == NULL)
 	{
         perror("malloc");
@@ -85,9 +85,9 @@ void env_search_replace(t_env *head, char *to_replace, char *to_look)
 		{
 			if(ft_strcmp(tmp->name, to_look) == 0)
 			{
-				free(tmp->var);
+				// free(tmp->var);
 				tmp->var = ft_strdup(to_replace);
-				free(to_replace);
+				// free(to_replace);
 				return;
 			}
 				
@@ -233,7 +233,7 @@ void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
 		data.env = needs->env_dup;
 		
 		export_env_print(&data);
-		free_env_list(&needs->env_dup);
+		// free_env_list(&needs->env_dup);
 		needs->env_dup = NULL;
 	}
 	else if (name && var && *var)
@@ -265,7 +265,7 @@ void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
 char **split_env(char *arg, char c)
 {
 	int i;
-	char **res = malloc(sizeof(char *) * 3);
+	char **res = zyalloc(sizeof(char *) * 3, 'a');
 	
 	i = 0;
 	while(arg[i] != c && arg[i])

@@ -6,7 +6,11 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/05/03 17:46:15 by zyamli           ###   ########.fr       */
+=======
 /*   Updated: 2024/05/03 17:49:44 by moichou          ###   ########.fr       */
+>>>>>>> c384899af5bcbe955c8e2b74249154e533cb4566
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +213,7 @@ char	*ft_env_list_serch_res(t_env *head, char *to_look);
 char **split_env(char *arg, char c);
 int	ft_set_status(int	new_status, int type);
 void *zyalloc(size_t size, int flag);
+void *nyalloc(size_t size, int flag);
 #endif
 
 // 'something''something'

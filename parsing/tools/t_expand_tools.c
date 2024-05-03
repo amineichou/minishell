@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_expand_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 10:13:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/21 22:51:22 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:00:43 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_expand	*ft_create_expand_node(char *str)
 {
 	t_expand	*node;
 
-	node = malloc(sizeof(t_expand));
+	node = zyalloc(sizeof(t_expand), 'a');
 	if (!node)
 		return (ft_printerror(MALLOC_ERORR), NULL);
 	node->value = str;

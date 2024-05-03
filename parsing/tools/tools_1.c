@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tools_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/05/03 17:00:27 by zyamli           ###   ########.fr       */
+=======
 /*   Updated: 2024/05/03 17:48:34 by moichou          ###   ########.fr       */
+>>>>>>> c384899af5bcbe955c8e2b74249154e533cb4566
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +87,7 @@ char	*ft_strldup(char *s1, int lenght)
 	i = 0;
 	if (ft_strlen(s1) < lenght)
 		return (NULL);
-	s2 = malloc(sizeof(char) * (lenght + 1));
+	s2 = zyalloc(sizeof(char) * (lenght + 1), 'a');
 	if (!s2)
 		return (NULL);
 	while (i < lenght)

@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/03 16:52:31 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/03 17:01:39 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ char **env_tolist(t_env **env_list)
         size++;
         current = current->next;
     }
-    result = (char **)malloc(sizeof(char *) * (size + 1));
+    result = (char **)zyalloc(sizeof(char *) * (size + 1), 'a');
 	if(!result)
 		return(perror("malloc"), NULL);
     current = (*env_list);
