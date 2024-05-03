@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 22:38:46 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/02 18:15:06 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env, int ex_sta)
 	if (str[*i] == '?')
 	{
 		(*i)++;
-		return (ft_itoa(ex_sta));
+		return (ft_itoa(ft_set_status(0, 0)));
 	}
 	if (str[*i] == '\0' || !ft_is_alphanumeric(str[*i]))
 		return (ft_strdup("$"));

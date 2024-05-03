@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/27 15:13:40 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/03 16:53:04 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strdup(char *s1)
 	if(!s1)
 		return (NULL);
 	str_length = ft_strlen(s1) + 1;
-	s2 = malloc(sizeof(char) * str_length);
+	s2 = zyalloc(sizeof(char) * str_length);
 	if (!s2)
 		return (0);
 	while (s1[i])
@@ -319,4 +319,75 @@ void	ft_putstr(char *s)
 		write (1, &s[i], 1);
 		i++;
 	}
+}
+
+void garb_add(t_garbage **lst, t_garbage *new)
+{
+	t_garbage *lastone;
+
+	if (!lst || !new)
+		return;
+	if (!(*lst))
+	{
+		*lst = new;
+		return;
+	}
+	lastone = *lst;
+	while (lastone->next)
+		lastone = lastone->next;
+	lastone->next = new;
+	new->next = NULL;
+}
+
+t_garbage *garb_new(void *addrress)
+{
+    t_garbage *newnode = malloc(sizeof(t_garbage));
+    if (newnode == NULL)
+	{
+        perror("malloc");
+        return(NULL);
+    }
+    newnode->adr = addrress;
+    newnode->next = NULL;
+    return (newnode);
+}
+
+void free_garb_list(t_garbage **head)
+{
+	t_garbage *current;
+	t_garbage *next;
+
+	current = *head;
+	while (current != NULL)
+	{
+
+		next = current->next;
+		free(current->adr);
+		free(current);
+		current = next;
+	}
+}
+
+void *zyalloc(size_t size, int flag)
+{
+	static t_garbage	*gooper;
+	t_garbage			*node;
+	void *addrress;
+	
+	if(flag == 'a')
+	{
+		addrress = malloc(size);
+		if(gooper == NULL)
+		{
+			gooper = garb_new(addrress);
+		}
+		else
+		{
+			node = garb_new(addrress);
+			garb_add(&gooper, node);
+		}
+	}
+	else if(flag == 'f')
+		free_garb_list(&gooper);
+	return(addrress);
 }

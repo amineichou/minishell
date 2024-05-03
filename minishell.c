@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 18:34:30 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:13:45 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,35 +31,30 @@ void fill_envinlist(t_toexec **head, t_env *env_list)
 void update_env(t_env *envl)
 {
 	char *to_replace;
-
+	char *tmp;
+	int level;
 	to_replace = ft_env_list_serch_res(envl, "SHLVL");
+	tmp = to_replace;
 	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1), "SHLVL");
+	free(tmp);
 	env_search_replace(envl, ft_strdup("/bin/minishell"), "SHELL");
+	env_search_replace(envl, NULL, "OLDPWD");
+	
 }
-
-int main(int ac, char **av, char **env)
+t_env *set_env(char **env)
 {
-	t_toexec	*lst;
-	char		*line;
 	t_env	*envl = NULL;
 	t_env	*tmp = NULL;
 	char	**argument = NULL;
-	int		exit_status;
 
-	(void)ac;
-	(void)av;
 	int i;
 	i = 0;
-	rl_catch_signals = 0;
-	exit_status = 0;
-	signal(SIGINT, ft_sigkill_handler);
-	signal(SIGQUIT, ft_sigquit_handler);
 	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));
 		if (!new_env)
-			return (ft_printerror(MALLOC_ERORR), 0);
-		argument = ft_split(env[i], '=');
+			return (ft_printerror(MALLOC_ERORR), NULL);
+		argument = split_env(env[i], '=');
         new_env->var = ft_strdup(argument[1]);
 		new_env->name = ft_strdup(argument[0]);
 		free_leaks(argument);
@@ -75,9 +70,33 @@ int main(int ac, char **av, char **env)
 		}
 		i++;
 	}
-	t_pipe needs;
-	needs.env_dup = NULL;
+	return(envl);
+}
+int	ft_set_status(int	new_status, int type)
+{
+	static int	old_status;
+
+	if (type)
+		old_status = new_status;
+	return (old_status);
+}
+int main(int ac, char **av, char **env)
+{
+	t_toexec	*lst;
+	char		*line;
+	t_env *envl;
+	int		exit_status;
+
+	(void)ac;
+	(void)av;
+
+	rl_catch_signals = 0;
+	exit_status = 0;
+	signal(SIGINT, ft_sigkill_handler);
+	signal(SIGQUIT, ft_sigquit_handler);
+	envl = set_env(env);
 	update_env(envl);
+	t_pipe needs;
 	// atexit(lex);
 	while (1)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 18:43:50 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 16:51:42 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,11 @@ typedef struct s_herdoc {
 	struct s_herdoc	*next;
 }	t_herdoc;
 
+typedef struct s_garbage {
+	void	*adr;
+	struct	s_garbage	*next;
+}	t_garbage;
+
 // #define malloc(x) NULL
 
 // START FUNCTION
@@ -174,7 +179,7 @@ size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
 char	**free_leaks(char **strs);
 int	ft_atoi(const char *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
-void freeList(t_env **head);
+void free_env_list(t_env **head);
 
 // free leaks
 void		ft_free_toexec(t_toexec *head);
@@ -205,6 +210,9 @@ int env_list_serch(t_env **head, char *to_look);
 void ft_unset(t_env **env, char *to_del);
 int ft_exit(char **args);
 char	*ft_env_list_serch_res(t_env *head, char *to_look);
+char **split_env(char *arg, char c);
+int	ft_set_status(int	new_status, int type);
+void *zyalloc(size_t size, int flag);
 #endif
 
 // 'something''something'

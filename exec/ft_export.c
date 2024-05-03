@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/27 16:52:33 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/03 16:53:36 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void lst_add(t_env **lst, t_env *new)
 
 t_env *env_new(char *var, char *name)
 {
-    t_env *newnode = (t_env *)malloc(sizeof(t_env));
+    t_env *newnode = (t_env *)zyalloc(sizeof(t_env));
     if (newnode == NULL)
 	{
         perror("malloc");
@@ -76,7 +76,7 @@ void env_search_replace(t_env *head, char *to_replace, char *to_look)
 
 	if (!head) 
 	{
-		printf("Invalid data or env is NULL\n");
+		// printf("Invalid data or env is NULL\n");
 		return;
 	}
 	// printf("%s= = =%s\n", to_replace, to_look);
@@ -85,7 +85,9 @@ void env_search_replace(t_env *head, char *to_replace, char *to_look)
 		{
 			if(ft_strcmp(tmp->name, to_look) == 0)
 			{
+				free(tmp->var);
 				tmp->var = ft_strdup(to_replace);
+				free(to_replace);
 				return;
 			}
 				
@@ -99,7 +101,7 @@ int env_list_serch(t_env **head, char *to_look)
 
 	if (!(*head)) 
 	{
-		printf("Invalid data or env is NULL\n");
+		// printf("Invalid data or env is NULL\n");
 		return (0);
 	}
 	tmp = *head;
@@ -118,7 +120,7 @@ void env_search_and_add(t_env *head, char *to_add, char *to_look)
 
 	if (!head) 
 	{
-		printf("Invalid data or env is NULL\n");
+		// printf("Invalid data or env is NULL\n");
 		return;
 	}
 
@@ -160,7 +162,7 @@ void export_env_print(t_toexec *data)
     t_env *tmp;
 
     if (!data || !data->env) {
-        printf("Invalid data or env is NULL\n");
+        // printf("Invalid data or env is NULL\n");
         return;
     }
 	
@@ -231,7 +233,7 @@ void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
 		data.env = needs->env_dup;
 		
 		export_env_print(&data);
-		freeList(&needs->env_dup);
+		free_env_list(&needs->env_dup);
 		needs->env_dup = NULL;
 	}
 	else if (name && var && *var)
@@ -260,13 +262,13 @@ void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
 	// data.env = exported_env;	
 	// env_print(&data);
 }
-char **split_env(char *arg)
+char **split_env(char *arg, char c)
 {
 	int i;
 	char **res = malloc(sizeof(char *) * 3);
 	
 	i = 0;
-	while(arg[i] != '=' && arg[i])
+	while(arg[i] != c && arg[i])
 		i++;
 	// if(arg[i] == '=' && arg[i + 1] == '\0')
 	// {
@@ -274,7 +276,7 @@ char **split_env(char *arg)
 	// 	res[1] = NULL;
 	// 	return(res);
 	// }
-	if(arg[i] == '=')
+	if(arg[i] == c)
 	{
 		res[0] = ft_substr(arg, 0, i);
 		res[1] = ft_substr(arg ,i + 1 , ft_strlen(arg));
@@ -310,14 +312,14 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 
 	char **to_add;
 
-	if(av == NULL || ft_strstr(av, "-p") != NULL)
+	if (av == NULL || ft_strstr(av, "-p") != NULL)
 	{
 		ft_export(NULL, NULL, data->env, needs);
 		return ;
 	}
-	if(ft_strstr(av, "+=") != NULL)
+	if (ft_strstr(av, "+=") != NULL)
 	{
-		to_add = ft_split(av, '+');
+		to_add = split_env(av, '+');
 	}
 	// else if(look_for(av, '='))
 	// {
@@ -327,18 +329,18 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 	// }
 	else
 	{
-		to_add = split_env(av);
+		to_add = split_env(av, '=');
 	}
 	
-	if(env_list_serch(&data->env, to_add[0]))
+	if (env_list_serch(&data->env, to_add[0]))
 	{
-		if(ft_strstr(av, "+=") != NULL)
+		if (ft_strstr(av, "+=") != NULL)
 		{
 		// printf("1");
 			env_search_and_add(data->env, ft_strdup(&to_add[1][1]), ft_strdup(to_add[0]));
 			// env_search_and_add(needs->env_dup, ft_strdup(&to_add[1][1]), ft_strdup(to_add[0]));
 		}
-		else if(ft_strstr(av, "=") != NULL)
+		else if (ft_strstr(av, "=") != NULL)
 		{
 			env_search_replace(data->env, ft_strdup(to_add[1]), ft_strdup(to_add[0]));
 			// env_search_replace(needs->env_dup, ft_strdup(to_add[1]), ft_strdup(to_add[0]));
@@ -350,9 +352,9 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 			ft_export(ft_strdup(av), NULL, data->env, needs);
 		}
 	}
-	else if(!env_list_serch(&data->env, to_add[0]))
+	else if (!env_list_serch(&data->env, to_add[0]))
 	{
-		if(ft_strstr(av, "+=") != NULL)
+		if (ft_strstr(av, "+=") != NULL)
 		{
 			// printf("4\n");
 			ft_export(ft_strdup(to_add[0]), ft_strdup(&to_add[1][1]),data->env, needs);
@@ -363,6 +365,8 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 			// printf("{{{%s}}}", to_add[1]);
 	
 	}
+	// free_leaks(to_add);
+	
 }
 
 int check_ifvalid(char *cmd)
@@ -370,17 +374,17 @@ int check_ifvalid(char *cmd)
 	int i;
 
 	i = 0;
-	if(cmd[0] == '=' || ft_isdigit(cmd[0]))
+	if (cmd[0] == '=' || ft_isdigit(cmd[0]))
 		return (0);
-	while(cmd[i])
+	while (cmd[i])
 	{
-		if(cmd[i] == '+' || cmd[i] == '=')
+		if (cmd[i] == '+' || cmd[i] == '=')
 			break ;
-		if(!ft_is_alphanumeric(cmd[i]))
+		if (!ft_is_alphanumeric(cmd[i]))
 			return (0);
 		i++;
 	}
-	if(cmd[i] == '+' && cmd[i + 1] != '=')
+	if (cmd[i] == '+' && cmd[i + 1] != '=')
 		return (0);
 	return (1);
 }

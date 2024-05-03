@@ -6,14 +6,14 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/25 15:32:15 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/01 12:04:50 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include <string.h>
 
-void freeList(t_env **head)
+void free_env_list(t_env **head)
 {
 	t_env *current;
 	t_env *next;

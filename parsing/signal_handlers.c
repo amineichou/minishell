@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:33:14 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 18:44:38 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/02 18:18:27 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,20 @@ int	ft_update_status(int status, struct termios *term)
     {
         if (WTERMSIG(status) == 2)
             ft_putstr_fd("\n", 2);
-        else if (WTERMSIG(status) == 3)		{
+        else if (WTERMSIG(status) == 3)
+		{
 			tcsetattr(STDIN_FILENO, TCSANOW, term);
             ft_putstr_fd("Quit: 3\n", 2);
 		}
+		ft_set_status(WTERMSIG(status) + 128, 1);
         return (WTERMSIG(status) + 128);
     }
     if (WIFEXITED(status))
         return (WEXITSTATUS(status));
     return (1);
 }
+
+
 
 void	ft_sigkill_handler(int signum)
 {
@@ -37,6 +41,7 @@ void	ft_sigkill_handler(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();
+		ft_set_status(1, 1);
 	}
 }
 

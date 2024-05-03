@@ -1,4 +1,4 @@
-FLAGS = -g -fsanitize=address
+FLAGS = -g #-fsanitize=address
 CC = cc
 NAME = minishell
 READLINE_LIB = -lreadline
