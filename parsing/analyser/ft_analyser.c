@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_analyser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 22:38:00 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:02:52 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char		**ft_reallocate_copy(char **old_res, char *new)
 	i = 0;
 	if (!old_res)
 	{
-		res = malloc(sizeof(char *) * 2);
+		res = zyalloc(sizeof(char *) * 2, 'a');
 		res[0] = ft_strdup(new); // leaks if new is mallocated
 		res[1] = NULL;
 	}
@@ -28,7 +28,7 @@ static char		**ft_reallocate_copy(char **old_res, char *new)
 	{
 		while (old_res[i])
 			i++;
-		res = malloc(sizeof(char *) * (i + 2));
+		res = zyalloc(sizeof(char *) * (i + 2), 'a');
 		i = 0;
 		while (old_res[i])
 		{
@@ -168,7 +168,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 	lst_herdoc = NULL;
 	while (lst_token)
 	{
-		node = malloc(sizeof(t_toexec));
+		node = zyalloc(sizeof(t_toexec), 'a');
 		if (!node)
 			return (ft_printerror(MALLOC_ERORR), NULL);
 		ft_set_default_vals(node, envl);;

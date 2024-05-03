@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/02 18:13:45 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/03 17:45:49 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void update_env(t_env *envl)
 	to_replace = ft_env_list_serch_res(envl, "SHLVL");
 	tmp = to_replace;
 	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1), "SHLVL");
-	free(tmp);
+	// free(tmp);
 	env_search_replace(envl, ft_strdup("/bin/minishell"), "SHELL");
 	env_search_replace(envl, NULL, "OLDPWD");
 	
@@ -51,13 +51,13 @@ t_env *set_env(char **env)
 	i = 0;
 	while (env[i] != NULL)
 	{
-		t_env *new_env = malloc(sizeof(t_env));
+		t_env *new_env = nyalloc(sizeof(t_env), 'a');
 		if (!new_env)
 			return (ft_printerror(MALLOC_ERORR), NULL);
 		argument = split_env(env[i], '=');
         new_env->var = ft_strdup(argument[1]);
 		new_env->name = ft_strdup(argument[0]);
-		free_leaks(argument);
+		// free_leaks(argument);
         new_env->next = NULL;
         if (envl == NULL)
             envl = new_env;
@@ -122,7 +122,6 @@ int main(int ac, char **av, char **env)
 				g_inexec = 0;
 				continue ;
 			}
-			free(line);
 		}
 	}
 	(void)av;

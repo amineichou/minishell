@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 16:53:04 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/03 17:45:40 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strdup(char *s1)
 	if(!s1)
 		return (NULL);
 	str_length = ft_strlen(s1) + 1;
-	s2 = zyalloc(sizeof(char) * str_length);
+	s2 = nyalloc(sizeof(char) * str_length, 'a');
 	if (!s2)
 		return (0);
 	while (s1[i])
@@ -194,7 +194,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s2));
 	else if (!s2)
 		return (ft_strdup(s1));
-	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = (char *)zyalloc(ft_strlen(s1) + ft_strlen(s2) + 1, 'a');
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
@@ -236,7 +236,7 @@ char	*ft_substr(char *s, int start, int len)
 	i = 0;
 	if (ft_strlen(&s[start]) < len)
 		len = ft_strlen(&s[start]);
-	str = (char *)malloc(sizeof(char) * len + 1);
+	str = (char *)zyalloc(sizeof(char) * len + 1, 'a');
 	if (!str)
 		return (NULL);
 	while (s[start] && i < len)
@@ -248,16 +248,16 @@ char	*ft_substr(char *s, int start, int len)
 	str[i] = '\0';
 	return (str);
 }
-void	*talloc(size_t __size)
-{
-	void	*__ptr;
+// void	*talloc(size_t __size)
+// {
+// 	void	*__ptr;
 
-	__ptr = malloc(__size);
-	if (__ptr == NULL)
-		return (NULL);
-	printf("pointer \033[32m%p\033[0m was allocated, size : \033[32m%ld\033[0m\n", __ptr, __size);
-	return (__ptr);
-}
+// 	__ptr = malloc(__size);
+// 	if (__ptr == NULL)
+// 		return (NULL);
+// 	printf("pointer \033[32m%p\033[0m was allocated, size : \033[32m%ld\033[0m\n", __ptr, __size);
+// 	return (__ptr);
+// }
 
 
 
@@ -293,7 +293,7 @@ char	*ft_itoa(int n)
 		number *= -1;
 		digit_count++;
 	}
-	converted_number = malloc(sizeof(char) * (digit_count + 1));
+	converted_number = zyalloc(sizeof(char) * (digit_count + 1), 'a');
 	if (!converted_number)
 		return (0);
 	converted_number[digit_count] = '\0';
@@ -369,6 +369,30 @@ void free_garb_list(t_garbage **head)
 }
 
 void *zyalloc(size_t size, int flag)
+{
+	static t_garbage	*gooper;
+	t_garbage			*node;
+	void *addrress;
+	
+	if(flag == 'a')
+	{
+		addrress = malloc(size);
+		if(gooper == NULL)
+		{
+			gooper = garb_new(addrress);
+		}
+		else
+		{
+			node = garb_new(addrress);
+			garb_add(&gooper, node);
+		}
+	}
+	else if(flag == 'f')
+		free_garb_list(&gooper);
+	return(addrress);
+}
+
+void *nyalloc(size_t size, int flag)
 {
 	static t_garbage	*gooper;
 	t_garbage			*node;

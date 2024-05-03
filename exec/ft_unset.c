@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/01 12:04:50 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/03 17:51:17 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void ft_unset(t_env **env, char *to_del)
 		free(tmp->var);
 		free(tmp->name);
 		free(prev);
-		// free(tmp);
+		free(tmp);
 	}
 	else
 	{
@@ -97,12 +97,12 @@ void ft_unset(t_env **env, char *to_del)
 				if (tmp->next->next)
 				{
 					tmp->next = tmp->next->next;
-					free(prev->var);
-					prev->var = NULL;
-					free(prev->name);
-					prev->name = NULL;
-					free(prev);
-					prev = NULL;
+					// free(prev->var);
+					// prev->var = NULL;
+					// free(prev->name);
+					// prev->name = NULL;
+					// free(prev);
+					// prev = NULL;
 				}
 				else
 					tmp->next = NULL;

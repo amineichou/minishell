@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:19:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/04 22:59:57 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:02:12 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static char	**fill_the_splited(char **splited, char *str, char c)
 		}
 		if (str_len == 0)
 			break ;
-		splited[splited_i] = malloc(sizeof(char) * (str_len + 1));
+		splited[splited_i] = zyalloc(sizeof(char) * (str_len + 1), 'a');
 		if (!splited[splited_i])
 			return (free_allocated(splited));
 		ft_strlcpy(splited[splited_i], &str[index] - str_len, str_len + 1);

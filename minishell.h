@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 16:51:42 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/03 17:46:15 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ char	*ft_env_list_serch_res(t_env *head, char *to_look);
 char **split_env(char *arg, char c);
 int	ft_set_status(int	new_status, int type);
 void *zyalloc(size_t size, int flag);
+void *nyalloc(size_t size, int flag);
 #endif
 
 // 'something''something'

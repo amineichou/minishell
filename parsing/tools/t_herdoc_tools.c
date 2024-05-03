@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_herdoc_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:34:29 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 12:00:57 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:03:14 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_herdoc	*ft_create_herdoc_node(char *del)
 {
 	t_herdoc	*node;
 
-	node = malloc(sizeof(t_herdoc));
+	node = zyalloc(sizeof(t_herdoc), 'a');
 	if (!node)
 		return (ft_printerror(MALLOC_ERORR), NULL);
 	node->del = del;
