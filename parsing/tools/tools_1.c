@@ -6,7 +6,11 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/03 17:00:27 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/03 17:48:34 by moichou          ###   ########.fr       */
+>>>>>>> c384899af5bcbe955c8e2b74249154e533cb4566
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +119,8 @@ char	*ft_trim_spaces(char *str)
 	j = ft_strlen(str) - j - 1;
 	res = ft_strldup(str + i, (ft_strlen(str) - i - j));
 	if (!res)
-		return (ft_printerror(MALLOC_ERORR),NULL);
+		return (ft_printerror(MALLOC_ERORR), NULL);
+	// free (str), str = NULL, 
 	return (res);
 }
 

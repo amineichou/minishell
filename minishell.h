@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/03 17:46:15 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/03 17:49:44 by moichou          ###   ########.fr       */
+>>>>>>> c384899af5bcbe955c8e2b74249154e533cb4566
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +116,7 @@ typedef struct s_garbage {
 t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta);
 
 // syntax sanitizer
-t_toexec	*ft_sanitizer(char *line, t_env *env, int ex_sta);
-int			ft_sanitize_pipes(char *line, int *where);
-int			ft_sanitize_quotes(char *line, int *where);
-int			ft_sanitize_redirections(char *line, int *where);
+
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 
@@ -145,7 +146,6 @@ int			ft_isspecialchars(char c);
 int			ft_isquote(char c);
 
 // tools
-t_toexec	*ft_create_node(char *cmd, char **args);
 t_expand	*ft_create_expand_node(char *str);
 t_herdoc	*ft_create_herdoc_node(char *del);
 void		ft_append_node_herdoc(t_herdoc **head, t_herdoc *node);

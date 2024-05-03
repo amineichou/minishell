@@ -13,3 +13,28 @@ ls >
 << amine << " bug in 52-56 ft_sanitizer.c
 
 signal in herdoc
+
+export a="-n hello"
+
+- echo $OLDPWD f dakhla @done
+
+ -unset PWD OLDPWD  && cd @done
+
+ - echo $'USER' => USER @done
+ - "l"s => ls works @done
+ - $'ls' => ls works @done
+ - echo '"'$USER'"' => "moichou" @done
+ - echo'|'"|" j @done
+ - echo "$"HOME
+ - echo ^$^$HOME
+ - e'''''c'ho a
+
+
+
+ls " << amine << am
+
+
+ - echo $ | $HOME       exec
+ - syntax errors check
+
+- while true; do clear && leaks minishell; sleep 2 ; done

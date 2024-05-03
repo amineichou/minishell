@@ -6,7 +6,11 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/05/03 17:02:20 by moichou          ###   ########.fr       */
+=======
 /*   Updated: 2024/05/02 18:15:06 by zyamli           ###   ########.fr       */
+>>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +45,9 @@ static char	*ft_get_to_look(char *str, int *i)
 		(*i)++;
 		length++;
 	}
-	res = ft_strldup(&str[start], length); // TODO : protection
+	res = ft_strldup(&str[start], length);
+	if (!res)
+		return (NULL);
 	return (res);
 }
 
@@ -62,6 +68,7 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env, int ex_sta)
 		return (ft_strdup("$"));
 	to_look = ft_get_to_look(str, i);
 	res = ft_env_list_serch_res(env, to_look);
+	free(to_look);
 	return (res);
 }
 
@@ -91,7 +98,7 @@ char	*ft_replace_dollar(char *str, t_env *env, int ex_sta)
 		if (str[i] && str[i] == '$')
 			res = ft_strjoin(res, ft_fill_arg(str, &i, env, ex_sta));
 	}
-	return (res);
+	return (free(str), res);
 }
 
 // int main(int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:32:21 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 18:59:14 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 16:44:16 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,29 @@ void	ft_free_token(t_token *head)
 {
 	t_token	*tmp;
 
+	if (head == NULL)
+		return ;
 	tmp = head;
 	while (tmp)
 	{
-		tmp = tmp->next;
 		free(tmp->value);
 		free(tmp);
+		tmp = tmp->next;
 	}
-	free(head->value);
-	free(head);
+	head = NULL;
+}
+
+void	ft_free_herdoc_lst(t_herdoc *head)
+{
+	t_herdoc	*tmp;
+
+	if (head == NULL)
+		return ;
+	tmp = head;
+	while (tmp)
+	{
+		free(tmp->del);
+		free(tmp);
+	}
+	head = NULL;
 }

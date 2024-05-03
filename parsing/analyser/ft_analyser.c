@@ -6,7 +6,11 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/03 17:02:52 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/03 17:47:11 by moichou          ###   ########.fr       */
+>>>>>>> c384899af5bcbe955c8e2b74249154e533cb4566
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +117,6 @@ static t_herdoc	*ft_go_for_herdoc(t_token **head)
 
 	tmp = *head;
 	lst_herdoc = NULL;
-	// cat << ls
 	while (tmp && tmp->token != PIPE)
 	{
 		if (tmp && tmp->token == HEREDOC)
@@ -132,12 +135,6 @@ static t_herdoc	*ft_go_for_herdoc(t_token **head)
 		else
 			tmp = tmp->next;
 	}
-	// t_herdoc *test = lst_herdoc;
-	// while (test)
-	// {
-	// 	printf("[%s]\n", test->del);
-	// 	test = test->next;
-	// }
 	return (lst_herdoc);
 }
 
@@ -160,25 +157,29 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 	t_toexec	*lst_toexec;
 	t_toexec	*node;
 	t_herdoc	*lst_herdoc;
+	int			is_expand;
 
 	lst_token = ft_make_tokens(sanitize_result);
 	// expanding
 	// test_tokens(lst_token);
 	lst_toexec = NULL;
 	lst_herdoc = NULL;
+	is_expand = 1;
 	while (lst_token)
 	{
 		node = zyalloc(sizeof(t_toexec), 'a');
 		if (!node)
 			return (ft_printerror(MALLOC_ERORR), NULL);
-		ft_set_default_vals(node, envl);;
+		ft_set_default_vals(node, envl);
 		lst_herdoc = ft_go_for_herdoc(&lst_token);
 		if (lst_herdoc)
 			ft_run_for_herdoc(lst_herdoc, node, ex_sta);
-		else
+		else if (!lst_herdoc && is_expand)
+		{
 			ft_expand(lst_token, envl, ex_sta);
-		// if (lst_token == NULL)
-		// 	break ;
+			is_expand = 0;
+		}
+
 		if (lst_token && lst_token->token == WORD)
 		{
 			ft_handle_args(&node, &lst_token);
@@ -212,9 +213,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 			ft_append_node_t_toexec(&lst_toexec, node);
 			continue;
 		}
-		// if (lst_token && lst_token->token == HEREDOC)
-		// 	lst_token == lst_token->next->next;
 	}
-	// test_lst(lst_toexec);
+	// test_lst(lst_toexec); ft_free_token(lst_token), 
 	return (lst_toexec);
 }
