@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:00 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/03 17:48:50 by moichou          ###   ########.fr       */
-=======
-/*   Updated: 2024/05/02 18:13:45 by zyamli           ###   ########.fr       */
->>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
+/*   Updated: 2024/05/03 17:51:22 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +41,7 @@ void update_env(t_env *envl)
 	env_search_replace(envl, NULL, "OLDPWD");
 	
 }
-<<<<<<< HEAD
-static void	ft_catch_signal(void)
-{
-	signal(SIGINT, ft_sigkill_handler);
-	signal(SIGQUIT, ft_sigquit_handler);
-}
-
-int main(int ac, char **av, char **env)
-=======
 t_env *set_env(char **env)
->>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
 {
 	t_env	*envl = NULL;
 	t_env	*tmp = NULL;
@@ -63,11 +49,6 @@ t_env *set_env(char **env)
 
 	int i;
 	i = 0;
-<<<<<<< HEAD
-	rl_catch_signals = 0;
-	exit_status = 0;
-=======
->>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
 	while (env[i] != NULL)
 	{
 		t_env *new_env = malloc(sizeof(t_env));
@@ -115,11 +96,7 @@ int main(int ac, char **av, char **env)
 	signal(SIGQUIT, ft_sigquit_handler);
 	envl = set_env(env);
 	update_env(envl);
-<<<<<<< HEAD
-	ft_catch_signal();
-=======
 	t_pipe needs;
->>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
 	// atexit(lex);
 	while (1)
 	{

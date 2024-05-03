@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-FLAGS =# -g -fsanitize=address
-=======
 FLAGS = -g #-fsanitize=address
->>>>>>> 72cce19ca6104a3c557b40f826da4883073dd99c
 CC = cc
 NAME = minishell
 READLINE_LIB = -lreadline
