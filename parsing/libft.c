@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:53:09 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 19:29:58 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strdup(char *s1)
 	if(!s1)
 		return (NULL);
 	str_length = ft_strlen(s1) + 1;
-	s2 = nyalloc(sizeof(char) * str_length, 'a');
+	s2 = zyalloc(sizeof(char) * str_length, 'a');
 	if (!s2)
 		return (0);
 	while (s1[i])
@@ -392,26 +392,3 @@ void *zyalloc(size_t size, int flag)
 	return(addrress);
 }
 
-void *nyalloc(size_t size, int flag)
-{
-	static t_garbage	*gooper;
-	t_garbage			*node;
-	void *addrress;
-	
-	if(flag == 'a')
-	{
-		addrress = malloc(size);
-		if(gooper == NULL)
-		{
-			gooper = garb_new(addrress);
-		}
-		else
-		{
-			node = garb_new(addrress);
-			garb_add(&gooper, node);
-		}
-	}
-	else if(flag == 'f')
-		free_garb_list(&gooper);
-	return(addrress);
-}

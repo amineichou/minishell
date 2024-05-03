@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace_dollar.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:54:35 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 19:22:07 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env, int ex_sta)
 		return (ft_strdup("$"));
 	to_look = ft_get_to_look(str, i);
 	res = ft_env_list_serch_res(env, to_look);
-	free(to_look);
+	// free(to_look);
 	return (res);
 }
 
@@ -94,7 +94,7 @@ char	*ft_replace_dollar(char *str, t_env *env, int ex_sta)
 		if (str[i] && str[i] == '$')
 			res = ft_strjoin(res, ft_fill_arg(str, &i, env, ex_sta));
 	}
-	return (free(str), res);
+	return (res);
 }
 
 // int main(int ac, char **av, char **env)

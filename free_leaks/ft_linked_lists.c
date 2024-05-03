@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_linked_lists.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:32:21 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 16:44:16 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 19:23:15 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	ft_free_token(t_token *head)
 	tmp = head;
 	while (tmp)
 	{
-		free(tmp->value);
-		free(tmp);
+		// free(tmp->value);
+		// free(tmp);
 		tmp = tmp->next;
 	}
 	head = NULL;
