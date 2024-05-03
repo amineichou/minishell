@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/03 17:01:04 by zyamli           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/03 17:47:43 by moichou          ###   ########.fr       */
->>>>>>> c384899af5bcbe955c8e2b74249154e533cb4566
+/*   Updated: 2024/05/03 17:54:18 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +77,9 @@ t_token	*ft_make_tokens(char *sanitize_result)
 	lst_token = NULL;
 	while (sanitize_result[i])
 	{
-<<<<<<< HEAD
-		node = zyalloc(sizeof(t_token), 'a');// TODO : malloc protection
-=======
 		node = malloc(sizeof(t_token));
 		if (!node)
 			return (ft_printerror(MALLOC_ERORR),  NULL);
->>>>>>> c384899af5bcbe955c8e2b74249154e533cb4566
 		start = i;
 		ft_check_token_val(sanitize_result, &i);
 		if (start == i)
