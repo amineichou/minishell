@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:53:37 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/03 17:57:56 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void fill_envinlist(t_toexec **head, t_env *env_list)
         current = current->next;
     }
 }
+
 
 void update_env(t_env *envl)
 {
