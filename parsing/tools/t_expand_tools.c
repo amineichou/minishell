@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 10:13:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:00:43 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/04 15:57:06 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_expand	*ft_create_expand_node(char *str)
 {
 	t_expand	*node;
 
-	node = zyalloc(sizeof(t_expand), 'a');
+	node = zyalloc(sizeof(t_expand), 'a', true);
 	if (!node)
 		return (ft_printerror(MALLOC_ERORR), NULL);
 	node->value = str;

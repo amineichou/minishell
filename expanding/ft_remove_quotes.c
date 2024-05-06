@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_remove_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/23 12:04:00 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/04 16:39:19 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_remove_qoutes(char *str)
 	x = 0;
 	if (!str)
 		return (NULL);
-	res = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	res = (char *)zyalloc(sizeof(char) * (ft_strlen(str) + 1), 'a', true);
 	if (!res)
 		return (ft_printerror(MALLOC_ERORR), NULL);
 	while (str[i])

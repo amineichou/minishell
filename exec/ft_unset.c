@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/03 21:43:44 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/06 13:45:01 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void ft_unset(t_env **env, char *to_del)
 			tmp = tmp->next;
 		}
 }
-
-
 
 int unseter(t_toexec *cmd, t_pipe *needs)
 {

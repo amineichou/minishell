@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/03 20:23:57 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/06 13:48:39 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ char	*find_commands(char *av, char **pathes)
 	int		i;
 	if (ft_strchr(av , '/') != 0)
 	{
-		result = ft_strdup(av);
+		result = ft_strdup(av, true);
 		return (result);
 	}
-	path = ft_strjoin("/", av);
+	path = ft_strjoin("/", av, true);
 	i = 0;
 	while (pathes[i])
 	{
-		result = ft_strjoin(pathes[i], path);
+		result = ft_strjoin(pathes[i], path, true);
 		if (access(result, F_OK | X_OK) == 0)
 		{
 			return (result);
@@ -84,7 +84,7 @@ char	**extract_paths(char **env)
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 4) == 0)
-			return (ft_split(env[i] + 5, ':'));
+			return (ft_split(env[i] + 5, ':', true));
 		i++;
 	}
 	return (NULL);
@@ -148,14 +148,14 @@ char **env_tolist(t_env **env_list)
 
 	size = env_size(*env_list);
 	current = (*env_list);
-    result = (char **)zyalloc(sizeof(char *) * (size + 1), 'a');
+    result = (char **)zyalloc(sizeof(char *) * (size + 1), 'a', true);
 	if (!result)
 		return (perror("malloc"), NULL);
     i = 0;
     while (current != NULL)
 	{
-		tmp = ft_strjoin(current->name, "=");
-		result[i] = ft_strjoin(tmp, current->var);
+		tmp = ft_strjoin(current->name, "=", true);
+		result[i] = ft_strjoin(tmp, current->var, true);
         current = current->next;
         i++;
     }
@@ -238,7 +238,11 @@ int check_builtin(t_toexec *cmd, t_pipe *needs)
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
 		res = unseter(cmd, needs);
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
+	{
 		res = ft_exit(cmd->args);
+		*(needs->ex_stat) = 1;
+		ft_set_status(*(needs->ex_stat), 1);
+	}
 	return (res);
 }
 
@@ -317,7 +321,7 @@ void exec_routines(t_toexec *cmds, t_pipe *needs)
 		if(cmds->args)
 		{
 			if(check_builtin(cmds, needs))
-				exit(0);
+				exit(*(needs->ex_stat));
 			ft_execution(cmds, needs);
 		}
 		else
@@ -350,7 +354,8 @@ void	first_cmd(t_toexec **cmds, t_pipe *needs)
 {
 	needs->i = lst_size((*cmds));
 	needs->env = env_tolist(&(*cmds)->env);
-	env_search_replace((*cmds)->env, ft_strdup(" "), "_");
+	env_search_replace((*cmds)->env, ft_strdup(" ", false), "_");
+	needs->pids = zyalloc(sizeof(int) * needs->i, 'a', true);
 	if(!needs->pids)
 		return ; 
 	while (needs->i > 1)
@@ -368,17 +373,19 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	needs->env = env_tolist(&cmds->env);
 	needs->save_fd_in = dup(STDIN_FILENO);
 	needs->save_fd_out = dup(STDOUT_FILENO);
-	needs->pids = zyalloc(sizeof(int), 'a');
 	tcgetattr(STDIN_FILENO, &needs->term);
-		if(lst_size(cmds) == 1)
+	needs->size = lst_size(cmds);
+	needs->step = 0;
+		if(needs->size == 1)
 		{
+			
+			needs->pids = zyalloc(sizeof(int), 'a', true);
 			if(cmds->args)
 			{
-				env_search_replace(cmds->env, ft_strdup(cmds->args[0]), "_");
+				env_search_replace(cmds->env, ft_strdup(cmds->args[0], false), "_");
 				in_out_handler(cmds, needs);
-				if(check_builtin(cmds, needs))
+				if (check_builtin(cmds, needs))
 				{
-					
 					(dup2(needs->save_fd_in, STDIN_FILENO) ,close(needs->save_fd_in));
 					(dup2(needs->save_fd_out, STDOUT_FILENO) ,close(needs->save_fd_out));
 					return ;
@@ -393,7 +400,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 				
 			}
 		}
-		else if(lst_size(cmds) > 1)
+		else if (needs->size > 1)
 		{
 			first_cmd(&cmds, needs);
 			last_child(&cmds, needs);
@@ -401,7 +408,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 			(dup2(needs->save_fd_in, STDIN_FILENO) ,close(needs->save_fd_in));
 			(dup2(needs->save_fd_out, STDOUT_FILENO) ,close(needs->save_fd_out));
 		int fds = 3;
-		while(fds < 2400)
+		while (fds < 2400)
 		{
 			close(fds++);
 		}
@@ -414,6 +421,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	}
 	ft_set_status(WEXITSTATUS(x), 1);
 	*(needs->ex_stat)= ft_update_status(x, &needs->term);
+	
 	
 
 }

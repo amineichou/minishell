@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc_syn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:20:27 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/28 16:22:53 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/04 17:56:37 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ void	ft_heredoc_handler_syn(t_env *env, char *delemiter)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (!ft_strncmp(line, delemiter, ft_strlen(delemiter)))
+		if (!ft_strcmp(line, delemiter))
 			break ;
 		ft_putstr_fd(line, fl);
 		free(line);
+		line = NULL;
 	}
-	(free(delemiter), free(line), close(fl));
+	(free(line), close(fl));
 }

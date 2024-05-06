@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/03 21:41:15 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/06 13:44:20 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ void lst_add(t_env **lst, t_env *new)
 	new->next = NULL;
 }
 
-t_env *env_new(char *var, char *name)
+t_env *env_new(char *var, char *name, bool to_free)
 {
-    t_env *newnode = (t_env *)zyalloc(sizeof(t_env), 'a');
+    t_env *newnode = (t_env *)zyalloc(sizeof(t_env), 'a', to_free);
     if (newnode == NULL)
 	{
         perror("malloc");
         return(NULL);
     }
-    newnode->var = ft_strdup(var);
-    newnode->name = ft_strdup(name);
+    newnode->var = ft_strdup(var, to_free);
+    newnode->name = ft_strdup(name, to_free);
     newnode->next = NULL;
     return (newnode);
 }
@@ -59,7 +59,7 @@ t_env *duplicate_list(t_env **head)
 	while (tmp != NULL)
 	{
 		// printf("%s====%s\n",tmp->name , tmp->var);
-		newnode = env_new(tmp->var, tmp->name);
+		newnode = env_new(tmp->var, tmp->name, true);
 		if (newlist == NULL)
 			newlist = newnode;
 		else
@@ -86,8 +86,10 @@ void env_search_replace(t_env *head, char *to_replace, char *to_look)
 			if(ft_strcmp(tmp->name, to_look) == 0)
 			{
 				// free(tmp->var);
-				tmp->var = ft_strdup(to_replace);
+				// tmp->var = NULL;
+				tmp->var = ft_strdup(to_replace, false);
 				// free(to_replace);
+				// to_replace = NULL;
 				return;
 			}
 				
@@ -123,7 +125,7 @@ void env_search_and_add(t_env *head, char *to_add, char *to_look)
 		{
 			if(ft_strcmp(tmp->name, to_look) == 0)
 			{
-				tmp->var = ft_strjoin(tmp->var ,to_add);
+				tmp->var = ft_strjoin(tmp->var ,to_add, false);
 				return;
 			}
 				
@@ -226,12 +228,12 @@ void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
 	}
 	else if (name && var && *var)
 	{
-		newnode = env_new(var, name);
+		newnode = env_new(var, name, false);
 		lst_add(&head ,newnode);
 	}
 	else if(var == NULL || *var == '\0')
 	{
-		newnode = env_new(var, name);
+		newnode = env_new(var, name, false);
 		if(!env_list_serch(&head, name))
 			lst_add(&head ,newnode);
 	}
@@ -242,13 +244,13 @@ char **split_env(char *arg, char c)
 	char **res;
 	
 	i = 0;
-	res = zyalloc(sizeof(char *) * 3, 'a');
+	res = zyalloc(sizeof(char *) * 3, 'a', false);
 	while(arg[i] != c && arg[i])
 		i++;
 	if(arg[i] == c)
 	{
-		res[0] = ft_substr(arg, 0, i);
-		res[1] = ft_substr(arg ,i + 1 , ft_strlen(arg));
+		res[0] = ft_substr(arg, 0, i, false);
+		res[1] = ft_substr(arg ,i + 1 , ft_strlen(arg), false);
 		res[2] = NULL;
 		return(res);
 	}
@@ -279,18 +281,18 @@ void add_to_env(char *av, t_toexec *data,t_pipe *needs, char **to_add)
 	if (env_list_serch(&data->env, to_add[0]))
 	{
 		if (ft_strstr(av, "+=") != NULL)
-			env_search_and_add(data->env, ft_strdup(&to_add[1][1]), ft_strdup(to_add[0]));
+			env_search_and_add(data->env, ft_strdup(&to_add[1][1], false), ft_strdup(to_add[0], false));
 		else if (ft_strstr(av, "=") != NULL)
-			env_search_replace(data->env, ft_strdup(to_add[1]), ft_strdup(to_add[0]));
+			env_search_replace(data->env, ft_strdup(to_add[1], false), ft_strdup(to_add[0], false));
 		else
-			ft_export(ft_strdup(av), NULL, data->env, needs);
+			ft_export(ft_strdup(av, false), NULL, data->env, needs);
 	}
 	else if (!env_list_serch(&data->env, to_add[0]))
 	{
 		if (ft_strstr(av, "+=") != NULL)
-			ft_export(ft_strdup(to_add[0]), ft_strdup(&to_add[1][1]),data->env, needs);
+			ft_export(ft_strdup(to_add[0], false), ft_strdup(&to_add[1][1], false),data->env, needs);
 		else
-			ft_export(ft_strdup(to_add[0]), ft_strdup(to_add[1]),data->env, needs);
+			ft_export(ft_strdup(to_add[0], false), ft_strdup(to_add[1], false),data->env, needs);
 	}	
 }
 
@@ -345,6 +347,7 @@ int ft_exporter(t_toexec *cmd, t_pipe *needs)
 				ft_putstr_fd(cmd->args[k],2);
 				ft_putstr_fd(" : not a valid identifier\n",2);
 				*(needs->ex_stat) = 1;
+				ft_set_status(*(needs->ex_stat), 1);
 				k++;
 				continue;
 			}

@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 19:22:07 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/04 16:28:25 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_env_list_serch_res(t_env *head, char *to_look)
 	while(tmp)
 	{
 		if(ft_strcmp(tmp->name, to_look) == 0)
-			return(ft_strdup(tmp->var));
+			return(ft_strdup(tmp->var, false));
 		tmp = tmp->next;
 	}
 	return (NULL);
@@ -58,10 +58,10 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env, int ex_sta)
 	if (str[*i] == '?')
 	{
 		(*i)++;
-		return (ft_itoa(ft_set_status(0, 0)));
+		return (ft_itoa(ft_set_status(0, 0), true));
 	}
 	if (str[*i] == '\0' || !ft_is_alphanumeric(str[*i]))
-		return (ft_strdup("$"));
+		return (ft_strdup("$", true));
 	to_look = ft_get_to_look(str, i);
 	res = ft_env_list_serch_res(env, to_look);
 	// free(to_look);
@@ -84,15 +84,15 @@ char	*ft_replace_dollar(char *str, t_env *env, int ex_sta)
 			if (str[i] == '$')
 			{
 				if (start != i)
-					res = ft_strjoin(res, ft_strldup(&str[start], i - start));
+					res = ft_strjoin(res, ft_strldup(&str[start], i - start), true);
 				break ;
 			}
 			i++;
 			if (str[i] == '\0')
-				res = ft_strjoin(res, ft_strldup(&str[start], i - start));
+				res = ft_strjoin(res, ft_strldup(&str[start], i - start), true);
 		}
 		if (str[i] && str[i] == '$')
-			res = ft_strjoin(res, ft_fill_arg(str, &i, env, ex_sta));
+			res = ft_strjoin(res, ft_fill_arg(str, &i, env, ex_sta), true);
 	}
 	return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/02 15:18:26 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/04 16:39:55 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static char	*ft_expand_dollar(char *str, t_env *env, int ex_sta)
 	tmp = lst_expand;
 	while (tmp)
 	{
-		res = ft_strjoin(res, tmp->value);
+		res = ft_strjoin(res, tmp->value, true);
 		tmp = tmp->next;
 	}
 	return (res);

@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:34:29 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:03:14 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/04 15:57:14 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_herdoc	*ft_create_herdoc_node(char *del)
 {
 	t_herdoc	*node;
 
-	node = zyalloc(sizeof(t_herdoc), 'a');
+	node = zyalloc(sizeof(t_herdoc), 'a', true);
 	if (!node)
 		return (ft_printerror(MALLOC_ERORR), NULL);
 	node->del = del;

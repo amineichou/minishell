@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:53:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/04 20:26:30 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ typedef struct  s_toexec {
 typedef struct t_pipe
 {
 	int		i;
+	int		j;
+	int		p;
+	int		size;
+	int		step;
 	int		ex_stat[1];
 	int		fd[2];
 	int		save_fd_in;
 	int		save_fd_out;
 	int		infile;
 	int		outfile;
-	int		j;
 	char	*path;
-	char	**cmd;
-	char	*limiter;
 	t_env	*env_dup;
 	char	**env;
 	int		*pids;
-	int		p;
 	struct termios term;
 }	t_pipe;
 
@@ -103,6 +103,7 @@ typedef struct s_herdoc {
 
 typedef struct s_garbage {
 	void	*adr;
+	bool	is_free;
 	struct	s_garbage	*next;
 }	t_garbage;
 
@@ -133,7 +134,7 @@ void	ft_heredoc_handler_syn(t_env *env, char *delemiter);
 
 // utils
 int			ft_strlen(char *str);
-char		**ft_split(char *s, char c);
+char	**ft_split(char *s, char c, bool to_free);
 void		ft_printerror(char *msg);
 void		ft_put_syntaxerror(char *msg, char c);
 int			ft_count_legal_char(char *line, char c);
@@ -156,20 +157,20 @@ int			ft_isredirection(char c);
 char		*ft_get_inside_quotes(char *in_quotes, int *i, char q_type);
 
 // libft
-char		*ft_strdup(char *s1);
+char	*ft_strdup(char *s1, bool to_free);
 char		*ft_strchr(char *s, int c);
 int			ft_isspace(char c);
 int			ft_isdigit(char c);
 int			ft_strcmp(char *s1, char *s2);
 void		ft_strcpy(char *dst, char *src, size_t dstsize);
 int			ft_is_alphanumeric(char c);
-char		*ft_itoa(int n);
+char		*ft_itoa(int n, bool to_free);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putstr(char *s);
 void	ft_print_error(char *str);
 char* ft_strstr(const char* haystack, const char* needle);
-char	*ft_substr(char *s, int start, int len);
-char *ft_strjoin(char *s1, char *s2);
+char	*ft_substr(char *s, int start, int len, bool to_free);
+char *ft_strjoin(char *s1, char *s2, bool to_free);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, char *src, size_t dstsize);
 char	**free_leaks(char **strs);
@@ -208,7 +209,7 @@ int ft_exit(char **args);
 char	*ft_env_list_serch_res(t_env *head, char *to_look);
 char **split_env(char *arg, char c);
 int	ft_set_status(int	new_status, int type);
-void *zyalloc(size_t size, int flag);
+void *zyalloc(size_t size, int flag, bool is_free);
 void *nyalloc(size_t size, int flag);
 #endif
 
