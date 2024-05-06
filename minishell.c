@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/03 17:57:56 by moichou          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/06 14:57:34 by zyamli           ###   ########.fr       */
+>>>>>>> e328d93f170a7d910884053b0e8a6ea66b3775dd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +40,34 @@ void update_env(t_env *envl)
 	int level;
 	to_replace = ft_env_list_serch_res(envl, "SHLVL");
 	tmp = to_replace;
-	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1), "SHLVL");
-	// free(tmp);
-	env_search_replace(envl, ft_strdup("/bin/minishell"), "SHELL");
+	printf("honaa   %s\n", to_replace);
+	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1, false), "SHLVL");
+	env_search_replace(envl, ft_strdup("/bin/minishell", false), "SHELL");
 	env_search_replace(envl, NULL, "OLDPWD");
-	
 }
+
+static void	ft_catch_signal(void)
+{
+	signal(SIGINT, ft_sigkill_handler);
+	signal(SIGQUIT, ft_sigquit_handler);
+}
+
 t_env *set_env(char **env)
 {
 	t_env	*envl = NULL;
 	t_env	*tmp = NULL;
 	char	**argument = NULL;
-
 	int i;
+
 	i = 0;
 	while (env[i] != NULL)
 	{
-		t_env *new_env = nyalloc(sizeof(t_env), 'a');
+		t_env *new_env = zyalloc(sizeof(t_env), 'a', false);
 		if (!new_env)
 			return (ft_printerror(MALLOC_ERORR), NULL);
 		argument = split_env(env[i], '=');
-        new_env->var = ft_strdup(argument[1]);
-		new_env->name = ft_strdup(argument[0]);
-		// free_leaks(argument);
+        new_env->var = ft_strdup(argument[1], false);
+		new_env->name = ft_strdup(argument[0], false);
         new_env->next = NULL;
         if (envl == NULL)
             envl = new_env;
@@ -72,6 +81,25 @@ t_env *set_env(char **env)
 		i++;
 	}
 	return(envl);
+}
+t_env *set_spare_env(void)
+{
+	t_env	*head;
+	char	cwd[1024];
+	printf("dkhol\n");
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		perror("getcwd");
+	head = zyalloc(sizeof(t_env), 'a', false);
+	head->name = ft_strdup("SHLVL", false);
+	head->var = ft_strdup("0", false);
+	head->next = zyalloc(sizeof(t_env), 'a', false);
+	head->next->name = ft_strdup("PATH", false);
+	head->next->var = ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.", false);
+	head->next->next = zyalloc(sizeof(t_env), 'a', false);
+	head->next->next->name = ft_strdup("PWD", false);
+	head->next->next->var = ft_strdup(cwd, false);
+	return(head);
+	
 }
 int	ft_set_status(int	new_status, int type)
 {
@@ -90,12 +118,15 @@ int main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-
+	//when env is NULL you must create you mini spare env
 	rl_catch_signals = 0;
 	exit_status = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
-	envl = set_env(env);
+	if(*env == NULL)
+		envl = set_spare_env();
+	else
+		envl = set_env(env);
 	update_env(envl);
 	t_pipe needs;
 	// atexit(lex);
@@ -107,7 +138,6 @@ int main(int ac, char **av, char **env)
 			write(1, "exit\n", 6);
 			exit (0);
 		}
-		line = ft_trim_spaces(line); //TODO : protect
 		if (line && line[0])
 		{
 			add_history(line);
@@ -121,10 +151,11 @@ int main(int ac, char **av, char **env)
 				envl = lst->env;
 				exit_status = *(needs.ex_stat);
 				g_inexec = 0;
-				// ft_free_toexec(lst);
+				zyalloc(0, 'f', true);
 				continue ;
 			}
 		}
+		else
+			free(line);
 	}
-	(void)av;
 }

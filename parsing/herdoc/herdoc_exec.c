@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/03 23:45:22 by moichou          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/04 18:03:39 by zyamli           ###   ########.fr       */
+>>>>>>> e328d93f170a7d910884053b0e8a6ea66b3775dd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +29,7 @@
 void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 {
 	char	*line;
+	char	*tmp;
 	int		fl;
 
 	node->input = open("tempfile", O_CREAT | O_RDWR, 0777);
@@ -40,13 +45,32 @@ void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (!ft_strncmp(line, herdoc_node->del, ft_strlen(herdoc_node->del)))
+		if (!ft_strcmp(line, herdoc_node->del))
 			break ;
 		if (herdoc_node->is_expand)
+<<<<<<< HEAD
 			line = ft_replace_dollar(line, node->env, ex_sta);
 		ft_putstr_fd(line, fl);
 		ft_putstr_fd("\n", fl);
 		free(line);
 	}                         
 	(free(herdoc_node->del), free(line), close(fl));
+=======
+		{
+			tmp = ft_replace_dollar(line, node->env, ex_sta);
+			ft_putstr_fd(tmp, fl);
+			ft_putstr_fd("\n", fl);
+			free(line);
+		}
+		else
+		{
+			ft_putstr_fd(line, fl);
+			ft_putstr_fd("\n", fl);
+			free(line);
+		}
+		// free(line);
+		// line = NULL;
+	}
+	(free(line), close(fl));
+>>>>>>> e328d93f170a7d910884053b0e8a6ea66b3775dd
 }

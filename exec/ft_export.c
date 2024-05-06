@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/03 16:56:28 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/06 13:44:20 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ void lst_add(t_env **lst, t_env *new)
 	new->next = NULL;
 }
 
-t_env *env_new(char *var, char *name)
+t_env *env_new(char *var, char *name, bool to_free)
 {
-    t_env *newnode = (t_env *)zyalloc(sizeof(t_env), 'a');
+    t_env *newnode = (t_env *)zyalloc(sizeof(t_env), 'a', to_free);
     if (newnode == NULL)
 	{
         perror("malloc");
         return(NULL);
     }
-    newnode->var = ft_strdup(var);
-    newnode->name = ft_strdup(name);
+    newnode->var = ft_strdup(var, to_free);
+    newnode->name = ft_strdup(name, to_free);
     newnode->next = NULL;
     return (newnode);
 }
@@ -59,7 +59,7 @@ t_env *duplicate_list(t_env **head)
 	while (tmp != NULL)
 	{
 		// printf("%s====%s\n",tmp->name , tmp->var);
-		newnode = env_new(tmp->var, tmp->name);
+		newnode = env_new(tmp->var, tmp->name, true);
 		if (newlist == NULL)
 			newlist = newnode;
 		else
@@ -86,8 +86,10 @@ void env_search_replace(t_env *head, char *to_replace, char *to_look)
 			if(ft_strcmp(tmp->name, to_look) == 0)
 			{
 				// free(tmp->var);
-				tmp->var = ft_strdup(to_replace);
+				// tmp->var = NULL;
+				tmp->var = ft_strdup(to_replace, false);
 				// free(to_replace);
+				// to_replace = NULL;
 				return;
 			}
 				
@@ -100,10 +102,7 @@ int env_list_serch(t_env **head, char *to_look)
 	t_env	*tmp;
 
 	if (!(*head)) 
-	{
-		// printf("Invalid data or env is NULL\n");
 		return (0);
-	}
 	tmp = *head;
 	while(tmp)
 		{
@@ -119,25 +118,20 @@ void env_search_and_add(t_env *head, char *to_add, char *to_look)
 	t_env	*tmp;
 
 	if (!head) 
-	{
-		// printf("Invalid data or env is NULL\n");
 		return;
-	}
 
 	tmp = head;
 	while(tmp)
 		{
 			if(ft_strcmp(tmp->name, to_look) == 0)
 			{
-				// printf("{%s}", tmp->next->name);
-				
-				tmp->var = ft_strjoin(tmp->var ,to_add);
+				tmp->var = ft_strjoin(tmp->var ,to_add, false);
 				return;
 			}
 				
 			tmp = tmp->next;
 		}
-		return;
+	return;
 }
 // void env_print(t_toexec *data)
 // {
@@ -161,10 +155,8 @@ void export_env_print(t_toexec *data)
 {
     t_env *tmp;
 
-    if (!data || !data->env) {
-        // printf("Invalid data or env is NULL\n");
+    if (!data || !data->env)
         return;
-    }
 	
     tmp = data->env; // Initialize tmp to point to the first node of the linked list
     while (tmp) {
@@ -224,8 +216,7 @@ void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
 {
 	t_toexec data;
 	t_env *newnode;
-	// t_env *newnode_sec;
-		// printf("{%s .   %s}\n",head->var, head->next->var);
+
 	if (name == NULL)
 	{
 		needs->env_dup = duplicate_list(&head);
@@ -233,53 +224,33 @@ void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
 		data.env = needs->env_dup;
 		
 		export_env_print(&data);
-		// free_env_list(&needs->env_dup);
 		needs->env_dup = NULL;
 	}
 	else if (name && var && *var)
 	{
-		// printf("{%s .   %s}\n",head->var, head->next->var);
-		newnode = env_new(var, name);
-		// newnode_sec = env_new(var, name);
+		newnode = env_new(var, name, false);
 		lst_add(&head ,newnode);
-		// if(!env_list_serch(&needs->env_dup, name))
-		// 	lst_add(&needs->env_dup ,newnode_sec);
-		// else{
-		// 	env_search_replace(needs->env_dup, var, name);
-		// 	}
 	}
 	else if(var == NULL || *var == '\0')
 	{
-		// printf("name == %p\n", name);
-		newnode = env_new(var, name);
-		// newnode_sec = env_new(var, name);
-		// data.env = needs->env_dup;
+		newnode = env_new(var, name, false);
 		if(!env_list_serch(&head, name))
 			lst_add(&head ,newnode);
-		// if(!env_list_serch(&needs->env_dup, name))
-		// 	lst_add(&needs->env_dup ,newnode);
 	}
-	// data.env = exported_env;	
-	// env_print(&data);
 }
 char **split_env(char *arg, char c)
 {
 	int i;
-	char **res = zyalloc(sizeof(char *) * 3, 'a');
+	char **res;
 	
 	i = 0;
+	res = zyalloc(sizeof(char *) * 3, 'a', false);
 	while(arg[i] != c && arg[i])
 		i++;
-	// if(arg[i] == '=' && arg[i + 1] == '\0')
-	// {
-	// 	res[0] = ft_substr(arg, 0, i);
-	// 	res[1] = NULL;
-	// 	return(res);
-	// }
 	if(arg[i] == c)
 	{
-		res[0] = ft_substr(arg, 0, i);
-		res[1] = ft_substr(arg ,i + 1 , ft_strlen(arg));
+		res[0] = ft_substr(arg, 0, i, false);
+		res[1] = ft_substr(arg ,i + 1 , ft_strlen(arg), false);
 		res[2] = NULL;
 		return(res);
 	}
@@ -304,12 +275,29 @@ int look_for(char *str, char c)
 	}
 	return (0);
 }
+
+void add_to_env(char *av, t_toexec *data,t_pipe *needs, char **to_add)
+{
+	if (env_list_serch(&data->env, to_add[0]))
+	{
+		if (ft_strstr(av, "+=") != NULL)
+			env_search_and_add(data->env, ft_strdup(&to_add[1][1], false), ft_strdup(to_add[0], false));
+		else if (ft_strstr(av, "=") != NULL)
+			env_search_replace(data->env, ft_strdup(to_add[1], false), ft_strdup(to_add[0], false));
+		else
+			ft_export(ft_strdup(av, false), NULL, data->env, needs);
+	}
+	else if (!env_list_serch(&data->env, to_add[0]))
+	{
+		if (ft_strstr(av, "+=") != NULL)
+			ft_export(ft_strdup(to_add[0], false), ft_strdup(&to_add[1][1], false),data->env, needs);
+		else
+			ft_export(ft_strdup(to_add[0], false), ft_strdup(to_add[1], false),data->env, needs);
+	}	
+}
+
 void exporter(char *av, t_toexec *data,t_pipe *needs)
 {
-
-	// env_print(&data);
-	// printf("%s--------------------------------------\n", data.env->var);
-
 	char **to_add;
 
 	if (av == NULL || ft_strstr(av, "-p") != NULL)
@@ -318,55 +306,10 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 		return ;
 	}
 	if (ft_strstr(av, "+=") != NULL)
-	{
 		to_add = split_env(av, '+');
-	}
-	// else if(look_for(av, '='))
-	// {
-	// 	printf("hna\n");
-	// 	ft_export(av, "", data->env, needs);
-	// 	return ;
-	// }
 	else
-	{
 		to_add = split_env(av, '=');
-	}
-	
-	if (env_list_serch(&data->env, to_add[0]))
-	{
-		if (ft_strstr(av, "+=") != NULL)
-		{
-		// printf("1");
-			env_search_and_add(data->env, ft_strdup(&to_add[1][1]), ft_strdup(to_add[0]));
-			// env_search_and_add(needs->env_dup, ft_strdup(&to_add[1][1]), ft_strdup(to_add[0]));
-		}
-		else if (ft_strstr(av, "=") != NULL)
-		{
-			env_search_replace(data->env, ft_strdup(to_add[1]), ft_strdup(to_add[0]));
-			// env_search_replace(needs->env_dup, ft_strdup(to_add[1]), ft_strdup(to_add[0]));
-			// printf("{%s . %s}\n", to_replace[1], to_replace[0]);
-		}
-		else
-		{
-
-			ft_export(ft_strdup(av), NULL, data->env, needs);
-		}
-	}
-	else if (!env_list_serch(&data->env, to_add[0]))
-	{
-		if (ft_strstr(av, "+=") != NULL)
-		{
-			// printf("4\n");
-			ft_export(ft_strdup(to_add[0]), ft_strdup(&to_add[1][1]),data->env, needs);
-		}
-		else
-			ft_export(ft_strdup(to_add[0]), ft_strdup(to_add[1]),data->env, needs);
-			// printf("%s     %s\n",to_add[0], to_add[1]);
-			// printf("{{{%s}}}", to_add[1]);
-	
-	}
-	// free_leaks(to_add);
-	
+	add_to_env(av, data, needs, to_add);
 }
 
 int check_ifvalid(char *cmd)
@@ -391,45 +334,11 @@ int check_ifvalid(char *cmd)
 
 int ft_exporter(t_toexec *cmd, t_pipe *needs)
 {
-	// 	t_env	*envi = NULL;
-	// t_env	*tmp = NULL;
-	// char	**arg = NULL;
-	// t_toexec data;
-	// // data.env = NULL;
-
-	// int i;
-	// i = 0;
-	// while (env[i] != NULL)
-	// {
-	// 	t_env *new_env = malloc(sizeof(t_env));
-	// 	if (!new_env)
-	// 	{
-	// 		perror("malloc");
-	// 		exit(EXIT_FAILURE);
-    //     }
-	// 	arg = ft_split(env[i], '=');
-    //     new_env->var = arg[1];
-	// 	// printf("%s", arg[0]);
-	// 	new_env->name = arg[0];
-    //     new_env->next = NULL;
-    //     if (envi == NULL)
-    //         envi = new_env;
-	// 	else
-	// 	{
-	// 		tmp = envi;
-    //         while (tmp->next)
-	// 			tmp = tmp->next;
-	// 		tmp->next = new_env;
-	// 	}
-	// 	i++;
-	// }
-	// data.env = envi;
-	int k = 1;
+	int k;
 	
+	k = 1;
 	if(!cmd->args[k])
-	{
 		exporter(cmd->args[k], cmd, needs);
-	}
 	while(cmd->args[k])
 	{
 		if(!check_ifvalid(cmd->args[k]))
@@ -438,6 +347,7 @@ int ft_exporter(t_toexec *cmd, t_pipe *needs)
 				ft_putstr_fd(cmd->args[k],2);
 				ft_putstr_fd(" : not a valid identifier\n",2);
 				*(needs->ex_stat) = 1;
+				ft_set_status(*(needs->ex_stat), 1);
 				k++;
 				continue;
 			}
@@ -445,6 +355,5 @@ int ft_exporter(t_toexec *cmd, t_pipe *needs)
 		k++;
 	}
 	return (1);
-	// env_print(&data);
 }
 

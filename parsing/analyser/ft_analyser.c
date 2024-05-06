@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_analyser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:53:58 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/04 16:37:50 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,22 @@ static char		**ft_reallocate_copy(char **old_res, char *new)
 	i = 0;
 	if (!old_res)
 	{
-		res = zyalloc(sizeof(char *) * 2, 'a');
-		res[0] = ft_strdup(new); // leaks if new is mallocated
+		res = zyalloc(sizeof(char *) * 2, 'a', true);
+		res[0] = ft_strdup(new, true); // leaks if new is mallocated
 		res[1] = NULL;
 	}
 	else
 	{
 		while (old_res[i])
 			i++;
-		res = zyalloc(sizeof(char *) * (i + 2), 'a');
+		res = zyalloc(sizeof(char *) * (i + 2), 'a', true);
 		i = 0;
 		while (old_res[i])
 		{
-			res[i] = ft_strdup(old_res[i]);
+			res[i] = ft_strdup(old_res[i], true);
 			i++;
 		}
-		res[i] = ft_strdup(new);
+		res[i] = ft_strdup(new, true);
 		res[i + 1] = NULL;
 	}
 	return (res);
@@ -100,7 +100,7 @@ static char *ft_ckeck_herdoc_del(char *del, t_herdoc *node)
 		return (ft_strldup(&del[1], ft_strlen(del) - 2));
 	}
 	node->is_expand = true;
-	res = ft_strdup(del);
+	res = ft_strdup(del, true);
 	return (res);
 }
 
@@ -120,7 +120,7 @@ static t_herdoc	*ft_go_for_herdoc(t_token **head)
 			pop_it = tmp;
 			tmp = tmp->next;
 			ft_pop_node_t_token(head, pop_it);
-			herdoc_node = malloc(sizeof(t_herdoc));
+			herdoc_node = zyalloc(sizeof(t_herdoc), 'a', true);
 			herdoc_node->del = ft_ckeck_herdoc_del(tmp->value, herdoc_node);
 			herdoc_node->next = NULL;
 			ft_append_node_herdoc(&lst_herdoc, herdoc_node);
@@ -163,7 +163,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 	is_expand = 1;
 	while (lst_token)
 	{
-		node = zyalloc(sizeof(t_toexec), 'a');
+		node = zyalloc(sizeof(t_toexec), 'a', true);
 		if (!node)
 			return (ft_printerror(MALLOC_ERORR), NULL);
 		ft_set_default_vals(node, envl);

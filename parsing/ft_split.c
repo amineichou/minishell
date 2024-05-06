@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:19:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:02:12 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/04 15:40:24 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,16 @@ static char	**fill_the_splited(char **splited, char *str, char c)
 		}
 		if (str_len == 0)
 			break ;
-		splited[splited_i] = zyalloc(sizeof(char) * (str_len + 1), 'a');
+		splited[splited_i] = zyalloc(sizeof(char) * (str_len + 1), 'a', true);
 		if (!splited[splited_i])
-			return (free_allocated(splited));
+			return (NULL);
 		ft_strlcpy(splited[splited_i], &str[index] - str_len, str_len + 1);
 		splited_i += 1;
 	}
 	return (splited);
 }
 
-char	**ft_split(char *s, char c)
+char	**ft_split(char *s, char c, bool to_free)
 {
 	char	**splited;
 	int		count_del;
@@ -105,7 +105,7 @@ char	**ft_split(char *s, char c)
 	if (!s)
 		return (NULL);
 	count_del = ft_count_delimiters(s, c);
-	splited = malloc(sizeof(char *) * (count_del + 1));
+	splited = zyalloc(sizeof(char *) * (count_del + 1), 'a', true);
 	if (!splited)
 		return (NULL);
 	if (!fill_the_splited(splited, s, c))

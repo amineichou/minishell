@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/03 17:53:09 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/04 16:45:06 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_isdigit(char c)
 	return (0);
 }
 
-char	*ft_strdup(char *s1)
+char	*ft_strdup(char *s1, bool to_free)
 {
 	int		str_length;
 	int		i;
@@ -56,7 +56,7 @@ char	*ft_strdup(char *s1)
 	if(!s1)
 		return (NULL);
 	str_length = ft_strlen(s1) + 1;
-	s2 = nyalloc(sizeof(char) * str_length, 'a');
+	s2 = zyalloc(sizeof(char) * str_length, 'a', to_free);
 	if (!s2)
 		return (0);
 	while (s1[i])
@@ -184,17 +184,17 @@ int	ft_atoi(const char *str)
 	return (res * sign);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, bool to_free)
 {
 	char	*str;
 
 	if (!s1 && !s2)
 		return (NULL);
 	else if (!s1)
-		return (ft_strdup(s2));
+		return (ft_strdup(s2, to_free));
 	else if (!s2)
-		return (ft_strdup(s1));
-	str = (char *)zyalloc(ft_strlen(s1) + ft_strlen(s2) + 1, 'a');
+		return (ft_strdup(s1, to_free));
+	str = (char *)zyalloc(ft_strlen(s1) + ft_strlen(s2) + 1, 'a', to_free);
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
@@ -224,7 +224,7 @@ size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
 	return (dst_lenth + src_lenth);
 }
 
-char	*ft_substr(char *s, int start, int len)
+char	*ft_substr(char *s, int start, int len, bool to_free)
 {
 	char	*str;
 	int		i;
@@ -232,11 +232,11 @@ char	*ft_substr(char *s, int start, int len)
 	if (s == NULL)
 		return (NULL);
 	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
+		return (ft_strdup("", to_free));
 	i = 0;
 	if (ft_strlen(&s[start]) < len)
 		len = ft_strlen(&s[start]);
-	str = (char *)zyalloc(sizeof(char) * len + 1, 'a');
+	str = (char *)zyalloc(sizeof(char) * len + 1, 'a', to_free);
 	if (!str)
 		return (NULL);
 	while (s[start] && i < len)
@@ -280,7 +280,7 @@ static int	ft_count_dig(long int n)
 	return (counter);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int n, bool to_free)
 {
 	char		*converted_number;
 	int			digit_count;
@@ -293,7 +293,7 @@ char	*ft_itoa(int n)
 		number *= -1;
 		digit_count++;
 	}
-	converted_number = zyalloc(sizeof(char) * (digit_count + 1), 'a');
+	converted_number = zyalloc(sizeof(char) * (digit_count + 1), 'a', to_free);
 	if (!converted_number)
 		return (0);
 	converted_number[digit_count] = '\0';
@@ -339,7 +339,7 @@ void garb_add(t_garbage **lst, t_garbage *new)
 	new->next = NULL;
 }
 
-t_garbage *garb_new(void *addrress)
+t_garbage *garb_new(void *addrress, bool is_free)
 {
     t_garbage *newnode = malloc(sizeof(t_garbage));
     if (newnode == NULL)
@@ -348,6 +348,7 @@ t_garbage *garb_new(void *addrress)
         return(NULL);
     }
     newnode->adr = addrress;
+	newnode->is_free = is_free;
     newnode->next = NULL;
     return (newnode);
 }
@@ -360,15 +361,19 @@ void free_garb_list(t_garbage **head)
 	current = *head;
 	while (current != NULL)
 	{
-
 		next = current->next;
-		free(current->adr);
-		free(current);
+		if (current->is_free)
+		{
+			// dprintf(2 ,"%s\n", current->adr);
+			free(current->adr);
+			current->adr = NULL;
+			
+		}
 		current = next;
 	}
 }
 
-void *zyalloc(size_t size, int flag)
+void *zyalloc(size_t size, int flag, bool is_free)
 {
 	static t_garbage	*gooper;
 	t_garbage			*node;
@@ -379,11 +384,11 @@ void *zyalloc(size_t size, int flag)
 		addrress = malloc(size);
 		if(gooper == NULL)
 		{
-			gooper = garb_new(addrress);
+			gooper = garb_new(addrress, is_free);
 		}
 		else
 		{
-			node = garb_new(addrress);
+			node = garb_new(addrress, is_free);
 			garb_add(&gooper, node);
 		}
 	}
@@ -392,26 +397,3 @@ void *zyalloc(size_t size, int flag)
 	return(addrress);
 }
 
-void *nyalloc(size_t size, int flag)
-{
-	static t_garbage	*gooper;
-	t_garbage			*node;
-	void *addrress;
-	
-	if(flag == 'a')
-	{
-		addrress = malloc(size);
-		if(gooper == NULL)
-		{
-			gooper = garb_new(addrress);
-		}
-		else
-		{
-			node = garb_new(addrress);
-			garb_add(&gooper, node);
-		}
-	}
-	else if(flag == 'f')
-		free_garb_list(&gooper);
-	return(addrress);
-}

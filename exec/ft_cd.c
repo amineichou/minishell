@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:13:47 by zyamli            #+#    #+#             */
-/*   Updated: 2024/04/25 15:30:48 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/06 13:42:38 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,49 +32,43 @@ char *env_list_find_var(t_env **head, char *to_look)
 }
 int ft_cd(char *dir, t_env *env, t_pipe *needs)
 {
-	char cwd[1024];
-	// if (getcwd(cwd, sizeof(cwd)) == NULL)
-	// {
-	//     // Error handling
-	//     perror("cd ");
-	//     return (0);
-	// }
-	char *home;
-	char *oldpwd = env_list_find_var(&env, "PWD");
-	if (dir == NULL)
-	{
-		if (chdir(getenv("HOME")) != 0)
-		{
-			*(needs->ex_stat) = 1;
-			perror("cd");
-			return (0);
-		}
-	}
+	char	cwd[1024];
+	char	*home;
+	char	*oldpwd;
+	oldpwd = env_list_find_var(&env, "PWD");
 	if (!dir || !ft_strcmp(dir, "~"))
 	{
-		home = ft_strjoin("/Users/",env_list_find_var(&env, "USER"));
+		home = env_list_find_var(&env, "HOME");
+		if(!home)
+		{
+			ft_putstr_fd("HOME is not set\n", 2);
+			*(needs->ex_stat) = 1;
+			ft_set_status(*(needs->ex_stat), 1);
+			return(1);
+		}
 		if (chdir(home) < 0)
 		{
 			*(needs->ex_stat) = 1;
+			ft_set_status(*(needs->ex_stat), 1);
 			perror("chdir");
-			return (0);
+			return (1);
 		}
-		free(home);
 	}
 	else if (chdir(dir) != 0)
 	{
 		*(needs->ex_stat) = 1;
+		ft_set_status(*(needs->ex_stat), 1);
 		perror("cd");
-		return (0);
+		return (1);
 	}
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 	{
 		*(needs->ex_stat) = 1;
+		ft_set_status(*(needs->ex_stat), 1);
 		perror("getcwd");
-		return (0);
+		return (1);
 	}
 	env_search_replace(env, cwd, "PWD");
-	env_search_replace(needs->env_dup, cwd, "PWD");
 	if (!env_list_serch(&env, "OLDPWD"))
 		ft_export("OLDPWD", oldpwd, env, needs);
 	else
@@ -82,9 +76,9 @@ int ft_cd(char *dir, t_env *env, t_pipe *needs)
 	if (!env_list_serch(&env, "PWD"))
 	{
 		ft_unset(&env, "OLDPWD");
-		ft_unset(&needs->env_dup, "OLDPWD");
 	}
 	*(needs->ex_stat) = 0;
+	ft_set_status(*(needs->ex_stat), 1);
 	return (1);
 }
 

@@ -37,6 +37,8 @@ int ft_echo(t_toexec *cmd, t_pipe *needs)
 		if (!step)
 			printf("\n");
 	}
+	dprintf(2, "hna === %d \n",*(needs->ex_stat));
 	*(needs->ex_stat) = 0;
+	ft_set_status(WEXITSTATUS(*(needs->ex_stat)), 1);
 	return (1);
 }

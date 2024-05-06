@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_token_tools.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 03:30:26 by moichou           #+#    #+#             */
-/*   Updated: 2024/04/30 15:11:55 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/04 16:03:56 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	ft_pop_node_t_token(t_token **head, t_token *to_pop)
 	if ((*head) == to_pop)
 	{
 		(*head) = to_pop->next;
-		free(to_pop->value);
-		free(to_pop);
+		// free(to_pop->value);
+		// free(to_pop);
 		return ;
 	}
 	while (prev)
@@ -49,8 +49,8 @@ void	ft_pop_node_t_token(t_token **head, t_token *to_pop)
 		if (prev->next == to_pop)
 		{
 			prev->next = to_pop->next;
-			free(to_pop->value);
-			free(to_pop);
+			// free(to_pop->value);
+			// free(to_pop);
 			break;
 		}
 		prev = prev->next;
