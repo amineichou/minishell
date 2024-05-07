@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/03 23:45:22 by moichou          ###   ########.fr       */
-=======
-/*   Updated: 2024/05/04 18:03:39 by zyamli           ###   ########.fr       */
->>>>>>> e328d93f170a7d910884053b0e8a6ea66b3775dd
+/*   Updated: 2024/05/07 15:46:59 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-// void	ft_open_herdoc(t_toexec *node, t_token **lst_token, t_env *env)
-// {
-// 	while ((*lst_token)->token && (*lst_token)->token == HEREDOC)
-// 	{
-// 		heredoc_handler(node, env);
-// 		if ((*lst_token  ))
-// 		(*lst_token) = (*lst_token)->next;
-// 	}
-// }
 
 void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 {
@@ -32,6 +18,7 @@ void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 	char	*tmp;
 	int		fl;
 
+	line = NULL;
 	node->input = open("tempfile", O_CREAT | O_RDWR, 0777);
 	fl = open("tempfile", O_CREAT | O_RDWR, 0777);
 	if (node->input == -1 || fl == -1)
@@ -43,19 +30,13 @@ void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 	while (1)
 	{
 		line = readline("> ");
+		if (!g_inexec)
+			break ;
 		if (!line)
 			break ;
 		if (!ft_strcmp(line, herdoc_node->del))
 			break ;
 		if (herdoc_node->is_expand)
-<<<<<<< HEAD
-			line = ft_replace_dollar(line, node->env, ex_sta);
-		ft_putstr_fd(line, fl);
-		ft_putstr_fd("\n", fl);
-		free(line);
-	}                         
-	(free(herdoc_node->del), free(line), close(fl));
-=======
 		{
 			tmp = ft_replace_dollar(line, node->env, ex_sta);
 			ft_putstr_fd(tmp, fl);
@@ -68,9 +49,6 @@ void	ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 			ft_putstr_fd("\n", fl);
 			free(line);
 		}
-		// free(line);
-		// line = NULL;
 	}
 	(free(line), close(fl));
->>>>>>> e328d93f170a7d910884053b0e8a6ea66b3775dd
 }

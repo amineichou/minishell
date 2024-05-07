@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/03 17:57:56 by moichou          ###   ########.fr       */
-=======
-/*   Updated: 2024/05/06 14:57:34 by zyamli           ###   ########.fr       */
->>>>>>> e328d93f170a7d910884053b0e8a6ea66b3775dd
+/*   Updated: 2024/05/07 15:37:22 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +33,6 @@ void update_env(t_env *envl)
 {
 	char *to_replace;
 	char *tmp;
-	int level;
 	to_replace = ft_env_list_serch_res(envl, "SHLVL");
 	tmp = to_replace;
 	printf("honaa   %s\n", to_replace);
@@ -151,7 +146,7 @@ int main(int ac, char **av, char **env)
 				envl = lst->env;
 				exit_status = *(needs.ex_stat);
 				g_inexec = 0;
-				zyalloc(0, 'f', true);
+				// zyalloc(0, 'f', true);
 				continue ;
 			}
 		}

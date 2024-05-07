@@ -41,8 +41,6 @@ static char* token_to_string(token t) {
             return "RD_RP";
         case RD_IN:
             return "RD_IN";
-        case RD_OUT:
-            return "RD_OUT";
         case HEREDOC:
             return "HEREDOC";
         default:
