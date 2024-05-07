@@ -6,7 +6,11 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/07 15:37:22 by moichou          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/07 18:15:26 by zyamli           ###   ########.fr       */
+>>>>>>> a1019ff75860efdc67c227ad6c68ce942362d6e2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,32 +51,39 @@ static void	ft_catch_signal(void)
 	signal(SIGQUIT, ft_sigquit_handler);
 }
 
+static void	ft_add_last_env(t_env *new_env, t_env *envl)
+{
+	t_env	*tmp;
+
+	tmp = NULL;
+	tmp = envl;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_env;
+}
+
 t_env *set_env(char **env)
 {
-	t_env	*envl = NULL;
-	t_env	*tmp = NULL;
-	char	**argument = NULL;
+	t_env	*envl;
+	char	**argument;
 	int i;
 
 	i = 0;
+	envl = NULL;
+	argument = NULL;
 	while (env[i] != NULL)
 	{
 		t_env *new_env = zyalloc(sizeof(t_env), 'a', false);
 		if (!new_env)
 			return (ft_printerror(MALLOC_ERORR), NULL);
 		argument = split_env(env[i], '=');
-        new_env->var = ft_strdup(argument[1], false);
+		new_env->var = ft_strdup(argument[1], false);
 		new_env->name = ft_strdup(argument[0], false);
-        new_env->next = NULL;
-        if (envl == NULL)
-            envl = new_env;
+		new_env->next = NULL;
+		if (envl == NULL)
+			envl = new_env;
 		else
-		{
-			tmp = envl;
-            while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new_env;
-		}
+			ft_add_last_env(new_env, envl);
 		i++;
 	}
 	return(envl);
@@ -81,7 +92,6 @@ t_env *set_spare_env(void)
 {
 	t_env	*head;
 	char	cwd[1024];
-	printf("dkhol\n");
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		perror("getcwd");
 	head = zyalloc(sizeof(t_env), 'a', false);
@@ -93,6 +103,9 @@ t_env *set_spare_env(void)
 	head->next->next = zyalloc(sizeof(t_env), 'a', false);
 	head->next->next->name = ft_strdup("PWD", false);
 	head->next->next->var = ft_strdup(cwd, false);
+	head->next->next->next = zyalloc(sizeof(t_env), 'a', false);
+	head->next->next->next->name = ft_strdup("_", false);
+	head->next->next->next->var = ft_strdup("./minishell", false);
 	return(head);
 	
 }
@@ -118,6 +131,7 @@ int main(int ac, char **av, char **env)
 	exit_status = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
+	// ft_catch_signal();
 	if(*env == NULL)
 		envl = set_spare_env();
 	else
@@ -139,7 +153,7 @@ int main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl, exit_status);
 			if (lst)
 			{
-				// test_lst(lst);
+				test_lst(lst);
 				g_inexec = 1;
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);

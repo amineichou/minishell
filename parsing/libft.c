@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/04 16:45:06 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:51:41 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,23 +377,71 @@ void *zyalloc(size_t size, int flag, bool is_free)
 {
 	static t_garbage	*gooper;
 	t_garbage			*node;
-	void *addrress;
+	void *address;
 	
+	address = NULL;
 	if(flag == 'a')
 	{
-		addrress = malloc(size);
+		address = malloc(size);
+		if(!address)
+			perror("malloc");
 		if(gooper == NULL)
 		{
-			gooper = garb_new(addrress, is_free);
+			gooper = garb_new(address, is_free);
 		}
 		else
 		{
-			node = garb_new(addrress, is_free);
+			node = garb_new(address, is_free);
 			garb_add(&gooper, node);
 		}
 	}
 	else if(flag == 'f')
 		free_garb_list(&gooper);
-	return(addrress);
+	return(address);
+}
+
+char* ft_strstr(const char* haystack, const char* needle)
+{
+
+    const char* p1;
+    const char* p2;
+    const char* p1_advance;
+
+	if (*needle == '\0')
+        return (char*)haystack;
+	p1_advance = haystack;
+    while (*p1_advance)
+	{
+        p1 = p1_advance;
+        p2 = needle;
+        
+        while (*p1 && *p2 && *p1 == *p2)
+		{
+            p1++;
+            p2++;
+        }
+        if (*p2 == '\0')
+            return (char*)p1_advance;
+        
+        p1_advance++;
+    }
+    
+    return (NULL);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
+
+	i = 0;
+	if (fd < 0)
+		return ;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write (fd, &s[i], 1);
+		i++;
+	}
 }
 
