@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/04 20:26:30 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:50:27 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <fcntl.h>
 #include <termios.h>
 #include <sys/wait.h>
+#include <limits.h>
 
 extern int g_inexec;
 
@@ -59,7 +60,7 @@ typedef struct  s_toexec {
 typedef struct t_pipe
 {
 	int		i;
-	int		j;
+	// int		j;
 	int		p;
 	int		size;
 	int		step;
@@ -134,7 +135,7 @@ void	ft_heredoc_handler_syn(t_env *env, char *delemiter);
 
 // utils
 int			ft_strlen(char *str);
-char	**ft_split(char *s, char c, bool to_free);
+char	**ft_split(char *s, char c);
 void		ft_printerror(char *msg);
 void		ft_put_syntaxerror(char *msg, char c);
 int			ft_count_legal_char(char *line, char c);
@@ -203,14 +204,30 @@ int unseter(t_toexec *cmd, t_pipe *needs);
 t_env *duplicate_list(t_env **head);
 void ft_export(char *name, char *var, t_env *head, t_pipe *needs);
 void env_search_replace(t_env *head, char *to_replace, char *to_look);
-int env_list_serch(t_env **head, char *to_look);
-void ft_unset(t_env **env, char *to_del);
-int ft_exit(char **args);
+int		env_list_serch(t_env **head, char *to_look);
+void	ft_unset(t_env **env, char *to_del);
+int		ft_exit(char **args);
+void	in_out_fixer(t_pipe *needs);
+void	ft_execution(t_toexec *cmd, t_pipe *needs);
+void	ft_execution(t_toexec *cmd, t_pipe *needs);
+int		check_builtin(t_toexec *cmd, t_pipe *needs);
+void in_out_handler_last(t_toexec *cmds, t_pipe *needs);
+void in_out_handler_multiple(t_toexec *cmds, t_pipe *needs);
+void in_out_handler(t_toexec *cmds, t_pipe *needs);
+void in_out_fixer(t_pipe *needs);
+void close_all(void);
+int	lst_size(t_toexec *head);
+int	env_size(t_env *head);
+char **env_tolist(t_env **env_list);
+void ft_wait(t_pipe *needs);
 char	*ft_env_list_serch_res(t_env *head, char *to_look);
+void set_values(t_pipe *needs, t_toexec *cmds);
+void cmds_executer(t_toexec *cmds, t_pipe *needs);
+char	*find_path(char *cmd, char *env[]);
+void	error_handler(char *str);
 char **split_env(char *arg, char c);
 int	ft_set_status(int	new_status, int type);
 void *zyalloc(size_t size, int flag, bool is_free);
-void *nyalloc(size_t size, int flag);
 #endif
 
 // 'something''something'

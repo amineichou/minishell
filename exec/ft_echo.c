@@ -1,5 +1,17 @@
-#include"../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/06 20:18:36 by zyamli            #+#    #+#             */
+/*   Updated: 2024/05/06 20:18:37 by zyamli           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+
+#include"../minishell.h"
 
 int flag_check(char *str)
 {
@@ -37,8 +49,7 @@ int ft_echo(t_toexec *cmd, t_pipe *needs)
 		if (!step)
 			printf("\n");
 	}
-	dprintf(2, "hna === %d \n",*(needs->ex_stat));
 	*(needs->ex_stat) = 0;
-	ft_set_status(WEXITSTATUS(*(needs->ex_stat)), 1);
+	ft_set_status(0, 1);
 	return (1);
 }

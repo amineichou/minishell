@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/06 13:44:20 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/06 18:43:47 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,6 @@ void env_sort(t_env **start)
 		ptr1 = *start;
 		while (ptr1->next != lptr)
 		{
-			
 			if (ft_strncmp(ptr1->name, ptr1->next->name,
 				ft_strlen(ptr1->name) + ft_strlen(ptr1->next->name)) > 0)
 			{

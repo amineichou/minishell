@@ -6,61 +6,41 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 15:11:11 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/04 17:50:57 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:41:02 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include<string.h>
-
-char* ft_strstr(const char* haystack, const char* needle)
-{
-
-    const char* p1;
-    const char* p2;
-    const char* p1_advance;
-
-	if (*needle == '\0')
-        return (char*)haystack;
-	p1_advance = haystack;
-    while (*p1_advance)
-	{
-        p1 = p1_advance;
-        p2 = needle;
-        
-        while (*p1 && *p2 && *p1 == *p2)
-		{
-            p1++;
-            p2++;
-        }
-        if (*p2 == '\0')
-            return (char*)p1_advance;
-        
-        p1_advance++;
-    }
-    
-    return NULL;
-}
 
 void	ft_print_error(char *str)
 {
 	ft_putstr_fd(str, 2);
 	exit (127);
 }
-void	ft_putstr_fd(char *s, int fd)
+void ft_wait(t_pipe *needs)
 {
-	size_t	i;
+	int j;
+	int x;
 
-	i = 0;
-	if (fd < 0)
-		return ;
-	if (!s)
-		return ;
-	while (s[i])
+	j = 0;
+	while(j <= needs->p)
 	{
-		write (fd, &s[i], 1);
-		i++;
+		waitpid(needs->pids[j], &x, 0);
+		j++;
 	}
+	ft_set_status(WEXITSTATUS(x), 1);
+	*(needs->ex_stat) = ft_update_status(x, &needs->term);
+}
+
+void set_values(t_pipe *needs, t_toexec *cmds)
+{
+	needs->p = 0;
+	needs->env = env_tolist(&cmds->env);
+	needs->save_fd_in = dup(STDIN_FILENO);
+	needs->save_fd_out = dup(STDOUT_FILENO);
+	tcgetattr(STDIN_FILENO, &needs->term);
+	needs->size = lst_size(cmds);
+	needs->step = 0;
 }
 
 // size_t	ft_strlen(const char *str)

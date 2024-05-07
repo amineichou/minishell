@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 14:19:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/04 15:40:24 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/07 15:50:37 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,19 @@ static size_t	ft_count_delimiters(char const *s, char c)
 	return (count);
 }
 
-static char	**free_allocated(char **splited)
-{
-	size_t	i;
+// static char	**free_allocated(char **splited)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (splited[i])
-	{
-		free(splited[i]);
-		i++;
-	}
-	free(splited);
-	return (0);
-}
+// 	i = 0;
+// 	while (splited[i])
+// 	{
+// 		free(splited[i]);
+// 		i++;
+// 	}
+// 	free(splited);
+// 	return (0);
+// }
 
 static char	**fill_the_splited(char **splited, char *str, char c)
 {
@@ -97,7 +97,7 @@ static char	**fill_the_splited(char **splited, char *str, char c)
 	return (splited);
 }
 
-char	**ft_split(char *s, char c, bool to_free)
+char	**ft_split(char *s, char c)
 {
 	char	**splited;
 	int		count_del;
