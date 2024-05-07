@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_remove_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/04 16:39:19 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/07 11:22:13 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ char	*ft_remove_qoutes(char *str)
 		}
 		else
 		{
-				res[x] = str[i];
-				x++;
-				i++;
+			res[x] = str[i];
+			x++;
+			i++;
 		}
 	}
 	res[x] = '\0';

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/05/06 15:56:59 by moichou          ###   ########.fr       */
+=======
 /*   Updated: 2024/05/07 15:50:27 by zyamli           ###   ########.fr       */
+>>>>>>> a1019ff75860efdc67c227ad6c68ce942362d6e2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +87,7 @@ typedef enum token {
 	RD_AP, // >>
 	RD_RP, // >
 	RD_IN, // <
-	RD_OUT, 
 	HEREDOC, // <<
-	HEREDOC_E, // <<
-	HEREDOC_O, // <<
 }	token;
 
 typedef struct s_token {
