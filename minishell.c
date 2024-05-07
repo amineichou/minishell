@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/07 16:12:24 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/07 18:15:26 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void fill_envinlist(t_toexec **head, t_env *env_list)
         current = current->next;
     }
 }
+
 
 void update_env(t_env *envl)
 {
