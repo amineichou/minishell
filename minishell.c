@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/07 18:15:26 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/07 20:58:21 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,18 @@ int main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	if (!isatty(STDIN_FILENO))
+    {
+		close(0);
+        write (2, "tty required!\n", 14);
+        exit(1);
+    }
 	//when env is NULL you must create you mini spare env
 	rl_catch_signals = 0;
 	exit_status = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
-	// ft_catch_signal();
+	// // ft_catch_signal();
 	if(*env == NULL)
 		envl = set_spare_env();
 	else

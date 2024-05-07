@@ -1,0 +1,13 @@
+1
+Makefile
+a
+b
+c
+exec
+expanding
+free_leaks
+list.todo
+minishell
+minishell.c
+minishell.h
+parsing
