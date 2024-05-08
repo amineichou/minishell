@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 18:08:13 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/08 21:15:49 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ int		ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 {
 	char	*line;
 	char	*tmp;
+	char	*name;
 	int		fl;
 
 	line = NULL;
+	name = ft_itoa((int)herdoc_node, true);
 	int fd = dup(STDIN_FILENO);
-	node->input = open("tempfile", O_CREAT | O_RDWR, 0777);
-	fl = open("tempfile", O_CREAT | O_RDWR, 0777);
+	node->input = open(name, O_CREAT | O_RDWR, 0777);
+	fl = open(name, O_CREAT | O_RDWR, 0777);
 	if (node->input == -1 || fl == -1)
 		ft_printerror("here_doc");
-	if (-1 == unlink("tempfile"))
+	if (-1 == unlink(name))
 		(perror("unlink"));
 	if (node->input == -1)
 		ft_printerror("here_doc");
