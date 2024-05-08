@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 18:07:36 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/08 21:24:24 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ static void	ft_runpast_herdoclst(t_herdoc *head, t_env *env)
 		{
 			open(ttyname(0), O_RDWR);
 			signal(SIGINT, ft_sigkill_handler);
+			close_all();
 			break;
 		}
 		tmp = tmp->next;
