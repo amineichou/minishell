@@ -6,11 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/06 15:56:59 by moichou          ###   ########.fr       */
-=======
-/*   Updated: 2024/05/07 15:50:27 by zyamli           ###   ########.fr       */
->>>>>>> a1019ff75860efdc67c227ad6c68ce942362d6e2
+/*   Updated: 2024/05/08 15:39:00 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +118,7 @@ void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta);
 t_token		*ft_make_tokens(char *sanitize_result);
+void	ft_handle_args(t_toexec **node, t_token **lst_token);
 
 // expanding
 void		ft_expand(t_token *lst_token, t_env *envl, int ex_sta);
