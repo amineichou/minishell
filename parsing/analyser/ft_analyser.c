@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/06 16:32:48 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/08 16:16:18 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static char		**ft_reallocate_copy(char **old_res, char *new)
 	return (res);
 }
 
-static void	ft_handle_args(t_toexec **node, t_token **lst_token)
+void	ft_handle_args(t_toexec **node, t_token **lst_token)
 {
 	char	**joined;
 
-	joined = NULL;
-	if ((*lst_token)->value == NULL)
+	joined = (*node)->args;
+	if ((*lst_token) && (*lst_token)->value == NULL)
 	{
 		(*node)->args = NULL;
 		(*lst_token) = (*lst_token)->next;
@@ -156,7 +156,6 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 	int			is_expand;
 
 	lst_token = ft_make_tokens(sanitize_result);
-	// expanding
 	// test_tokens(lst_token);
 	lst_toexec = NULL;
 	lst_herdoc = NULL;
@@ -175,7 +174,6 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 			ft_expand(lst_token, envl, ex_sta);
 			is_expand = 0;
 		}
-
 		if (lst_token && lst_token->token == WORD)
 		{
 			ft_handle_args(&node, &lst_token);
@@ -188,20 +186,20 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 		if (lst_token && (lst_token->token == RD_AP || lst_token->token == RD_RP || lst_token->token == RD_IN))
 		{
 			ft_handle_redirections(&lst_token, node);
+				ft_append_node_t_toexec(&lst_toexec, node);
 			if (lst_token == NULL)
 			{
-				ft_append_node_t_toexec(&lst_toexec, node);
 				break;
 			}
-			else if (lst_token->token == WORD)
-			{
-				ft_handle_args(&node, &lst_token);
-				if (lst_token == NULL)
-				{
-					ft_append_node_t_toexec(&lst_toexec, node);
-					break;
-				}
-			}
+			// else if (lst_token->token == WORD)
+			// {
+			// 	ft_handle_args(&node, &lst_token);
+			// 	if (lst_token == NULL)
+			// 	{
+			// 		ft_append_node_t_toexec(&lst_toexec, node);
+			// 		break;
+			// 	}
+			// }
 		}
 		if (lst_token && lst_token->token == PIPE)
 		{
