@@ -6,24 +6,24 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 15:11:11 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/07 15:41:02 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/08 21:37:34 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_print_error(char *str)
+void ft_print_error(char *str)
 {
 	ft_putstr_fd(str, 2);
 	exit (127);
 }
 void ft_wait(t_pipe *needs)
 {
-	int j;
-	int x;
+	int	j;
+	int	x;
 
 	j = 0;
-	while(j <= needs->p)
+	while (j <= needs->p)
 	{
 		waitpid(needs->pids[j], &x, 0);
 		j++;
