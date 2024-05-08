@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:33:14 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 21:18:09 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/08 21:35:50 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_update_status(int status, struct termios *term)
 void	ft_sigkill_handler(int signum)
 {
 	(void)signum;
-	if (g_inexec)
+	if (!g_inexec)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();

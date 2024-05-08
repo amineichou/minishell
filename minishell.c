@@ -6,13 +6,13 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 21:19:04 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/08 21:35:44 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_inexec = 1;
+int	g_inexec = 0;
 
 void lex(void)
 {
@@ -35,7 +35,6 @@ void update_env(t_env *envl)
 	char *tmp;
 	to_replace = ft_env_list_serch_res(envl, "SHLVL");
 	tmp = to_replace;
-	printf("honaa   %s\n", to_replace);
 	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1, false), "SHLVL");
 	env_search_replace(envl, ft_strdup("/bin/minishell", false), "SHELL");
 	env_search_replace(envl, NULL, "OLDPWD");
