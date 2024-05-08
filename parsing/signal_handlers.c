@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:33:14 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/07 20:59:38 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/08 18:08:21 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	ft_sigkill_handler(int signum)
 		g_inexec = 0;
 		write(1, "\n", 1);
 	}
+}
+
+
+void	ft_sigkill_herdoc(int signum)
+{
+	(void)signum;
+	close(0);
 }
 
 void	ft_sigquit_handler(int signum)

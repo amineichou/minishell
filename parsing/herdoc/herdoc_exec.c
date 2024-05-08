@@ -6,17 +6,11 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 17:16:05 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:08:13 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	ft_sigint_herdoc(int signum)
-{
-	(void)signum;
-	close(0);
-}
 
 int		ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 {
@@ -25,7 +19,7 @@ int		ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 	int		fl;
 
 	line = NULL;
-	// int fd = dup(STDIN_FILENO);
+	int fd = dup(STDIN_FILENO);
 	node->input = open("tempfile", O_CREAT | O_RDWR, 0777);
 	fl = open("tempfile", O_CREAT | O_RDWR, 0777);
 	if (node->input == -1 || fl == -1)
@@ -34,20 +28,19 @@ int		ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta)
 		(perror("unlink"));
 	if (node->input == -1)
 		ft_printerror("here_doc");
-	// signal(SIGINT, ft_sigint_herdoc);
+	signal(SIGINT, ft_sigkill_herdoc);
 	while (1)
 	{
 		line = readline("> ");
-		// if (line && !ttyname(0))
-        // {
-		// 	open(ttyname(fd), O_RDWR);
-        //     close(fl);
-        //     return (-1);
-        // }
+		if (!ttyname(0))
+		{
+			open(ttyname(fd), O_RDWR);
+            close(fl);
+            return (-1);
+        }
 		if (!line)
 			break ;
-			printf("%s\n", line);
-		if (line && line[0] && !ft_strcmp(line, herdoc_node->del))
+		if (line[0] && !ft_strcmp(line, herdoc_node->del))
 			break ;
 		if (herdoc_node->is_expand)
 		{

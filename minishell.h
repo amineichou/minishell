@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 16:46:01 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:08:32 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char		*ft_remove_qoutes(char *str);
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
 int			ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta);
-void	ft_heredoc_handler_syn(t_env *env, char *delemiter);
+int			ft_heredoc_handler_syn(t_env *env, char *delemiter);
 
 
 // utils
@@ -185,7 +185,8 @@ void		ft_free_token(t_token *head);
 // signal hanldler
 void		ft_sigkill_handler(int signum);
 void		ft_sigquit_handler(int signum);
-int	ft_update_status(int status, struct termios *term);
+void	ft_sigkill_herdoc(int signum);
+int			ft_update_status(int status, struct termios *term);
 
 // tests start
 void test_tokens(t_token *lst_token_input);

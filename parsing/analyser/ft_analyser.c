@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 17:15:14 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/08 18:08:48 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,15 +138,15 @@ static void	ft_run_for_herdoc(t_herdoc *head, t_toexec *node, int ex_sta)
 {
 	t_herdoc	*tmp;
 
+	tmp = head;
 	while (tmp)
 	{
-		ft_heredoc_handler_exec(node, tmp, ex_sta);
-		// if ( == -1)
-		// {
-		// 	// open(ttyname(0), O_RDWR);
-		// 	signal(SIGINT, ft_sigkill_handler);
-		// 	break;
-		// }
+		if (ft_heredoc_handler_exec(node, tmp, ex_sta) == -1)
+		{
+			open(ttyname(0), O_RDWR);
+			signal(SIGINT, ft_sigkill_handler);
+			break;
+		}
 		tmp = tmp->next;
 	}
 }
