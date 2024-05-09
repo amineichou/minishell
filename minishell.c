@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 21:35:44 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:28:54 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,3 +169,4 @@ int main(int ac, char **av, char **env)
 			free(line);
 	}
 }
+//<< ls cat << ps cat
