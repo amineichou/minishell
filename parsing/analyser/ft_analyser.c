@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 21:26:05 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/09 19:00:49 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_handle_args(t_toexec **node, t_token **lst_token)
 	}
 	while ((*lst_token) && (*lst_token)->token == WORD)
 	{
-		joined = ft_reallocate_copy(joined, (*lst_token)->value); // TODO : leaks
+		joined = ft_reallocate_copy(joined, (*lst_token)->value);
 		(*lst_token) = (*lst_token)->next;
 	}
 	(*node)->args = joined;
@@ -104,51 +104,119 @@ static char *ft_ckeck_herdoc_del(char *del, t_herdoc *node)
 	return (res);
 }
 
-static t_herdoc	*ft_go_for_herdoc(t_token **head)
-{
-	t_token		*tmp;
-	t_herdoc	*lst_herdoc;
-	t_herdoc	*herdoc_node;
-	t_token		*pop_it;
+// static t_herdoc	*ft_go_for_herdoc(t_token **head)
+// {
+// 	t_token		*tmp;
+// 	t_herdoc	*lst_herdoc;
+// 	t_herdoc	*herdoc_node;
+// 	t_token		*pop_it;
 
-	tmp = *head;
-	lst_herdoc = NULL;
-	while (tmp && tmp->token != PIPE)
+// 	tmp = *head;
+// 	lst_herdoc = NULL;
+// 	while (tmp && tmp->token != PIPE)
+// 	{
+// 		if (tmp && tmp->token == HEREDOC)
+// 		{
+// 			pop_it = tmp;
+// 			tmp = tmp->next;
+// 			ft_pop_node_t_token(head, pop_it);
+// 			herdoc_node = zyalloc(sizeof(t_herdoc), 'a', true);
+// 			herdoc_node->del = ft_ckeck_herdoc_del(tmp->value, herdoc_node);
+// 			herdoc_node->next = NULL;
+// 			ft_append_node_herdoc(&lst_herdoc, herdoc_node);
+// 			pop_it = tmp;
+// 			tmp = tmp->next;
+// 			ft_pop_node_t_token(head, pop_it);
+// 		}
+// 		else
+// 			tmp = tmp->next;
+// 	}
+// 	return (lst_herdoc);
+// }
+
+// static int	ft_run_for_herdoc(t_herdoc *head, t_toexec *node, int ex_sta)
+// {
+// 	t_herdoc	*tmp;
+
+// 	tmp = head;
+// 	while (tmp)
+// 	{
+// 		if (ft_heredoc_handler_exec(node, tmp, ex_sta) == -1)
+// 		{
+// 			close_all();
+// 			return (-1);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	signal(SIGINT, ft_sigkill_handler);
+// 	return (1);
+// }
+
+static void	ft_skip_till_pipe(t_token **lst_token)
+{
+	while ((*lst_token) && (*lst_token)->token != PIPE)
 	{
-		if (tmp && tmp->token == HEREDOC)
-		{
-			pop_it = tmp;
-			tmp = tmp->next;
-			ft_pop_node_t_token(head, pop_it);
-			herdoc_node = zyalloc(sizeof(t_herdoc), 'a', true);
-			herdoc_node->del = ft_ckeck_herdoc_del(tmp->value, herdoc_node);
-			herdoc_node->next = NULL;
-			ft_append_node_herdoc(&lst_herdoc, herdoc_node);
-			pop_it = tmp;
-			tmp = tmp->next;
-			ft_pop_node_t_token(head, pop_it);
-		}
-		else
-			tmp = tmp->next;
+		(*lst_token) = (*lst_token)->next;
 	}
-	return (lst_herdoc);
+	if ((*lst_token))
+		(*lst_token) = (*lst_token)->next;
 }
 
-static void	ft_run_for_herdoc(t_herdoc *head, t_toexec *node, int ex_sta)
+static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node, int ex_sta)
 {
-	t_herdoc	*tmp;
-
-	tmp = head;
-	while (tmp)
+	bool	is_expand = true;
+	while ((*lst_token) && (*lst_token)->token == HEREDOC)
 	{
-		if (ft_heredoc_handler_exec(node, tmp, ex_sta) == -1)
+		if (ft_heredoc_handler_exec(node, (*lst_token)->next->value, is_expand, ex_sta) == -1)
 		{
-			open(ttyname(0), O_RDWR);
-			signal(SIGINT, ft_sigkill_handler);
-			break;
+			close_all();
+			return (-1);
 		}
-		tmp = tmp->next;
+		(*lst_token) = (*lst_token)->next->next;
 	}
+	signal(SIGINT, ft_sigkill_handler);
+	return (1);
+}
+
+// return 1 == break
+static int	ft_analyse_herdoc(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node, int ex_sta)
+{
+	if ((*lst_token) && (*lst_token)->token == HEREDOC)
+	{
+		if (ft_hnadle_herdoc(lst_token, node, ex_sta) == -1)
+			ft_skip_till_pipe(lst_token);
+		else if ((*lst_token) == NULL)
+		{
+			ft_append_node_t_toexec(lst_toexec, node);
+				return (1);
+		}
+	}
+	return (0);
+}
+static int	ft_analyse_args(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node)
+{
+	if ((*lst_token) && (*lst_token)->token == WORD)
+	{
+		ft_handle_args(&node, lst_token);
+		if (lst_token == NULL)
+		{
+			ft_append_node_t_toexec(lst_toexec, node);
+				return (1);
+		}
+	}
+	return (0);
+}
+
+static int	ft_analyse_redd(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node)
+{
+	if ((*lst_token) && ((*lst_token)->token == RD_AP || (*lst_token)->token == RD_RP || (*lst_token)->token == RD_IN))
+	{
+		ft_handle_redirections(lst_token, node);
+		ft_append_node_t_toexec(lst_toexec, node);
+		if (lst_token == NULL)
+			return (1);
+	}
+	return (0);
 }
 
 // analyser will analyze tokens and create the t_toexec list
@@ -169,49 +237,25 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 	{
 		node = zyalloc(sizeof(t_toexec), 'a', true);
 		if (!node)
-			return (ft_printerror(MALLOC_ERORR), NULL);
+				return (ft_printerror(MALLOC_ERORR), NULL);
 		ft_set_default_vals(node, envl);
-		lst_herdoc = ft_go_for_herdoc(&lst_token);
-		if (lst_herdoc)
-			ft_run_for_herdoc(lst_herdoc, node, ex_sta);
-		else if (!lst_herdoc && is_expand)
+		while (lst_token && lst_token->token != PIPE)
 		{
-			ft_expand(lst_token, envl, ex_sta);
-			is_expand = 0;
+			if (ft_analyse_args(&lst_token, &lst_toexec, node))
+				break ;
+			if (ft_analyse_herdoc(&lst_token, &lst_toexec, node, ex_sta))
+				break ;
+			if (ft_analyse_redd(&lst_token, &lst_toexec, node))
+				break ;
 		}
-		if (lst_token && lst_token->token == WORD)
-		{
-			ft_handle_args(&node, &lst_token);
-			if (lst_token == NULL)
-			{
-				ft_append_node_t_toexec(&lst_toexec, node);
-				break;
-			}
-		}
-		if (lst_token && (lst_token->token == RD_AP || lst_token->token == RD_RP || lst_token->token == RD_IN))
-		{
-			ft_handle_redirections(&lst_token, node);
-				ft_append_node_t_toexec(&lst_toexec, node);
-			if (lst_token == NULL)
-			{
-				break;
-			}
-			// else if (lst_token->token == WORD)
-			// {
-			// 	ft_handle_args(&node, &lst_token);
-			// 	if (lst_token == NULL)
-			// 	{
-			// 		ft_append_node_t_toexec(&lst_toexec, node);
-			// 		break;
-			// 	}
-			// }
-		}
-		if (lst_token && lst_token->token == PIPE)
-		{
-			lst_token = lst_token->next;
+		// if (lst_token && lst_token->token == PIPE)
+		// {
+		// 	lst_token = lst_token->next;
 			ft_append_node_t_toexec(&lst_toexec, node);
-			continue;
-		}
+			if (lst_token)
+				lst_token = lst_token->next;
+		// 	continue;
+		// }
 	}
 	// test_lst(lst_toexec); ft_free_token(lst_token), 
 	return (lst_toexec);

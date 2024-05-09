@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 18:08:32 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/09 16:46:41 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char		*ft_remove_qoutes(char *str);
 
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
-int			ft_heredoc_handler_exec(t_toexec *node, t_herdoc *herdoc_node, int ex_sta);
+int			ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand, int ex_sta);
 int			ft_heredoc_handler_syn(t_env *env, char *delemiter);
 
 
@@ -189,6 +189,7 @@ void	ft_sigkill_herdoc(int signum);
 int			ft_update_status(int status, struct termios *term);
 
 // tests start
+void print_open_file_descriptors();
 void test_tokens(t_token *lst_token_input);
 void	test_lst(t_toexec *lst);
 void	printf_test(char *str);

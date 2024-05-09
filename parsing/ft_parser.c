@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 21:24:24 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:04:24 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,6 @@ static t_toexec	*ft_sanitizer(char *line, t_env *env, int ex_sta)
 			if (!herdoc_lst)
 				return (free(line), NULL);
 			ft_runpast_herdoclst(herdoc_lst, env);
-			// TODO free
 		}
 		return (free(line), NULL);
 	}
