@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:04:31 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/06 13:48:29 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:07:21 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int ft_exit(char **args)
 		ft_printerror("exit: too many arguments\n");
 		return (1);
 	}
-	if (args[1] && !str_isnum(args[1]) || overflow_handler(args[1]))
+	if ((args[1] && !str_isnum(args[1])) || overflow_handler(args[1]))
 	{
 		ft_printerror(" exit: ");
 		ft_putstr_fd(args[1], 2);

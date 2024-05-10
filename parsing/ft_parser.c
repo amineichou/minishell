@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 10:32:08 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 12:05:02 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,14 +159,14 @@ static t_herdoc	*ft_createpast_herdoc(char *line, int stop)
 	return (herdoc_lst);
 }
 
-static void	ft_runpast_herdoclst(t_herdoc *head, t_env *env)
+static void	ft_runpast_herdoclst(t_herdoc *head)
 {
 	t_herdoc	*tmp;
 
 	tmp = head;
 	while (tmp)
 	{
-		if (ft_heredoc_handler_syn(env, tmp->del) == -1)
+		if (ft_heredoc_handler_syn(tmp->del) == -1)
 		{
 			signal(SIGINT, ft_sigkill_handler);
 			close_all();
@@ -176,7 +176,7 @@ static void	ft_runpast_herdoclst(t_herdoc *head, t_env *env)
 	}
 }
 
-static t_toexec	*ft_sanitizer(char *line, t_env *env, int ex_sta)
+static t_toexec	*ft_sanitizer(char *line, t_env *env)
 {
 	t_herdoc	*herdoc_lst;
 	int			syntax_error_where;
@@ -192,11 +192,11 @@ static t_toexec	*ft_sanitizer(char *line, t_env *env, int ex_sta)
 			herdoc_lst = ft_createpast_herdoc(line, syntax_error_where);
 			if (!herdoc_lst)
 				return (free(line), NULL);
-			ft_runpast_herdoclst(herdoc_lst, env);
+			ft_runpast_herdoclst(herdoc_lst);
 		}
 		return (free(line), NULL);
 	}
-	return (ft_analyser(line, env, ex_sta));
+	return (ft_analyser(line, env));
 }
 
 static int	ft_check_valid_fd(t_toexec *head)
@@ -214,11 +214,11 @@ static int	ft_check_valid_fd(t_toexec *head)
 }
 
 // syntax health check and fix it's structure
-t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta)
+t_toexec	*ft_parser(char *line, t_env *envl)
 {
 	t_toexec	*lst_toexec;
 
-	lst_toexec = ft_sanitizer(line, envl, ex_sta);
+	lst_toexec = ft_sanitizer(line, envl);
 	if (ft_check_valid_fd(lst_toexec) == -1)
 		return (free(line), NULL);
 	// test_lst(lst_toexec);

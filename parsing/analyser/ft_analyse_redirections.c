@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:52:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 16:36:03 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 12:18:27 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ void	ft_handle_redirections(t_token **lst_token, t_toexec *node)
 		else if ((*lst_token)->token == RD_IN)
 			ft_hanlde_red_in(*lst_token, node);
 		(*lst_token) = (*lst_token)->next->next;
-		ft_handle_args(&node, lst_token);
+		// ft_handle_args(&node, lst_token);
 	}
 }

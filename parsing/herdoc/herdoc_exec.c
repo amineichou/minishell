@@ -6,13 +6,13 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/09 21:23:24 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 12:02:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int		ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand, int ex_sta)
+int		ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand)
 {
 	char	*line;
 	char	*tmp;
@@ -46,7 +46,7 @@ int		ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand, int ex_st
 			break ;
 		if (is_expand)
 		{
-			tmp = ft_replace_dollar(line, node->env, ex_sta);
+			tmp = ft_replace_dollar(line, node->env);
 			ft_putstr_fd(tmp, tmp_file);
 			ft_putstr_fd("\n", tmp_file);
 			free(line);

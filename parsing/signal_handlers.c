@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:33:14 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/09 14:39:41 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 11:59:53 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,5 @@ void	ft_sigkill_herdoc(int signum)
 
 void	ft_sigquit_handler(int signum)
 {
-	
-	
-	// s.c_lflag = ~ECHOCTL;
-	// executs signal
-	// if (signum == 3 && !g_inexec)
-	// {
-		
-	// }
-	// tcsetattr(STDIN_FILENO, TCSANOW, &s);
+	(void)signum;
 }

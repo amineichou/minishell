@@ -6,13 +6,13 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:20:27 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 10:37:24 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 12:00:19 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_heredoc_handler_syn(t_env *env, char *delemiter)
+int	ft_heredoc_handler_syn(char *delemiter)
 {
 	char	*line;
 	int		fl;

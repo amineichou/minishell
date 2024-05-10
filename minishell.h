@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/09 16:46:41 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 12:20:53 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_garbage {
 // #define malloc(x) NULL
 
 // START FUNCTION
-t_toexec	*ft_parser(char *line, t_env *envl, int ex_sta);
+t_toexec	*ft_parser(char *line, t_env *envl);
 
 // syntax sanitizer
 
@@ -116,19 +116,20 @@ char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 
 // analyser
-t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta);
+t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
 t_token		*ft_make_tokens(char *sanitize_result);
-void	ft_handle_args(t_toexec **node, t_token **lst_token);
+void		ft_handle_args(t_toexec **node, t_token **lst_token, t_env *envl);
 
 // expanding
-void		ft_expand(t_token *lst_token, t_env *envl, int ex_sta);
-char		*ft_replace_dollar(char *to_expand, t_env *env, int ex_sta);
+void		ft_expand(t_token *lst_token, t_env *envl);
+char		*ft_replace_dollar(char *to_expand, t_env *env);
+char		*ft_expand_dollar(char *str, t_env *env);
 char		*ft_remove_qoutes(char *str);
 
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
-int			ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand, int ex_sta);
-int			ft_heredoc_handler_syn(t_env *env, char *delemiter);
+int			ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand);
+int			ft_heredoc_handler_syn(char *delemiter);
 
 
 // utils

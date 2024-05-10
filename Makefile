@@ -1,4 +1,4 @@
-FLAGS = -g -fsanitize=address #-Wall -Wextra -Werror
+FLAGS =-g -fsanitize=address -Wall -Wextra -Werror
 CC = cc
 NAME = minishell
 READLINE_LIB = -lreadline

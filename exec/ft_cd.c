@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:13:47 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/07 15:07:22 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:06:36 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int ft_cd(char *dir, t_env *env, t_pipe *needs)
 {
 
 	char	cwd[1024];
-	char	*home;
 	char	*oldpwd;
 
 	oldpwd = env_list_find_var(&env, "PWD");

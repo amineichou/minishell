@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/09 22:34:07 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 12:22:01 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ static char		**ft_reallocate_copy(char **old_res, char *new)
 	return (res);
 }
 
-void	ft_handle_args(t_toexec **node, t_token **lst_token)
+void	ft_handle_args(t_toexec **node, t_token **lst_token, t_env *envl)
 {
 	char	**joined;
+	int		i;
 
+	i = 0;
 	joined = (*node)->args;
 	if ((*lst_token) && (*lst_token)->value == NULL)
 	{
@@ -56,6 +58,14 @@ void	ft_handle_args(t_toexec **node, t_token **lst_token)
 	{
 		joined = ft_reallocate_copy(joined, (*lst_token)->value);
 		(*lst_token) = (*lst_token)->next;
+	}
+	// check is expand () first before expanding
+	while (joined[i])
+	{
+		// checks for expanding !
+		joined[i] = ft_expand_dollar(joined[i], envl);
+		joined[i] = ft_remove_qoutes(joined[i]);
+		i++;
 	}
 	(*node)->args = joined;
 }
@@ -90,19 +100,19 @@ static void	ft_set_default_vals(t_toexec *node, t_env *envl)
 	node->env = envl;
 }
 
-static char *ft_ckeck_herdoc_del(char *del, t_herdoc *node)
-{
-	char	*res;
+// static char *ft_ckeck_herdoc_del(char *del, t_herdoc *node)
+// {
+// 	char	*res;
 
-	if (ft_isquote(del[0]))
-	{
-		node->is_expand = false;
-		return (ft_strldup(&del[1], ft_strlen(del) - 2));
-	}
-	node->is_expand = true;
-	res = ft_strdup(del, true);
-	return (res);
-}
+// 	if (ft_isquote(del[0]))
+// 	{
+// 		node->is_expand = false;
+// 		return (ft_strldup(&del[1], ft_strlen(del) - 2));
+// 	}
+// 	node->is_expand = true;
+// 	res = ft_strdup(del, true);
+// 	return (res);
+// }
 
 static void	ft_skip_till_pipe(t_token **lst_token)
 {
@@ -129,7 +139,7 @@ static bool	ft_isexpand_herdoc(char *str)
 	return (true);
 }
 
-static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node, int ex_sta)
+static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node)
 {
 	bool	is_expand;
 	char	*del;
@@ -138,7 +148,7 @@ static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node, int ex_sta)
 	{
 		is_expand = ft_isexpand_herdoc((*lst_token)->next->value);
 		del = ft_remove_qoutes((*lst_token)->next->value);
-		if (ft_heredoc_handler_exec(node, del, is_expand, ex_sta) == -1)
+		if (ft_heredoc_handler_exec(node, del, is_expand) == -1)
 		{
 			close_all();
 			return (-1);
@@ -150,11 +160,11 @@ static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node, int ex_sta)
 }
 
 // return 1 == break
-static int	ft_analyse_herdoc(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node, int ex_sta)
+static int	ft_analyse_herdoc(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node)
 {
 	if ((*lst_token) && (*lst_token)->token == HEREDOC)
 	{
-		if (ft_hnadle_herdoc(lst_token, node, ex_sta) == -1)
+		if (ft_hnadle_herdoc(lst_token, node) == -1)
 			ft_skip_till_pipe(lst_token);
 		else if ((*lst_token) == NULL)
 		{
@@ -166,11 +176,11 @@ static int	ft_analyse_herdoc(t_token **lst_token, t_toexec **lst_toexec, t_toexe
 }
 
 // return 1 == break
-static int	ft_analyse_args(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node)
+static int	ft_analyse_args(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node, t_env *envl)
 {
 	if ((*lst_token) && (*lst_token)->token == WORD)
 	{
-		ft_handle_args(&node, lst_token);
+		ft_handle_args(&node, lst_token, envl);
 		if (lst_token == NULL)
 		{
 			ft_append_node_t_toexec(lst_toexec, node);
@@ -194,7 +204,7 @@ static int	ft_analyse_redd(t_token **lst_token, t_toexec **lst_toexec, t_toexec 
 }
 
 // analyser will analyze tokens and create the t_toexec list
-t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
+t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 {
 	t_token		*lst_token;
 	t_toexec	*lst_toexec;
@@ -210,9 +220,9 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl, int ex_sta)
 		ft_set_default_vals(node, envl);
 		while (lst_token && lst_token->token != PIPE)
 		{
-			if (ft_analyse_args(&lst_token, &lst_toexec, node))
+			if (ft_analyse_args(&lst_token, &lst_toexec, node, envl))
 				break ;
-			if (ft_analyse_herdoc(&lst_token, &lst_toexec, node, ex_sta))
+			if (ft_analyse_herdoc(&lst_token, &lst_toexec, node))
 				break ;
 			if (ft_analyse_redd(&lst_token, &lst_toexec, node))
 				break ;

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/09 21:13:34 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 12:05:23 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,15 @@ void update_env(t_env *envl)
 	env_search_replace(envl, NULL, "OLDPWD");
 }
 
-static void	ft_catch_signal(void)
+static void	ft_init(void)
 {
+	if (!isatty(STDIN_FILENO))
+	{
+		// close(0);
+		write (2, "tty required!\n", 14);
+		exit(1);
+	}
+	rl_catch_signals = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
 }
@@ -112,34 +119,23 @@ int	ft_set_status(int	new_status, int type)
 		old_status = new_status;
 	return (old_status);
 }
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_toexec	*lst;
 	char		*line;
-	t_env *envl;
-	int		exit_status;
+	t_env		*envl;
+	int			exit_status;
+	t_pipe		needs;
 
 	(void)ac;
 	(void)av;
-	if (!isatty(STDIN_FILENO))
-    {
-		close(0);
-        write (2, "tty required!\n", 14);
-        exit(1);
-    }
-	//when env is NULL you must create you mini spare env
-	rl_catch_signals = 0;
+	ft_init();
 	exit_status = 0;
-	signal(SIGINT, ft_sigkill_handler);
-	signal(SIGQUIT, ft_sigquit_handler);
-	// // ft_catch_signal();
 	if(*env == NULL)
 		envl = set_spare_env();
 	else
 		envl = set_env(env);
 	update_env(envl);
-	t_pipe needs;
-	// atexit(lex);
 	while (1)
 	{
 		line = readline("\033[0;32mminishell$ \033[0;0m");
@@ -151,7 +147,7 @@ int main(int ac, char **av, char **env)
 		if (line && line[0])
 		{
 			add_history(line);
-			lst = ft_parser(line, envl, exit_status);
+			lst = ft_parser(line, envl);
 			if (lst)
 			{
 				// test_lst(lst);
@@ -169,4 +165,4 @@ int main(int ac, char **av, char **env)
 			free(line);
 	}
 }
-//<< ls cat << ps cat
+
