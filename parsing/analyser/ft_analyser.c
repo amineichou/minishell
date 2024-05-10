@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 15:23:47 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 16:29:49 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char		**ft_reallocate_copy(char **old_res, char *new)
 	if (!old_res)
 	{
 		res = zyalloc(sizeof(char *) * 2, 'a', true);
-		res[0] = ft_strdup(new, true); // leaks if new is mallocated
+		res[0] = ft_strdup(new, true);
 		res[1] = NULL;
 	}
 	else
@@ -63,7 +63,7 @@ void	ft_handle_args(t_toexec **node, t_token **lst_token, t_env *envl)
 	while (joined[i])
 	{
 		// checks for expanding !
-		joined[i] = ft_expand_dollar(joined[i], envl);
+		// joined[i] = ft_expand_dollar(joined[i], envl);
 		joined[i] = ft_remove_qoutes(joined[i]);
 		i++;
 	}
@@ -210,7 +210,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 	t_toexec	*lst_toexec;
 	t_toexec	*node;
 
-	lst_token = ft_make_tokens(sanitize_result);
+	lst_token = ft_make_tokens(sanitize_result, envl);
 	lst_toexec = NULL;
 	while (lst_token)
 	{
