@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:20:27 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 18:06:21 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 10:37:24 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,28 @@ int	ft_heredoc_handler_syn(t_env *env, char *delemiter)
 {
 	char	*line;
 	int		fl;
+	char	*name;
 
+	line = NULL;
+	name = ft_itoa((int)delemiter, true);
 	int fd = dup(STDIN_FILENO);
-	fl = open("tempfile", O_CREAT | O_RDWR, 0777);
+	fl = open(name, O_CREAT | O_RDWR, 0777);
 	if (fl == -1)
-		ft_printerror("error opning heredoc file\n");
-	if (-1 == unlink("tempfile"))
-		perror("unlink");
+		ft_printerror("HERDOC error ! couldn't open tmp file\n");
+	if (-1 == unlink(name))
+		(perror("unlink"));
 	signal(SIGINT, ft_sigkill_herdoc);
 	while (1)
 	{
 		line = readline("> ");
-		if (!ttyname(0))
+		if (g_inexec == -1)
 		{
-			open(ttyname(fd), O_RDWR);
-            close(fl);
-            return (-1);
-        }
+			free(line);
+			dup2(fd, 0);
+			close(fd);
+			close(fl);
+			return (g_inexec = 0, -1);
+		}
 		if (!line)
 			break ;
 		if (!ft_strcmp(line, delemiter))
@@ -41,5 +46,5 @@ int	ft_heredoc_handler_syn(t_env *env, char *delemiter)
 		free(line);
 		line = NULL;
 	}
-	return (free(line), close(fl), 1);
+	return (free(line),close(fd), close(fl), 1);
 }

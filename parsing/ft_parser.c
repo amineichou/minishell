@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/09 15:04:24 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 10:32:08 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,6 @@ static void	ft_runpast_herdoclst(t_herdoc *head, t_env *env)
 	{
 		if (ft_heredoc_handler_syn(env, tmp->del) == -1)
 		{
-			open(ttyname(0), O_RDWR);
 			signal(SIGINT, ft_sigkill_handler);
 			close_all();
 			break;
