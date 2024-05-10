@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/07 15:30:41 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 15:35:02 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	first_cmd(t_toexec **cmds, t_pipe *needs)
 
 void single_cmd(t_toexec *cmds, t_pipe *needs)
 {
-	needs->pids = zyalloc(sizeof(int), 'a', true);
 	if(cmds->args)
 	{
 		needs->pids[needs->p] = fork();
@@ -109,6 +108,7 @@ void executer(t_toexec *cmds, t_pipe *needs)
 	set_values(needs, cmds);
 	if(needs->size == 1)
 	{
+		needs->pids = zyalloc(sizeof(int), 'a', true);
 		if(cmds->args)
 		{
 			env_search_replace(cmds->env, ft_strdup(cmds->args[0], false), "_");
