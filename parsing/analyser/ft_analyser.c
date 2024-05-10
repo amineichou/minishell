@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 12:22:01 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 15:23:47 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,5 +231,6 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 		if (lst_token)
 			lst_token = lst_token->next;
 	}
+	test_lst(lst_toexec);
 	return (lst_toexec);
 }
