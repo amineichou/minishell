@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 15:28:23 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:32:05 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_init(void)
 		write (2, "tty required!\n", 14);
 		exit(1);
 	}
-	rl_catch_signals = 0;
+
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
 }
@@ -119,8 +119,12 @@ int	ft_set_status(int	new_status, int type)
 		old_status = new_status;
 	return (old_status);
 }
+
+void leak(){system("lsof -p minishell");}
+
 int	main(int ac, char **av, char **env)
 {
+	atexit(leak);
 	t_toexec	*lst;
 	char		*line;
 	t_env		*envl;
@@ -130,6 +134,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	ft_init();
+	// rl_catch_signals = 0;
 	exit_status = 0;
 	if(*env == NULL)
 		envl = set_spare_env();

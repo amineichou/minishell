@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:18:36 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/06 20:18:37 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:27:08 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ int ft_echo(t_toexec *cmd, t_pipe *needs)
 			ft_putstr(cmd->args[i]);
 			i++;
 			if (cmd->args[i])
-				printf(" ");
+				ft_putstr(" ");
 		}
 		if (!step)
-			printf("\n");
+			ft_putstr("\n");
 	}
 	*(needs->ex_stat) = 0;
 	ft_set_status(0, 1);
