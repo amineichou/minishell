@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/04 16:36:09 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:32:31 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*ft_get_toknen_val(char *str, int start, int i)
 	return (res);
 }
 
-t_token	*ft_make_tokens(char *sanitize_result)
+t_token	*ft_make_tokens(char *sanitize_result, t_env *envl)
 {
 	t_token	*lst_token;
 	t_token	*node;
@@ -75,6 +75,7 @@ t_token	*ft_make_tokens(char *sanitize_result)
 
 	i = 0;
 	lst_token = NULL;
+	sanitize_result = ft_replace_dollar(sanitize_result, envl);
 	while (sanitize_result[i])
 	{
 		node = zyalloc(sizeof(t_token), 'a', true);

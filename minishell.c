@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 16:32:05 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:34:34 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				test_lst(lst);
+				// test_lst(lst);
 				g_inexec = 1;
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
