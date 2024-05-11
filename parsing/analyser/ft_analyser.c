@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 15:40:53 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 16:01:25 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node)
 		}
 		(*lst_token) = (*lst_token)->next->next;
 	}
-	signal(SIGINT, ft_sigkill_handler);
 	return (1);
 }
 
@@ -156,8 +155,12 @@ static int	ft_analyse_herdoc(t_token **lst_token, t_toexec *node)
 	if ((*lst_token) && (*lst_token)->token == HEREDOC)
 	{
 		if (ft_hnadle_herdoc(lst_token, node) == -1)
+		{
+			signal(SIGINT, ft_sigkill_handler);
 			return (-1);
+		}
 	}
+	signal(SIGINT, ft_sigkill_handler);
 	return (0);
 }
 

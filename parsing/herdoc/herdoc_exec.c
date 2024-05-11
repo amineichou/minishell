@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 12:02:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 16:00:50 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int		ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand)
 			dup2(fd, 0);
 			close(fd);
 			close(tmp_file);
-			return (g_inexec = 0, -1);
+			g_inexec = 0;
+			return (-1);
 		}
 		if (!line)
 			break ;

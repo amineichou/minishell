@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:33:14 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 16:23:41 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/11 16:00:12 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	ft_update_status(int status, struct termios *term)
 
 void	ft_sigkill_handler(int signum)
 {
-	(void)signum;
-	if (!g_inexec)
+	if (signum == 2 && !g_inexec)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
@@ -44,13 +43,9 @@ void	ft_sigkill_handler(int signum)
 		rl_redisplay();
 		ft_set_status(1, 1);
 	}
-	else
-	{
-		g_inexec = 0;
-		write(1, "\n", 1);
-	}
+	// else if (g_inexec)
+	// 	g_inexec = 0;
 }
-
 
 void	ft_sigkill_herdoc(int signum)
 {
