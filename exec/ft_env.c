@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:54:51 by zyamli            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/11 15:45:03 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/11 15:45:45 by moichou          ###   ########.fr       */
+>>>>>>> e157dcf36f0c37ebd718fefae1c40b21a0edaf53
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +77,11 @@ char	**env_tolist(t_env **env_list)
 	return (result);
 }
 
+<<<<<<< HEAD
 int	env_print(t_toexec *data)
+=======
+int env_print(t_toexec *data)
+>>>>>>> e157dcf36f0c37ebd718fefae1c40b21a0edaf53
 {
 	t_env	*tmp;
 

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 10:18:05 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 15:40:53 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,23 +151,18 @@ static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node)
 }
 
 // return -1 == exit loop aka don't send to exec
-static int	ft_analyse_herdoc(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node)
+static int	ft_analyse_herdoc(t_token **lst_token, t_toexec *node)
 {
 	if ((*lst_token) && (*lst_token)->token == HEREDOC)
 	{
 		if (ft_hnadle_herdoc(lst_token, node) == -1)
 			return (-1);
-		// else if ((*lst_token) == NULL)
-		// {
-		// 	ft_append_node_t_toexec(lst_toexec, node);
-		// 		return (1);
-		// }
 	}
 	return (0);
 }
 
 // return 1 == break
-static int	ft_analyse_args(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node, t_env *envl)
+static int	ft_analyse_args(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node)
 {
 	if ((*lst_token) && (*lst_token)->token == WORD)
 	{
@@ -201,16 +196,9 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 	t_toexec	*lst_toexec;
 	t_toexec	*node;
 
-	lst_token = ft_make_tokens(sanitize_result, envl);
-	lst_token = ft_make_tokens(ft_expand(lst_token, envl), envl);
-	// remove stupid quotes
-	t_token *tmp = lst_token;
-	while (tmp)
-	{
-		if (tmp->token == WORD)
-			tmp->value = ft_remove_qoutes(tmp->value);
-		tmp = tmp->next;
-	}
+	lst_token = ft_make_tokens(sanitize_result);
+	lst_token = ft_make_tokens(ft_expand(lst_token, envl));
+	lst_token = ft_lst_remvove_qoutes(lst_token);
 	lst_toexec = NULL;
 	while (lst_token)
 	{
@@ -220,9 +208,9 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 		ft_set_default_vals(node, envl);
 		while (lst_token && lst_token->token != PIPE)
 		{
-			if (ft_analyse_args(&lst_token, &lst_toexec, node, envl))
+			if (ft_analyse_args(&lst_token, &lst_toexec, node))
 				break ;
-			if (ft_analyse_herdoc(&lst_token, &lst_toexec, node) == -1)
+			if (ft_analyse_herdoc(&lst_token, node) == -1)
 				return (NULL);
 			if (ft_analyse_redd(&lst_token, &lst_toexec, node))
 				break ;

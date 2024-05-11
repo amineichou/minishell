@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 FLAGS =  -g -fsanitize=address #-Wall -Wextra -Werror
+=======
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address 
+>>>>>>> e157dcf36f0c37ebd718fefae1c40b21a0edaf53
 CC = cc
 NAME = minishell
 READLINE_LIB = -lreadline

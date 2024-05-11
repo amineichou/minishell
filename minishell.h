@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/11 15:45:25 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/11 15:45:54 by moichou          ###   ########.fr       */
+>>>>>>> e157dcf36f0c37ebd718fefae1c40b21a0edaf53
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +121,7 @@ void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
-t_token		*ft_make_tokens(char *sanitize_result, t_env *envl);
+t_token	*ft_make_tokens(char *sanitize_result);
 void	ft_handle_args(t_toexec **node, t_token **lst_token);
 
 // expanding
@@ -125,6 +129,7 @@ char		*ft_expand(t_token *lst_token, t_env *envl);
 char		*ft_replace_dollar(char *to_expand, t_env *env);
 char		*ft_expand_dollar(char *str, t_env *env);
 char		*ft_remove_qoutes(char *str);
+t_token		*ft_lst_remvove_qoutes(t_token *lst_token);
 
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
@@ -199,7 +204,11 @@ void	printf_test(char *str);
 void executer(t_toexec *cmds, t_pipe *needs);
 int ft_cd (char *dir, t_env *env, t_pipe *needs);
 int ft_echo(t_toexec *cmd, t_pipe *needs);
+<<<<<<< HEAD
 int	env_print(t_toexec *data);
+=======
+int env_print(t_toexec *data);
+>>>>>>> e157dcf36f0c37ebd718fefae1c40b21a0edaf53
 void ft_export(char *name, char *var, t_env **head, t_pipe *needs);
 int ft_exporter(t_toexec *cmd, t_pipe *needs);
 int ft_pwd(t_pipe *needs);

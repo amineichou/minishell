@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/07 11:22:13 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 15:31:00 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,20 @@ char	*ft_remove_qoutes(char *str)
 	}
 	res[x] = '\0';
 	return (res);
+}
+
+t_token	*ft_lst_remvove_qoutes(t_token *lst_token)
+{
+	t_token *tmp;
+
+	tmp = lst_token;
+	while (tmp)
+	{
+		if (tmp->token == WORD)
+			tmp->value = ft_remove_qoutes(tmp->value);
+		tmp = tmp->next;
+	}
+	return (lst_token);
 }
 
 // int main(void)

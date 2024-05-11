@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/11 15:44:34 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/11 15:44:16 by moichou          ###   ########.fr       */
+>>>>>>> e157dcf36f0c37ebd718fefae1c40b21a0edaf53
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +18,6 @@
 
 int	g_inexec = 0;
 
-void lex(void)
-{
-	system("lsof -c minishell");
-}
 void fill_envinlist(t_toexec **head, t_env *env_list)
 {
     t_toexec *current = *head;
@@ -44,7 +44,7 @@ static void	ft_init(void)
 		write (2, "tty required!\n", 14);
 		exit(1);
 	}
-
+	rl_catch_signals = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
 }
@@ -150,7 +150,7 @@ int	main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				test_lst(lst);
+				// test_lst(lst);
 				g_inexec = 1;
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);
