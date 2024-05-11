@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/11 15:45:25 by zyamli           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/11 15:45:54 by moichou          ###   ########.fr       */
->>>>>>> e157dcf36f0c37ebd718fefae1c40b21a0edaf53
+/*   Updated: 2024/05/11 15:47:43 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,11 +200,7 @@ void	printf_test(char *str);
 void executer(t_toexec *cmds, t_pipe *needs);
 int ft_cd (char *dir, t_env *env, t_pipe *needs);
 int ft_echo(t_toexec *cmd, t_pipe *needs);
-<<<<<<< HEAD
 int	env_print(t_toexec *data);
-=======
-int env_print(t_toexec *data);
->>>>>>> e157dcf36f0c37ebd718fefae1c40b21a0edaf53
 void ft_export(char *name, char *var, t_env **head, t_pipe *needs);
 int ft_exporter(t_toexec *cmd, t_pipe *needs);
 int ft_pwd(t_pipe *needs);
