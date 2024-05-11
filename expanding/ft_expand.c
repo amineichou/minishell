@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 12:20:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 10:11:05 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,18 +88,22 @@ char	*ft_expand_dollar(char *str, t_env *env)
 	return (res);
 }
 
-// void	ft_expand(t_token *lst_token, t_env *envl)
-// {
-// 	t_token	*tmp;
+char	*ft_expand(t_token *lst_token, t_env *envl)
+{
+	t_token	*tmp;
+	char	*res;
 
-// 	tmp = lst_token;
-// 	while (tmp)
-// 	{
-// 		if (tmp->token == WORD)
-// 		{
-// 			tmp->value = ft_expand_dollar(tmp->value, envl);
-// 			tmp->value = ft_remove_qoutes(tmp->value);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = lst_token;
+	res = NULL;
+	while (tmp)
+	{
+		if (tmp->token == WORD)
+		{
+			tmp->value = ft_expand_dollar(tmp->value, envl);
+			// tmp->value = ft_remove_qoutes(tmp->value);
+		}
+		res = ft_strjoin_addspace(res, tmp->value, true);
+		tmp = tmp->next;
+	}
+	return (res);
+}

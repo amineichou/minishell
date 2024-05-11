@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 16:32:31 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 20:12:18 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ t_token	*ft_make_tokens(char *sanitize_result, t_env *envl)
 
 	i = 0;
 	lst_token = NULL;
-	sanitize_result = ft_replace_dollar(sanitize_result, envl);
 	while (sanitize_result[i])
 	{
 		node = zyalloc(sizeof(t_token), 'a', true);
