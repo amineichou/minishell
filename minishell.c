@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 16:34:34 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:10:54 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ void update_env(t_env *envl)
 	char *to_replace;
 	char *tmp;
 	to_replace = ft_env_list_serch_res(envl, "SHLVL");
-	tmp = to_replace;
+	// tmp = to_replace;
 	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1, false), "SHLVL");
-	env_search_replace(envl, ft_strdup("/bin/minishell", false), "SHELL");
-	env_search_replace(envl, NULL, "OLDPWD");
+	printf("hnaa\n");
 }
 
 static void	ft_init(void)
@@ -108,6 +107,7 @@ t_env *set_spare_env(void)
 	head->next->next->next = zyalloc(sizeof(t_env), 'a', false);
 	head->next->next->next->name = ft_strdup("_", false);
 	head->next->next->next->var = ft_strdup("./minishell", false);
+	head->next->next->next->next = NULL;
 	return(head);
 	
 }
@@ -120,26 +120,25 @@ int	ft_set_status(int	new_status, int type)
 	return (old_status);
 }
 
-void leak(){system("lsof -p minishell");}
 
 int	main(int ac, char **av, char **env)
 {
-	atexit(leak);
 	t_toexec	*lst;
 	char		*line;
 	t_env		*envl;
 	int			exit_status;
 	t_pipe		needs;
+	extern int	rl_catch_signals;
 
 	(void)ac;
 	(void)av;
-	ft_init();
-	// rl_catch_signals = 0;
-	exit_status = 0;
 	if(*env == NULL)
 		envl = set_spare_env();
 	else
 		envl = set_env(env);
+	ft_init();
+	rl_catch_signals = 0;
+	exit_status = 0;
 	update_env(envl);
 	while (1)
 	{

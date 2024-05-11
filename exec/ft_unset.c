@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/06 15:54:27 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 18:37:15 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ void ft_unset(t_env **env, char *to_del)
 	tmp = *env;
 	prev = NULL;
 	if (tmp != NULL && ft_strcmp(tmp->name, to_del) == 0)
-	{
-		prev = *env;
 		*env = (*env)->next;
-	}
 	else
+	{
 		while(tmp)
 		{
 			if(tmp->next && (ft_strcmp(tmp->next->name, to_del) == 0))
@@ -51,6 +49,7 @@ void ft_unset(t_env **env, char *to_del)
 			}
 			tmp = tmp->next;
 		}
+	}
 }
 
 int unseter(t_toexec *cmd, t_pipe *needs)

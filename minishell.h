@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 16:29:34 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 18:49:38 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,11 +199,11 @@ void executer(t_toexec *cmds, t_pipe *needs);
 int ft_cd (char *dir, t_env *env, t_pipe *needs);
 int ft_echo(t_toexec *cmd, t_pipe *needs);
 int env_print(t_toexec *data, t_pipe *needs);
+void ft_export(char *name, char *var, t_env **head, t_pipe *needs);
 int ft_exporter(t_toexec *cmd, t_pipe *needs);
 int ft_pwd(t_pipe *needs);
 int unseter(t_toexec *cmd, t_pipe *needs);
 t_env *duplicate_list(t_env **head);
-void ft_export(char *name, char *var, t_env *head, t_pipe *needs);
 void env_search_replace(t_env *head, char *to_replace, char *to_look);
 int		env_list_serch(t_env **head, char *to_look);
 void	ft_unset(t_env **env, char *to_del);
