@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/08 17:11:03 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 21:33:29 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,34 @@ char	*ft_strjoin(char *s1, char *s2, bool to_free)
 		return (NULL);
 	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
 	ft_strlcat(str, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (str);
+}
+
+char	*ft_strjoin_addspace(char *s1, char *s2, bool to_free)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	i = 0;
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return (ft_strdup(s2, to_free));
+	else if (!s2)
+		return (ft_strdup(s1, to_free));
+	str = (char *)zyalloc(ft_strlen(s1) + ft_strlen(s2) + 2, 'a', to_free);
+	if (!str)
+		return (NULL);
+	j = 0;
+	while (i < ft_strlen(s1))
+		str[i++] = s1[j++];
+	str[i] = ' ';
+	i++;
+	j = 0;
+	while (i <= (ft_strlen(s1) + ft_strlen(s2)))
+		str[i++] = s2[j++];
+	str[i] = '\0';
 	return (str);
 }
 

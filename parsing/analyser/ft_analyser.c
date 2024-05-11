@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 18:12:36 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 10:14:22 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,15 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 	t_toexec	*node;
 
 	lst_token = ft_make_tokens(sanitize_result, envl);
+	lst_token = ft_make_tokens(ft_expand(lst_token, envl), envl);
+	// remove stupid quotes
+	t_token *tmp = lst_token;
+	while (tmp)
+	{
+		if (tmp->token == WORD)
+			tmp->value = ft_remove_qoutes(tmp->value);
+		tmp = tmp->next;
+	}
 	lst_toexec = NULL;
 	while (lst_token)
 	{
@@ -227,6 +236,5 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 		if (lst_token)
 			lst_token = lst_token->next;
 	}
-	test_lst(lst_toexec);
 	return (lst_toexec);
 }

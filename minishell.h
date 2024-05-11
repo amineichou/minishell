@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 16:29:34 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 21:30:12 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_token		*ft_make_tokens(char *sanitize_result, t_env *envl);
 void		ft_handle_args(t_toexec **node, t_token **lst_token, t_env *envl);
 
 // expanding
-void		ft_expand(t_token *lst_token, t_env *envl);
+char		*ft_expand(t_token *lst_token, t_env *envl);
 char		*ft_replace_dollar(char *to_expand, t_env *env);
 char		*ft_expand_dollar(char *str, t_env *env);
 char		*ft_remove_qoutes(char *str);
@@ -177,6 +177,7 @@ char	**free_leaks(char **strs);
 int	ft_atoi(const char *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void free_env_list(t_env **head);
+char	*ft_strjoin_addspace(char *s1, char *s2, bool to_free);
 
 // free leaks
 void		ft_free_toexec(t_toexec *head);
