@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 10:11:05 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 15:28:55 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,7 @@ char	*ft_expand(t_token *lst_token, t_env *envl)
 	while (tmp)
 	{
 		if (tmp->token == WORD)
-		{
 			tmp->value = ft_expand_dollar(tmp->value, envl);
-			// tmp->value = ft_remove_qoutes(tmp->value);
-		}
 		res = ft_strjoin_addspace(res, tmp->value, true);
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 10:17:55 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 15:40:42 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
-t_token		*ft_make_tokens(char *sanitize_result, t_env *envl);
+t_token	*ft_make_tokens(char *sanitize_result);
 void	ft_handle_args(t_toexec **node, t_token **lst_token);
 
 // expanding
@@ -125,6 +125,7 @@ char		*ft_expand(t_token *lst_token, t_env *envl);
 char		*ft_replace_dollar(char *to_expand, t_env *env);
 char		*ft_expand_dollar(char *str, t_env *env);
 char		*ft_remove_qoutes(char *str);
+t_token		*ft_lst_remvove_qoutes(t_token *lst_token);
 
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);

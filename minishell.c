@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 10:15:32 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 15:17:57 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 int	g_inexec = 0;
 
-void lex(void)
-{
-	system("lsof -c minishell");
-}
 void fill_envinlist(t_toexec **head, t_env *env_list)
 {
     t_toexec *current = *head;
@@ -48,7 +44,7 @@ static void	ft_init(void)
 		write (2, "tty required!\n", 14);
 		exit(1);
 	}
-
+	rl_catch_signals = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
 }
@@ -124,7 +120,6 @@ void leak(){system("lsof -p minishell");}
 
 int	main(int ac, char **av, char **env)
 {
-	atexit(leak);
 	t_toexec	*lst;
 	char		*line;
 	t_env		*envl;
@@ -134,7 +129,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	ft_init();
-	// rl_catch_signals = 0;
 	exit_status = 0;
 	if(*env == NULL)
 		envl = set_spare_env();
@@ -155,7 +149,7 @@ int	main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				test_lst(lst);
+				// test_lst(lst);
 				g_inexec = 1;
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);

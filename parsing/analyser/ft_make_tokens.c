@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 20:12:18 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 15:42:21 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*ft_get_toknen_val(char *str, int start, int i)
 	return (res);
 }
 
-t_token	*ft_make_tokens(char *sanitize_result, t_env *envl)
+t_token	*ft_make_tokens(char *sanitize_result)
 {
 	t_token	*lst_token;
 	t_token	*node;
@@ -75,6 +75,8 @@ t_token	*ft_make_tokens(char *sanitize_result, t_env *envl)
 
 	i = 0;
 	lst_token = NULL;
+	if (!sanitize_result)
+		return (NULL);
 	while (sanitize_result[i])
 	{
 		node = zyalloc(sizeof(t_token), 'a', true);
