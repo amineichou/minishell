@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/10 21:33:29 by moichou          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/10 16:24:38 by zyamli           ###   ########.fr       */
+>>>>>>> 86871d2f0b4b74acaf0807f4568cbc9444eed5ef
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,7 +416,7 @@ void *zyalloc(size_t size, int flag, bool is_free)
 	{
 		address = malloc(size);
 		if(!address)
-			perror("malloc");
+			(perror("malloc"), exit(1));
 		if(gooper == NULL)
 		{
 			gooper = garb_new(address, is_free);
