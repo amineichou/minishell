@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/10 21:30:12 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 10:17:55 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
 t_token		*ft_make_tokens(char *sanitize_result, t_env *envl);
-void		ft_handle_args(t_toexec **node, t_token **lst_token, t_env *envl);
+void	ft_handle_args(t_toexec **node, t_token **lst_token);
 
 // expanding
 char		*ft_expand(t_token *lst_token, t_env *envl);

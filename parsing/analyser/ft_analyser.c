@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 10:14:22 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/11 10:18:05 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char		**ft_reallocate_copy(char **old_res, char *new)
 	return (res);
 }
 
-void	ft_handle_args(t_toexec **node, t_token **lst_token, t_env *envl)
+void	ft_handle_args(t_toexec **node, t_token **lst_token)
 {
 	char	**joined;
 	int		i;
@@ -59,12 +59,7 @@ void	ft_handle_args(t_toexec **node, t_token **lst_token, t_env *envl)
 		joined = ft_reallocate_copy(joined, (*lst_token)->value);
 		(*lst_token) = (*lst_token)->next;
 	}
-	// time to remove those quotes
-	while (joined[i])
-	{
-		joined[i] = ft_remove_qoutes(joined[i]);
-		i++;
-	}
+
 	(*node)->args = joined;
 }
 
@@ -176,7 +171,7 @@ static int	ft_analyse_args(t_token **lst_token, t_toexec **lst_toexec, t_toexec 
 {
 	if ((*lst_token) && (*lst_token)->token == WORD)
 	{
-		ft_handle_args(&node, lst_token, envl);
+		ft_handle_args(&node, lst_token);
 		if (lst_token == NULL)
 		{
 			ft_append_node_t_toexec(lst_toexec, node);
