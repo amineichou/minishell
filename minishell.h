@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 14:14:50 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/11 15:45:25 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	printf_test(char *str);
 void executer(t_toexec *cmds, t_pipe *needs);
 int ft_cd (char *dir, t_env *env, t_pipe *needs);
 int ft_echo(t_toexec *cmd, t_pipe *needs);
-int env_print(t_toexec *data, t_pipe *needs);
+int	env_print(t_toexec *data);
 void ft_export(char *name, char *var, t_env **head, t_pipe *needs);
 int ft_exporter(t_toexec *cmd, t_pipe *needs);
 int ft_pwd(t_pipe *needs);
@@ -207,6 +207,8 @@ int unseter(t_toexec *cmd, t_pipe *needs);
 t_env *duplicate_list(t_env **head);
 void env_search_replace(t_env *head, char *to_replace, char *to_look);
 int		env_list_serch(t_env **head, char *to_look);
+void	env_search_and_add(t_env *head, char *to_add, char *to_look);
+t_env	*env_new(char *var, char *name, bool to_free);
 void	ft_unset(t_env **env, char *to_del);
 int		ft_exit(char **args);
 void	in_out_fixer(t_pipe *needs);
@@ -220,15 +222,20 @@ void in_out_fixer(t_pipe *needs);
 void close_all(void);
 int	lst_size(t_toexec *head);
 int	env_size(t_env *head);
+void	env_sort(t_env **start);
 char **env_tolist(t_env **env_list);
+void	export_env_print(t_toexec *data);
+t_env	*duplicate_list(t_env **head);
 void ft_wait(t_pipe *needs);
 char	*ft_env_list_serch_res(t_env *head, char *to_look);
 void set_values(t_pipe *needs, t_toexec *cmds);
 void cmds_executer(t_toexec *cmds, t_pipe *needs);
 char	*find_path(char *cmd, char *env[]);
 void	error_handler(char *str);
+int	look_for(char *str, char c);
 char **split_env(char *arg, char c);
 int	ft_set_status(int	new_status, int type);
+void	lst_add(t_env **lst, t_env *new);
 void *zyalloc(size_t size, int flag, bool is_free);
 #endif
 

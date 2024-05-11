@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:04:31 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/10 15:34:09 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:53:49 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	str_isnum(char *str)
 	return (1);
 }
 
-int ft_exit(char **args)
+int	ft_exit(char **args)
 {
 	if (!args[1])
 		exit(0);
-	if(args[2])
+	if (args[2])
 	{
 		ft_printerror("exit: too many arguments\n");
 		return (1);

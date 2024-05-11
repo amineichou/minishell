@@ -6,57 +6,53 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:13:47 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/10 18:51:05 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/11 15:27:23 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *env_list_find_var(t_env **head, char *to_look)
+char	*env_list_find_var(t_env **head, char *to_look)
 {
 	t_env	*tmp;
 
-	if (!(*head)) 
-	{
-		printf("Invalid data or data->env is NULL\n");
+	if (!(*head))
 		return (0);
-	}
 	tmp = *head;
-	while(tmp)
-		{
-			if(ft_strcmp(tmp->name, to_look) == 0)
-				return(tmp->var);
-
-			tmp = tmp->next;
-		}
-		return("\0");
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, to_look) == 0)
+			return (tmp->var);
+		tmp = tmp->next;
+	}
+	return ("\0");
 }
 
-void cd_home(t_pipe *needs, t_env *env)
+void	cd_home(t_pipe *needs, t_env *env)
 {
-	char *home;
-		home = env_list_find_var(&env, "HOME");
-		if(!home)
-		{
-			ft_putstr_fd("HOME is not set\n", 2);
-			*(needs->ex_stat) = 1;
-			ft_set_status(*(needs->ex_stat), 1);
-			return ;
-		}
-		if (chdir(home) < 0)
-		{
-			*(needs->ex_stat) = 1;
-			ft_set_status(*(needs->ex_stat), 1);
-			perror("chdir");
-			return ;
-		}
-		*(needs->ex_stat) = 0;
+	char	*home;
+
+	home = env_list_find_var(&env, "HOME");
+	if (!home)
+	{
+		ft_putstr_fd("HOME is not set\n", 2);
+		*(needs->ex_stat) = 1;
+		ft_set_status(*(needs->ex_stat), 1);
+		return ;
+	}
+	if (chdir(home) < 0)
+	{
+		*(needs->ex_stat) = 1;
+		ft_set_status(*(needs->ex_stat), 1);
+		perror("chdir");
+		return ;
+	}
+	*(needs->ex_stat) = 0;
 	ft_set_status(*(needs->ex_stat), 1);
 }
 
-void cd_dir(t_pipe *needs, char *dir)
+void	cd_dir(t_pipe *needs, char *dir)
 {
-
 	if (chdir(dir) != 0)
 	{
 		*(needs->ex_stat) = 1;
@@ -66,12 +62,10 @@ void cd_dir(t_pipe *needs, char *dir)
 	}
 	*(needs->ex_stat) = 0;
 	ft_set_status(*(needs->ex_stat), 1);
-	
 }
 
-int ft_cd(char *dir, t_env *env, t_pipe *needs)
+int	ft_cd(char *dir, t_env *env, t_pipe *needs)
 {
-
 	char	cwd[1024];
 	char	*oldpwd;
 
@@ -92,12 +86,5 @@ int ft_cd(char *dir, t_env *env, t_pipe *needs)
 		ft_export("OLDPWD", oldpwd, &env, needs);
 	else
 		env_search_replace(env, oldpwd, "OLDPWD");
-	
 	return (1);
 }
-
-// int main(int ac, char **av)
-// {
-// 	(void)ac;
-// 	ft_cd(av[1]);
-// }

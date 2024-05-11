@@ -6,45 +6,45 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:09:30 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/07 15:16:37 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/11 15:45:50 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void check_if_found(t_pipe *needs, t_toexec *cmd)
+static void	check_if_found(t_pipe *needs, t_toexec *cmd)
 {
-	if(ft_strchr(cmd->args[0], '/') != NULL)
+	if (ft_strchr(cmd->args[0], '/') != NULL)
+	{
+		if (access(cmd->args[0], F_OK | X_OK) == 0)
+			needs->path = cmd->args[0];
+		else if (access(cmd->args[0], F_OK) != 0)
 		{
-			if (access(cmd->args[0], F_OK | X_OK) == 0)
-				needs->path = cmd->args[0];
-			else if(access(cmd->args[0], F_OK) != 0)
-			{
-				ft_putstr_fd( "minishell: ",2);
-				ft_putstr_fd(cmd->args[0], 2);
-				ft_putstr_fd(": No such file or directory\n", 2);
-				exit(127);
-			}
-			else if (access(cmd->args[0], X_OK) != 0)
-			{
-				ft_putstr_fd( "minishell: ",2);
-				ft_putstr_fd(cmd->args[0], 2);
-				ft_putstr_fd(": Permission denied\n", 2);
-				exit(126);
-			}
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			exit(127);
 		}
-		else
+		else if (access(cmd->args[0], X_OK) != 0)
 		{
-			ft_printerror(cmd->args[0]);
-			ft_print_error(": command not found\n");
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putstr_fd(": Permission denied\n", 2);
+			exit(126);
 		}
+	}
+	else
+	{
+		ft_printerror(cmd->args[0]);
+		ft_print_error(": command not found\n");
+	}
 }
 
-static void check_if_executable(t_pipe *needs, t_toexec *cmd)
+static void	check_if_executable(t_pipe *needs, t_toexec *cmd)
 {
-	if(access(needs->path, X_OK) != 0)
+	if (access(needs->path, X_OK) != 0)
 	{
-		ft_putstr_fd( "minishell: ",2);
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd->args[0], 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 		exit(126);
@@ -52,6 +52,7 @@ static void check_if_executable(t_pipe *needs, t_toexec *cmd)
 	if (!cmd->args[0][0])
 		ft_print_error("minishell: : command not found\n");
 }
+
 void	ft_execution(t_toexec *cmd, t_pipe *needs)
 {
 	needs->path = find_path(cmd->args[0], needs->env);
@@ -62,9 +63,11 @@ void	ft_execution(t_toexec *cmd, t_pipe *needs)
 		(close(0), close(needs->infile), error_handler("execve"));
 }
 
-int check_builtin(t_toexec *cmd, t_pipe *needs)
+int	check_builtin(t_toexec *cmd, t_pipe *needs)
 {
-	int res = 0;
+	int	res;
+
+	res = 0;
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		res = ft_echo(cmd, needs);
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
@@ -72,7 +75,7 @@ int check_builtin(t_toexec *cmd, t_pipe *needs)
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		res = ft_cd(cmd->args[1], cmd->env, needs);
 	if (ft_strcmp(cmd->args[0], "env") == 0)
-		res = env_print(cmd, needs);
+		res = env_print(cmd);
 	if (ft_strcmp(cmd->args[0], "export") == 0)
 		res = ft_exporter(cmd, needs);
 	if (ft_strcmp(cmd->args[0], "unset") == 0)

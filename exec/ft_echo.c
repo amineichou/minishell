@@ -6,36 +6,35 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:18:36 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/10 16:27:08 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/11 14:48:59 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
-#include"../minishell.h"
-
-int flag_check(char *str)
+int	flag_check(char *str)
 {
-    if (!*str)
-        return (0);
-    if (*str == '-' && *(str + 1) != '\0')
-    {
-        str++;
-        while (*str && *str == 'n')
-            str++;
-    }
-    if (*str)
-        return (0);
-    return (1);
+	if (!*str)
+		return (0);
+	if (*str == '-' && *(str + 1) != '\0')
+	{
+		str++;
+		while (*str && *str == 'n')
+			str++;
+	}
+	if (*str)
+		return (0);
+	return (1);
 }
 
-int ft_echo(t_toexec *cmd, t_pipe *needs)
+int	ft_echo(t_toexec *cmd, t_pipe *needs)
 {
-    int    step;
-    int    i;
+	int	step;
+	int	i;
 
-    i = 0;
-    step = 0;
-	if(cmd->args)
+	i = 0;
+	step = 0;
+	if (cmd->args)
 	{
 		while (cmd->args[++i] && flag_check(cmd->args[i]))
 			step = 1;

@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 14:14:59 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/11 15:44:34 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,15 @@ void fill_envinlist(t_toexec **head, t_env *env_list)
 void update_env(t_env *envl)
 {
 	char *to_replace;
-	char *tmp;
 	to_replace = ft_env_list_serch_res(envl, "SHLVL");
 	// tmp = to_replace;
 	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1, false), "SHLVL");
-	printf("hnaa\n");
 }
 
 static void	ft_init(void)
 {
 	if (!isatty(STDIN_FILENO))
 	{
-		// close(0);
 		write (2, "tty required!\n", 14);
 		exit(1);
 	}
@@ -109,7 +106,6 @@ t_env *set_spare_env(void)
 	head->next->next->next->var = ft_strdup("./minishell", false);
 	head->next->next->next->next = NULL;
 	return(head);
-	
 }
 int	ft_set_status(int	new_status, int type)
 {
