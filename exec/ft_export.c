@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/06 18:43:47 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 19:46:01 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void lst_add(t_env **lst, t_env *new)
 {
 	t_env *lastone;
 
-	if (!lst || !new)
+	if (!new)
 		return;
 	if (!(*lst))
 	{
@@ -74,11 +74,8 @@ void env_search_replace(t_env *head, char *to_replace, char *to_look)
 {
 	t_env	*tmp;
 
-	if (!head) 
-	{
-		// printf("Invalid data or env is NULL\n");
+	if (!head)
 		return;
-	}
 	// printf("%s= = =%s\n", to_replace, to_look);
 	tmp = head;
 	while(tmp)
@@ -211,30 +208,31 @@ void env_sort(t_env **start)
 	}
 }
 
-void ft_export(char *name, char *var, t_env *head, t_pipe *needs)
+void ft_export(char *name, char *var, t_env **head, t_pipe *needs)
 {
 	t_toexec data;
 	t_env *newnode;
 
 	if (name == NULL)
 	{
-		needs->env_dup = duplicate_list(&head);
+		if(!*head)
+			return ;
+		needs->env_dup = duplicate_list(head);
 		env_sort(&needs->env_dup);
 		data.env = needs->env_dup;
-		
 		export_env_print(&data);
 		needs->env_dup = NULL;
 	}
 	else if (name && var && *var)
 	{
 		newnode = env_new(var, name, false);
-		lst_add(&head ,newnode);
+		lst_add(head ,newnode);
 	}
 	else if(var == NULL || *var == '\0')
 	{
 		newnode = env_new(var, name, false);
-		if(!env_list_serch(&head, name))
-			lst_add(&head ,newnode);
+		if(!env_list_serch(head, name))
+			lst_add(head ,newnode);
 	}
 }
 char **split_env(char *arg, char c)
@@ -275,7 +273,7 @@ int look_for(char *str, char c)
 	return (0);
 }
 
-void add_to_env(char *av, t_toexec *data,t_pipe *needs, char **to_add)
+void add_to_env(char *av, t_toexec *data, t_pipe *needs, char **to_add)
 {
 	if (env_list_serch(&data->env, to_add[0]))
 	{
@@ -284,14 +282,14 @@ void add_to_env(char *av, t_toexec *data,t_pipe *needs, char **to_add)
 		else if (ft_strstr(av, "=") != NULL)
 			env_search_replace(data->env, ft_strdup(to_add[1], false), ft_strdup(to_add[0], false));
 		else
-			ft_export(ft_strdup(av, false), NULL, data->env, needs);
+			ft_export(ft_strdup(av, false), NULL, &data->env, needs);
 	}
 	else if (!env_list_serch(&data->env, to_add[0]))
 	{
 		if (ft_strstr(av, "+=") != NULL)
-			ft_export(ft_strdup(to_add[0], false), ft_strdup(&to_add[1][1], false),data->env, needs);
+			ft_export(ft_strdup(to_add[0], false), ft_strdup(&to_add[1][1], false), &data->env, needs);
 		else
-			ft_export(ft_strdup(to_add[0], false), ft_strdup(to_add[1], false),data->env, needs);
+			ft_export(ft_strdup(to_add[0], false), ft_strdup(to_add[1], false), &data->env, needs);
 	}	
 }
 
@@ -301,7 +299,7 @@ void exporter(char *av, t_toexec *data,t_pipe *needs)
 
 	if (av == NULL || ft_strstr(av, "-p") != NULL)
 	{
-		ft_export(NULL, NULL, data->env, needs);
+		ft_export(NULL, NULL, &data->env, needs);
 		return ;
 	}
 	if (ft_strstr(av, "+=") != NULL)
@@ -341,15 +339,15 @@ int ft_exporter(t_toexec *cmd, t_pipe *needs)
 	while(cmd->args[k])
 	{
 		if(!check_ifvalid(cmd->args[k]))
-			{
-				ft_putstr_fd("minishell: export: ",2);
-				ft_putstr_fd(cmd->args[k],2);
-				ft_putstr_fd(" : not a valid identifier\n",2);
-				*(needs->ex_stat) = 1;
-				ft_set_status(*(needs->ex_stat), 1);
-				k++;
-				continue;
-			}
+		{
+			ft_putstr_fd("minishell: export: ",2);
+			ft_putstr_fd(cmd->args[k],2);
+			ft_putstr_fd(" : not a valid identifier\n",2);
+			*(needs->ex_stat) = 1;
+			ft_set_status(*(needs->ex_stat), 1);
+			k++;
+			continue;
+		}
 		exporter(cmd->args[k], cmd, needs);
 		k++;
 	}

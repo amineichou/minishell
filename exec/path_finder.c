@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:16:17 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/07 16:07:04 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:45:40 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static char	**extract_paths(char **env)
 {
 	int	i;
 	i = 0;
-	
+	if(!env || !*env)
+		return(NULL);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 4) == 0)
@@ -56,6 +57,8 @@ char	*find_path(char *cmd, char *env[])
 	char	**to_look;
 	char	*path;
 
+	if(!env || !*env)
+		return(NULL);
 	to_look = extract_paths(env);
 	if (!to_look || !*to_look)
 		return (NULL);

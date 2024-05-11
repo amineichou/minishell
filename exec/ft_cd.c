@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:13:47 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/10 12:06:36 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/10 18:51:05 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int ft_cd(char *dir, t_env *env, t_pipe *needs)
 	}
 	env_search_replace(env, cwd, "PWD");
 	if (!env_list_serch(&env, "OLDPWD"))
-		ft_export("OLDPWD", oldpwd, env, needs);
+		ft_export("OLDPWD", oldpwd, &env, needs);
 	else
 		env_search_replace(env, oldpwd, "OLDPWD");
 	

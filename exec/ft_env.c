@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:54:51 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/07 15:19:05 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:43:30 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char **env_tolist(t_env **env_list)
     t_env	*current;
 	char	**result;
 
+	if(!env_list || !*env_list)
+		return(NULL);
 	size = env_size(*env_list);
 	current = (*env_list);
     result = (char **)zyalloc(sizeof(char *) * (size + 1), 'a', true);
@@ -78,11 +80,11 @@ int env_print(t_toexec *data, t_pipe *needs)
 	tmp = data->env;
 	while(tmp)
 	{
-	if (tmp->name && tmp->var)
+		if (tmp->name && tmp->var)
 			printf("%s=%s\n", tmp->name, tmp->var);
 		tmp = tmp->next;
 	}
-	*(needs->ex_stat) = 0;
+	// *(needs->ex_stat) = 0;
 	return(1);
 }
 
