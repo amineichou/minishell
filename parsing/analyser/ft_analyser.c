@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 12:36:07 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 16:24:06 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ static int	ft_analyse_redd(t_token **lst_token, t_toexec **lst_toexec, t_toexec 
 	{
 		ft_handle_redirections(lst_token, node);
 		(void)lst_toexec;
+		// ft_append_node_t_toexec(lst_toexec, node);
 		if (lst_token == NULL)
 			return (1);
 	}
@@ -203,7 +204,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 	lst_token = ft_make_tokens(sanitize_result);
 	lst_token = ft_make_tokens(ft_expand(lst_token, envl));
 	lst_token = ft_lst_remvove_qoutes(lst_token);
-	// test_tokens(lst_token);
+	test_tokens(lst_token);
 	lst_toexec = NULL;
 	while (lst_token)
 	{
@@ -221,6 +222,17 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 				break ;
 		}
 		ft_append_node_t_toexec(&lst_toexec, node);
+		if (lst_token && lst_token->token == PIPE
+			&& lst_token->next == NULL)
+		{
+			node = zyalloc(sizeof(t_toexec), 'a', true);
+			if (!node)
+				return (ft_printerror(MALLOC_ERORR), NULL);
+			node->args = NULL;
+			ft_append_node_t_toexec(&lst_toexec, node);
+			lst_token = lst_token->next;
+			break;
+		}
 		if (lst_token)
 			lst_token = lst_token->next;
 	}
