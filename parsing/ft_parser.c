@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 15:50:01 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 21:10:35 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ static int	ft_check_valid_fd(t_toexec *head)
 	tmp = head;
 	while (tmp)
 	{
-		if (tmp->output == -1 || tmp->input)
+		if (tmp->output == -1 || tmp->input == -1)
 			return (-1);
 		tmp = tmp->next;
 	}

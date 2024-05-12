@@ -6,16 +6,16 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:47:36 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 16:51:37 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 21:57:45 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int		ft_heredoc_handler_exec(t_toexec *node, char *del)
+int		ft_heredoc_handler_exec(t_toexec *node, char *del, bool is_expand)
 {
 	char	*line;
-	// char	*tmp;
+	char	*tmp;
 	char	*name;
 	int		tmp_file;
 
@@ -45,19 +45,19 @@ int		ft_heredoc_handler_exec(t_toexec *node, char *del)
 			break ;
 		if (!ft_strcmp(line, del))
 			break ;
-		// if (is_expand)
-		// {
-		// 	tmp = ft_replace_dollar(line, node->env);
-		// 	ft_putstr_fd(tmp, tmp_file);
-		// 	ft_putstr_fd("\n", tmp_file);
-		// 	free(line);
-		// }
-		// else
-		// {
+		if (is_expand)
+		{
+			tmp = ft_replace_dollar(line, node->env);
+			ft_putstr_fd(tmp, tmp_file);
+			ft_putstr_fd("\n", tmp_file);
+			free(line);
+		}
+		else
+		{
 			ft_putstr_fd(line, tmp_file);
 			ft_putstr_fd("\n", tmp_file);
 			free(line);
-		// }
+		}
 	}
 	return (free(line), close(fd), 1);
 }

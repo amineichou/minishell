@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 16:53:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 21:59:48 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,23 +116,26 @@ static void	ft_set_default_vals(t_toexec *node, t_env *envl)
 // }
 
 // checks for quotes and return false i any
-// static bool	ft_isexpand_herdoc(char *str)
-// {
-// 	int i;
+static bool	ft_isexpand_herdoc(char *str)
+{
+	int i;
 
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (ft_isquote(str[i]))
-// 			return (false);
-// 		i++;
-// 	}
-// 	return (true);
-// }
+	i = 0;
+	if (!str)
+		return (false);
+	while (str[i])
+	{
+		if (ft_isquote(str[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node)
 {
 	char	*del;
+	bool	is_expand;
 
 	while ((*lst_token) && (*lst_token)->token == HEREDOC)
 	{
@@ -140,7 +143,9 @@ static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node)
 			del = (*lst_token)->next->value;
 		else
 			del = NULL;
-		if (del && ft_heredoc_handler_exec(node, del) == -1)
+		is_expand = ft_isexpand_herdoc(del);
+		del = ft_remove_qoutes(del);
+		if (del && ft_heredoc_handler_exec(node, del, is_expand) == -1)
 		{
 			close_all();
 			return (-1);
@@ -225,19 +230,20 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 			if (ft_analyse_redd(&lst_token, &lst_toexec, node))
 				break ;
 		}
-		ft_append_node_t_toexec(&lst_toexec, node);
 		// if there's NULL after pipe
 		if (lst_token && lst_token->token == PIPE
 			&& lst_token->next == NULL)
 		{
-			node = zyalloc(sizeof(t_toexec), 'a', true);
-			if (!node)
-				return (ft_printerror(MALLOC_ERORR), NULL);
+			// node = zyalloc(sizeof(t_toexec), 'a', true);
+			// if (!node)
+			// 	return (ft_printerror(MALLOC_ERORR), NULL);
 			node->args = NULL;
 			ft_append_node_t_toexec(&lst_toexec, node);
 			lst_token = lst_token->next;
 			break;
 		}
+		else
+			ft_append_node_t_toexec(&lst_toexec, node);
 		if (lst_token)
 			lst_token = lst_token->next;
 	}
