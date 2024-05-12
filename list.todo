@@ -38,3 +38,27 @@ ls " << amine << am
  - syntax errors check
 
 - while true; do clear && leaks minishell; sleep 2 ; done
+
+
+herdoc exit with sigkill ====> exit status is 1
+export a +=wwww
+
+bash-3.2$ unset SECURITYSESSIONID+
+bash: unset: `SECURITYSESSIONID+': not a valid identifier
+
+bash-3.2$ exit "             1             "
+exit
+➜  minishell git:(master) ✗ 
+
+bash-3.2$ exit dcw fewf fwef
+exit
+bash: exit: dcw: numeric argument required
+➜  minishell git:(master) ✗ 
+
+
+
+unset pwd && oldpwd + cd 
+bash-3.2$ exit dcw fewf fwef
+exit
+bash: exit: dcw: numeric argument required
+➜  minishell git:(master) ✗ 

@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 15:42:21 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 09:24:13 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ t_token	*ft_make_tokens(char *sanitize_result)
 		while (sanitize_result[i] && ft_isspace(sanitize_result[i]))
 			i++;
 		node->value = ft_trim_spaces(ft_get_toknen_val(sanitize_result, start, i));
-		if (node->value == NULL)
-			return (NULL);
 		node->token = ft_check_token_type(node->value);
 		ft_append_node_t_token(&lst_token, node);
 		if (sanitize_result[i] == '\0')

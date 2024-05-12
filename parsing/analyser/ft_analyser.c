@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 16:01:25 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 12:36:07 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,10 +182,11 @@ static int	ft_analyse_args(t_token **lst_token, t_toexec **lst_toexec, t_toexec 
 // return 1 == break
 static int	ft_analyse_redd(t_token **lst_token, t_toexec **lst_toexec, t_toexec *node)
 {
-	if ((*lst_token) && ((*lst_token)->token == RD_AP || (*lst_token)->token == RD_RP || (*lst_token)->token == RD_IN))
+	if ((*lst_token) && ((*lst_token)->token == RD_AP
+		|| (*lst_token)->token == RD_RP || (*lst_token)->token == RD_IN))
 	{
 		ft_handle_redirections(lst_token, node);
-		ft_append_node_t_toexec(lst_toexec, node);
+		(void)lst_toexec;
 		if (lst_token == NULL)
 			return (1);
 	}
@@ -202,6 +203,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 	lst_token = ft_make_tokens(sanitize_result);
 	lst_token = ft_make_tokens(ft_expand(lst_token, envl));
 	lst_token = ft_lst_remvove_qoutes(lst_token);
+	// test_tokens(lst_token);
 	lst_toexec = NULL;
 	while (lst_token)
 	{

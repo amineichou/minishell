@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 23:33:14 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 16:00:12 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 09:09:56 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	ft_sigkill_handler(int signum)
 		rl_redisplay();
 		ft_set_status(1, 1);
 	}
-	// else if (g_inexec)
-	// 	g_inexec = 0;
 }
 
 void	ft_sigkill_herdoc(int signum)
