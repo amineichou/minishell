@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 15:22:36 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/12 17:05:44 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,23 @@ void	add_to_env(char *av, t_toexec *data, t_pipe *needs, char **to_add)
 void	exporter(char *av, t_toexec *data, t_pipe *needs)
 {
 	char	**to_add;
+	int		i;
 
+	i = 0;
 	if (av == NULL || ft_strstr(av, "-p") != NULL)
 	{
 		ft_export(NULL, NULL, &data->env, needs);
 		return ;
 	}
 	if (ft_strstr(av, "+=") != NULL)
-		to_add = split_env(av, '+');
+	{
+		while (av[i] != '+')
+			i++;
+		if (av[i - 1] == '=')
+			to_add = split_env(av, '=');
+		else
+			to_add = split_env(av, '+');
+	}
 	else
 		to_add = split_env(av, '=');
 	add_to_env(av, data, needs, to_add);

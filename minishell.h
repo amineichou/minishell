@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/12 15:38:20 by zyamli           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/12 16:01:44 by moichou          ###   ########.fr       */
->>>>>>> 525a93a52d486f48698fe1df2484a26f998f761d
+/*   Updated: 2024/05/12 16:54:03 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +212,7 @@ int		env_list_serch(t_env **head, char *to_look);
 void	env_search_and_add(t_env *head, char *to_add, char *to_look);
 t_env	*env_new(char *var, char *name, bool to_free);
 void	ft_unset(t_env **env, char *to_del);
+int	check_ifvalid(char *cmd);
 int		ft_exit(char **args);
 void	in_out_fixer(t_pipe *needs);
 void	ft_execution(t_toexec *cmd, t_pipe *needs);

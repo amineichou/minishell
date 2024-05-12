@@ -67,8 +67,8 @@ void	printf_test(char *str)
 {
 	printf("\033[0;31m%s\n\033[0;0m", str);
 }
-int main(void)
-{
-	char *arg[] = {"/bin/bash", "-c","ps -j $$ | awk 'NR==2 {print $3}'", NULL};
-	execve("/bin/bash", arg, NULL);
-}
+// int main(void)
+// {
+// 	char *arg[] = {"/bin/bash", "-c","ps -j $$ | awk 'NR==2 {print $3}'", NULL};
+// 	execve("/bin/bash", arg, NULL);
+// }

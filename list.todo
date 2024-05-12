@@ -61,3 +61,12 @@ bash-3.2$ exit dcw fewf fwef
 exit
 bash: exit: dcw: numeric argument required
 ➜  minishell git:(master) ✗ 
+<< $sdas
+
+<< a cat | cat
+
+<< $PWD
+
+ << '' cat
+ 
+ echo $123

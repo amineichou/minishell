@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:53:33 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/12 15:50:50 by zyamli           ###   ########.fr       */
-=======
-/*   Updated: 2024/05/12 16:08:18 by moichou          ###   ########.fr       */
->>>>>>> 525a93a52d486f48698fe1df2484a26f998f761d
+/*   Updated: 2024/05/12 16:42:23 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +146,7 @@ int	main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				test_lst(lst);
+				// test_lst(lst);
 				g_inexec = 1;
 				fill_envinlist(&lst, envl);
 				executer(lst, &needs);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_analyser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 16:24:06 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 16:29:16 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 	lst_token = ft_make_tokens(sanitize_result);
 	lst_token = ft_make_tokens(ft_expand(lst_token, envl));
 	lst_token = ft_lst_remvove_qoutes(lst_token);
-	test_tokens(lst_token);
+	// test_tokens(lst_token);
 	lst_toexec = NULL;
 	while (lst_token)
 	{
