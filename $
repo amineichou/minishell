@@ -1,0 +1,11 @@
+$
+Makefile
+exec
+expanding
+free_leaks
+list.todo
+minishell
+minishell.c
+minishell.h
+minishell.o
+parsing

@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:04:31 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 14:53:49 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/12 15:43:41 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	str_isnum(char *str)
 
 int	ft_exit(char **args)
 {
+	char *res;
+
 	if (!args[1])
 		exit(0);
 	if (args[2])
@@ -60,13 +62,14 @@ int	ft_exit(char **args)
 		ft_printerror("exit: too many arguments\n");
 		return (1);
 	}
-	if ((args[1] && !str_isnum(args[1])) || overflow_handler(args[1]))
+	res = ft_strtrim(args[1], " ");
+	if ((res && !str_isnum(res)) || overflow_handler(res))
 	{
 		ft_printerror(" exit: ");
-		ft_putstr_fd(args[1], 2);
+		ft_putstr_fd(res, 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		exit (255);
 	}
 	else
-		exit(ft_atoi(args[1]) % 256);
+		exit(ft_atoi(res) % 256);
 }

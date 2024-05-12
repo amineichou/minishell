@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 15:47:43 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/12 15:38:20 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,14 @@ int			ft_heredoc_handler_syn(char *delemiter);
 
 // utils
 int			ft_strlen(char *str);
-char	**ft_split(char *s, char c);
+char		**ft_split(char *s, char c);
 void		ft_printerror(char *msg);
 void		ft_put_syntaxerror(char *msg, char c);
 int			ft_count_legal_char(char *line, char c);
 char		*ft_strldup(char *s1, int lenght);
 int			ft_isspecialchars(char c);
 int			ft_isquote(char c);
+char		*ft_strtrim(char *s1, char *set);
 
 // tools
 t_expand	*ft_create_expand_node(char *str);
