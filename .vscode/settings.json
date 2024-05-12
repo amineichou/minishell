@@ -12,6 +12,7 @@
 		"string_view": "c",
 		"unordered_map": "c",
 		"vector": "c",
-		"termios.h": "c"
+		"termios.h": "c",
+		"minishell.h": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 15:21:48 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 15:22:54 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/12 18:57:16 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +52,16 @@ int	look_for(char *str, char c)
 	}
 	return (0);
 }
+
+int add_orjoin(char *av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i] && av[i] != '=')
+		i++;
+	if (av[i] == '=' && av[i - 1] == '+')
+		return (1);
+	return (0);
+}
+

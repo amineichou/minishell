@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 16:54:03 by zyamli           ###   ########.fr       */
+/*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
+/*   Updated: 2024/05/12 18:06:12 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_token		*ft_lst_remvove_qoutes(t_token *lst_token);
 
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
-int			ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand);
+int			ft_heredoc_handler_exec(t_toexec *node, char *del);
 int			ft_heredoc_handler_syn(char *delemiter);
 
 
@@ -204,6 +204,7 @@ int ft_echo(t_toexec *cmd, t_pipe *needs);
 int	env_print(t_toexec *data);
 void ft_export(char *name, char *var, t_env **head, t_pipe *needs);
 int ft_exporter(t_toexec *cmd, t_pipe *needs);
+int add_orjoin(char *av);
 int ft_pwd(t_pipe *needs);
 int unseter(t_toexec *cmd, t_pipe *needs);
 t_env *duplicate_list(t_env **head);
