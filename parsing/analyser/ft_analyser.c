@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 16:24:06 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 16:53:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,35 +116,39 @@ static void	ft_set_default_vals(t_toexec *node, t_env *envl)
 // }
 
 // checks for quotes and return false i any
-static bool	ft_isexpand_herdoc(char *str)
-{
-	int i;
+// static bool	ft_isexpand_herdoc(char *str)
+// {
+// 	int i;
 
-	i = 0;
-	while (str[i])
-	{
-		if (ft_isquote(str[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if (ft_isquote(str[i]))
+// 			return (false);
+// 		i++;
+// 	}
+// 	return (true);
+// }
 
 static int	ft_hnadle_herdoc(t_token **lst_token, t_toexec *node)
 {
-	bool	is_expand;
 	char	*del;
 
 	while ((*lst_token) && (*lst_token)->token == HEREDOC)
 	{
-		is_expand = ft_isexpand_herdoc((*lst_token)->next->value);
-		del = ft_remove_qoutes((*lst_token)->next->value);
-		if (ft_heredoc_handler_exec(node, del, is_expand) == -1)
+		if ((*lst_token)->next)
+			del = (*lst_token)->next->value;
+		else
+			del = NULL;
+		if (del && ft_heredoc_handler_exec(node, del) == -1)
 		{
 			close_all();
 			return (-1);
 		}
-		(*lst_token) = (*lst_token)->next->next;
+		if ((*lst_token)->next)
+			(*lst_token) = (*lst_token)->next->next;
+		else
+			(*lst_token) = (*lst_token)->next;
 	}
 	return (1);
 }
@@ -204,7 +208,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 	lst_token = ft_make_tokens(sanitize_result);
 	lst_token = ft_make_tokens(ft_expand(lst_token, envl));
 	lst_token = ft_lst_remvove_qoutes(lst_token);
-	test_tokens(lst_token);
+	// test_tokens(lst_token);
 	lst_toexec = NULL;
 	while (lst_token)
 	{
@@ -222,6 +226,7 @@ t_toexec	*ft_analyser(char *sanitize_result, t_env *envl)
 				break ;
 		}
 		ft_append_node_t_toexec(&lst_toexec, node);
+		// if there's NULL after pipe
 		if (lst_token && lst_token->token == PIPE
 			&& lst_token->next == NULL)
 		{

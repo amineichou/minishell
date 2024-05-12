@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 16:01:44 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 16:50:52 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_token		*ft_lst_remvove_qoutes(t_token *lst_token);
 
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
-int			ft_heredoc_handler_exec(t_toexec *node, char *del, int is_expand);
+int			ft_heredoc_handler_exec(t_toexec *node, char *del);
 int			ft_heredoc_handler_syn(char *delemiter);
 
 

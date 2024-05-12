@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 09:14:09 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 17:00:50 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,7 @@ char	*ft_strjoin_addspace(char *s1, char *s2, bool to_free)
 	else if (!s2)
 		return (ft_strdup(s1, to_free));
 	str = (char *)zyalloc(ft_strlen(s1) + ft_strlen(s2) + 2, 'a', to_free);
-	if (!str)
+	if (!str) 
 		return (NULL);
 	j = 0;
 	while (i < ft_strlen(s1))
