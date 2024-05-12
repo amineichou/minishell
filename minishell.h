@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/12 19:08:14 by moichou          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/12 18:06:12 by zyamli           ###   ########.fr       */
+>>>>>>> 453f3672d58a81c4e5ed9d896877fd90a46f1c1b
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +208,7 @@ int ft_echo(t_toexec *cmd, t_pipe *needs);
 int	env_print(t_toexec *data);
 void ft_export(char *name, char *var, t_env **head, t_pipe *needs);
 int ft_exporter(t_toexec *cmd, t_pipe *needs);
+int add_orjoin(char *av);
 int ft_pwd(t_pipe *needs);
 int unseter(t_toexec *cmd, t_pipe *needs);
 t_env *duplicate_list(t_env **head);
@@ -212,6 +217,7 @@ int		env_list_serch(t_env **head, char *to_look);
 void	env_search_and_add(t_env *head, char *to_add, char *to_look);
 t_env	*env_new(char *var, char *name, bool to_free);
 void	ft_unset(t_env **env, char *to_del);
+int	check_ifvalid(char *cmd);
 int		ft_exit(char **args);
 void	in_out_fixer(t_pipe *needs);
 void	ft_execution(t_toexec *cmd, t_pipe *needs);

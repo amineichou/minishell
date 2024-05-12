@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 15:09:41 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 15:16:51 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/12 21:41:28 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ void	export_env_print(t_toexec *data)
 	tmp = data->env;
 	while (tmp)
 	{
-		printf("declare -x %s=", tmp->name);
+		printf("declare -x %s", tmp->name);
 		if (tmp->var)
-			printf("\"%s\"\n", tmp->var);
-		else
-			printf("\"\"\n");
+			printf("=\"%s\"", tmp->var);
+		printf("\n");
 		tmp = tmp->next;
 	}
 }

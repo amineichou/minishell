@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 15:29:38 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/12 17:00:13 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,19 @@ int	unseter(t_toexec *cmd, t_pipe *needs)
 {
 	int	i;
 
-	(void)needs;
 	i = 1;
 	while (cmd->args[i])
 	{
+		if (ft_isdigit(cmd->args[i][0]))
+		{
+			ft_putstr_fd("minishell: unset: ", 2);
+			ft_putstr_fd(cmd->args[i], 2);
+			ft_putstr_fd(" : not a valid identifier\n", 2);
+			*(needs->ex_stat) = 1;
+			ft_set_status(*(needs->ex_stat), 1);
+			i++;
+			continue ;
+		}
 		ft_unset(&cmd->env, cmd->args[i]);
 		i++;
 	}

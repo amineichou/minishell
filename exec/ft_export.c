@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 15:22:36 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/12 18:52:18 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,17 @@ void	add_to_env(char *av, t_toexec *data, t_pipe *needs, char **to_add)
 {
 	if (env_list_serch(&data->env, to_add[0]))
 	{
-		if (ft_strstr(av, "+=") != NULL)
+		if (add_orjoin(av) == 1)
 			env_search_and_add(data->env, ft_strdup(&to_add[1][1], false),
 				ft_strdup(to_add[0], false));
-		else if (ft_strstr(av, "=") != NULL)
+		else
 			env_search_replace(data->env, ft_strdup(to_add[1], false),
 				ft_strdup(to_add[0], false));
-		else
-			ft_export(ft_strdup(av, false), NULL, &data->env, needs);
+
 	}
 	else if (!env_list_serch(&data->env, to_add[0]))
 	{
-		if (ft_strstr(av, "+=") != NULL)
+		if (add_orjoin(av) == 1)
 			ft_export(ft_strdup(to_add[0], false),
 				ft_strdup(&to_add[1][1], false), &data->env, needs);
 		else
@@ -67,13 +66,20 @@ void	add_to_env(char *av, t_toexec *data, t_pipe *needs, char **to_add)
 void	exporter(char *av, t_toexec *data, t_pipe *needs)
 {
 	char	**to_add;
+	int		i;
 
+	i = 0;
 	if (av == NULL || ft_strstr(av, "-p") != NULL)
 	{
 		ft_export(NULL, NULL, &data->env, needs);
 		return ;
 	}
-	if (ft_strstr(av, "+=") != NULL)
+	if(ft_strchr(av, '=') == 0)
+	{
+		ft_export(ft_strdup(av, false), NULL, &data->env, needs);
+		return ;
+	}
+	if (add_orjoin(av) == 1)
 		to_add = split_env(av, '+');
 	else
 		to_add = split_env(av, '=');
