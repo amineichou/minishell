@@ -6,7 +6,15 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:17:11 by moichou           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/12 16:50:52 by moichou          ###   ########.fr       */
+=======
+<<<<<<< HEAD
+/*   Updated: 2024/05/12 15:38:20 by zyamli           ###   ########.fr       */
+=======
+/*   Updated: 2024/05/12 16:01:44 by moichou          ###   ########.fr       */
+>>>>>>> 525a93a52d486f48698fe1df2484a26f998f761d
+>>>>>>> d92565a04bf0cccd87c1890c14cd25d7265cd058
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +143,14 @@ int			ft_heredoc_handler_syn(char *delemiter);
 
 // utils
 int			ft_strlen(char *str);
-char	**ft_split(char *s, char c);
+char		**ft_split(char *s, char c);
 void		ft_printerror(char *msg);
 void		ft_put_syntaxerror(char *msg, char c);
 int			ft_count_legal_char(char *line, char c);
 char		*ft_strldup(char *s1, int lenght);
 int			ft_isspecialchars(char c);
 int			ft_isquote(char c);
+char		*ft_strtrim(char *s1, char *set);
 
 // tools
 t_expand	*ft_create_expand_node(char *str);
