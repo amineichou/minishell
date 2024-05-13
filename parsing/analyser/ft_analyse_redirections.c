@@ -6,18 +6,30 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:52:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 15:39:32 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/13 22:28:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+// this func will set t_toexec node to it's default values
+void	ft_set_default_vals(t_toexec *node, t_env *envl)
+{
+	node->input = 0;
+	node->output = 1;
+	node->args = NULL;
+	node->env = envl;
+}
+
 static void	ft_hanlde_red_ap(t_token **lst_token, t_toexec *node)
 {
 	node->output = open((*lst_token)->next->value,
 			O_RDWR | O_APPEND | O_CREAT, 0777);
-	if (node->input == -1)
-		perror("open");
+	if (node->output == -1)
+	{
+		ft_printerror("");
+		perror((*lst_token)->next->value);
+	}
 	(*lst_token) = (*lst_token)->next;
 }
 
@@ -25,8 +37,11 @@ static void	ft_hanlde_red_rp(t_token **lst_token, t_toexec *node)
 {
 	node->output = open((*lst_token)->next->value,
 			O_RDWR | O_TRUNC | O_CREAT, 0777);
-	if (node->input == -1)
-		perror("open");
+	if (node->output == -1)
+	{
+		ft_printerror("");
+		perror((*lst_token)->next->value);
+	}
 	(*lst_token) = (*lst_token)->next;
 }
 
@@ -34,7 +49,10 @@ static void	ft_hanlde_red_in(t_token **lst_token, t_toexec *node)
 {
 	node->input = open((*lst_token)->next->value, O_RDWR, 0777);
 	if (node->input == -1)
-		perror("open");
+	{
+		ft_printerror("");
+		perror((*lst_token)->next->value);
+	}
 	(*lst_token) = (*lst_token)->next;
 }
 

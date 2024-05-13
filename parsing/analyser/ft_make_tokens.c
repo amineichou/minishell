@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 16:50:05 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/13 22:18:28 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_token	*ft_make_tokens(char *sanitize_result)
 	{
 		node = zyalloc(sizeof(t_token), 'a', true);
 		if (!node)
-			return (ft_printerror(MALLOC_ERORR),  NULL);
+			return (ft_printerror(MALLOC_ERORR), NULL);
 		start = i;
 		ft_check_token_val(sanitize_result, &i);
 		if (start == i)
@@ -91,8 +91,6 @@ t_token	*ft_make_tokens(char *sanitize_result)
 		node->value = ft_get_toknen_val(sanitize_result, start, i);
 		node->token = ft_check_token_type(node->value);
 		ft_append_node_t_token(&lst_token, node);
-		if (sanitize_result[i] == '\0')
-			break ;
 	}
 	return (lst_token);
 }

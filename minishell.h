@@ -3,62 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/13 17:02:37 by moichou          ###   ########.fr       */
-=======
-/*   Updated: 2024/05/13 15:14:01 by zyamli           ###   ########.fr       */
->>>>>>> 0fdb2449578e922b439cb8d2e1b1f2469fb52640
+/*   Updated: 2024/05/13 22:29:12 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "readline/readline.h"
-#include "readline/history.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <sys/wait.h>
-#include <limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "readline/readline.h"
+# include "readline/history.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <termios.h>
+# include <sys/wait.h>
+# include <limits.h>
 
-extern int g_inexec;
+extern int	g_inexec;
 
-#define MALLOC_ERORR "allocation failed\n"
-#define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
-#define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
-#define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `>'\n"
-#define SYNTAX_ERROR_REDIRECTION_2 "syntax error near unexpected token `>>'\n"
-#define FILE_D_ERROR_FAIL "faild to open fd\n"
+# define MALLOC_ERORR "allocation failed\n"
+# define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
+# define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
+# define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `>'\n"
+# define SYNTAX_ERROR_REDIRECTION_2 "syntax error near unexpected token `>>'\n"
+# define FILE_D_ERROR_FAIL "faild to open fd\n"
 
-typedef struct s_expand {
+typedef struct s_expand
+{
 	bool			is_expand;
 	char			*value;
 	struct s_expand	*next;
 }	t_expand;
 
-typedef struct s_env {
+typedef struct s_env
+{
 	char			*var;
 	char			*name;
 	struct s_env	*next;
 }	t_env;
 
-typedef struct  s_toexec {
+typedef struct s_toexec
+{
 	int					input;
 	int					output;
 	char				**args;
-	t_env 				*env;
-	struct s_toexec	*next;
-	struct s_toexec	*prev;
+	t_env				*env;
+	struct s_toexec		*next;
+	struct s_toexec		*prev;
 }	t_toexec;
 
 typedef struct t_pipe
@@ -90,23 +89,26 @@ typedef enum token
 	HEREDOC, // <<
 }	token;
 
-typedef struct s_token {
-	token 	token;
-	char	*value;
-	int		order;
+typedef struct s_token
+{
+	token			token;
+	char			*value;
+	int				order;
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_herdoc {
+typedef struct s_herdoc
+{
 	char			*del;
 	bool			is_expand;
 	struct s_herdoc	*next;
 }	t_herdoc;
 
-typedef struct s_garbage {
-	void	*adr;
-	bool	is_free;
-	struct	s_garbage	*next;
+typedef struct s_garbage
+{
+	void				*adr;
+	bool				is_free;
+	struct s_garbage	*next;
 }	t_garbage;
 
 // #define malloc(x) NULL
@@ -118,11 +120,15 @@ t_toexec	*ft_parser(char *line, t_env *envl);
 
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
-
+void		ft_set_default_vals(t_toexec *node, t_env *envl);
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
 t_token		*ft_make_tokens(char *sanitize_result);
 void		ft_handle_args(t_toexec **node, t_token **lst_token);
+// analyser tools
+char		**ft_reallocate_copy(char **old_res, char *new);
+int			ft_hnadle_herdoc(t_token **lst_token, t_toexec *node);
+bool		ft_isexpand_herdoc(char *str);
 
 // expanding
 char		*ft_expand(t_token *lst_token, t_env *envl);
@@ -140,7 +146,6 @@ int			ft_strlen(char *str);
 char		**ft_split(char *s, char c);
 void		ft_printerror(char *msg);
 void		ft_put_syntaxerror(char *msg, char c);
-int			ft_count_legal_char(char *line, char c);
 char		*ft_strldup(char *s1, int lenght);
 int			ft_isspecialchars(char c);
 int			ft_isquote(char c);

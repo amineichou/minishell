@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 15:00:45 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/13 22:34:02 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 int	ft_strlen(char *str)
 {
@@ -34,7 +34,8 @@ int	ft_isspace(char c)
 
 int	ft_is_alphanumeric(char c)
 {
-	if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9') || c == '_')
 		return (1);
 	return (0);
 }
@@ -53,7 +54,7 @@ char	*ft_strdup(char *s1, bool to_free)
 	char	*s2;
 
 	i = 0;
-	if(!s1)
+	if (!s1)
 		return (NULL);
 	str_length = ft_strlen(s1) + 1;
 	s2 = zyalloc(sizeof(char) * str_length, 'a', to_free);
@@ -144,7 +145,7 @@ static int	ft_handler(const char *str, int sign)
 	handler = 0;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		tmp = handler * 10 + (str[i] - 48); 
+		tmp = handler * 10 + (str[i] - 48);
 		if (tmp < handler && sign == 1)
 			return (-1);
 		if (tmp < handler && sign == -1)
@@ -216,7 +217,7 @@ char	*ft_strjoin_addspace(char *s1, char *s2, bool to_free)
 	else if (!s2)
 		return (ft_strdup(s1, to_free));
 	str = (char *)zyalloc(ft_strlen(s1) + ft_strlen(s2) + 2, 'a', to_free);
-	if (!str) 
+	if (!str)
 		return (NULL);
 	j = 0;
 	while (i < ft_strlen(s1))
@@ -276,20 +277,6 @@ char	*ft_substr(char *s, int start, int len, bool to_free)
 	str[i] = '\0';
 	return (str);
 }
-// void	*talloc(size_t __size)
-// {
-// 	void	*__ptr;
-
-// 	__ptr = malloc(__size);
-// 	if (__ptr == NULL)
-// 		return (NULL);
-// 	printf("pointer \033[32m%p\033[0m was allocated, size : \033[32m%ld\033[0m\n", __ptr, __size);
-// 	return (__ptr);
-// }
-
-
-
-// itoi
 
 static int	ft_count_dig(long int n)
 {
@@ -349,16 +336,16 @@ void	ft_putstr(char *s)
 	}
 }
 
-void garb_add(t_garbage **lst, t_garbage *new)
+void	garb_add(t_garbage **lst, t_garbage *new)
 {
-	t_garbage *lastone;
+	t_garbage	*lastone;
 
 	if (!lst || !new)
-		return;
+		return ;
 	if (!(*lst))
 	{
 		*lst = new;
-		return;
+		return ;
 	}
 	lastone = *lst;
 	while (lastone->next)
@@ -367,9 +354,9 @@ void garb_add(t_garbage **lst, t_garbage *new)
 	new->next = NULL;
 }
 
-t_garbage *garb_new(void *addrress, bool is_free)
+t_garbage	*garb_new(void *addrress, bool is_free)
 {
-    t_garbage *newnode = malloc(sizeof(t_garbage));
+ 	t_garbage *newnode = malloc(sizeof(t_garbage));
     if (newnode == NULL)
 	{
         perror("malloc");

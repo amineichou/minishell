@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tools_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 02:54:19 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/04 16:25:21 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/13 22:30:36 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	ft_count_legal_char(char *line, char c)
-{
-    int count = 0;
-    int in_quotes = 0;
-    char current_quote = '\0';
-
-    for (int i = 0; line[i] != '\0'; i++) {
-        if (ft_isquote(line[i])) {
-            if (!in_quotes) {
-                in_quotes = 1;
-                current_quote = line[i];
-            } else if (line[i] == current_quote) {
-                in_quotes = 0;
-                current_quote = '\0';
-            }
-        } else if (!in_quotes && line[i] == c) {
-            count++;
-        }
-    }
-    return count;
-}
 
 void	ft_printerror(char *msg)
 {
