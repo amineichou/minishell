@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 15:21:48 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/12 18:57:16 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:59:33 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	look_for(char *str, char c)
 	return (0);
 }
 
-int add_orjoin(char *av)
+int	add_orjoin(char *av)
 {
 	int	i;
 
@@ -64,4 +64,3 @@ int add_orjoin(char *av)
 		return (1);
 	return (0);
 }
-
