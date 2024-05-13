@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 01:05:57 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 17:04:18 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/12 21:52:22 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,13 @@ char	*ft_expand(t_token *lst_token, t_env *envl)
 	res = NULL;
 	while (tmp)
 	{
-		if (tmp->token != HEREDOC)
+		if (tmp && tmp->token == HEREDOC)
 		{
-			if (tmp->next && tmp->next->token == WORD)
-				tmp->next->value = ft_expand_dollar(tmp->next->value, envl);
+			res = ft_strjoin_addspace(res, tmp->value, true);
+			tmp = tmp->next;
 		}
+		else if (tmp && tmp->token == WORD)
+			tmp->value = ft_expand_dollar(tmp->value, envl);
 		res = ft_strjoin_addspace(res, tmp->value, true);
 		tmp = tmp->next;
 	}

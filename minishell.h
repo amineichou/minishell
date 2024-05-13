@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 15:12:35 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:14:01 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_token		*ft_lst_remvove_qoutes(t_token *lst_token);
 
 // herdoc
 // void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
-int			ft_heredoc_handler_exec(t_toexec *node, char *del);
+int			ft_heredoc_handler_exec(t_toexec *node, char *del, bool is_expand);
 int			ft_heredoc_handler_syn(char *delemiter);
 
 // utils
