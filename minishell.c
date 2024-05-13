@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:31 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 22:09:25 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/13 22:50:05 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,23 @@
 
 int	g_inexec = 0;
 
-void fill_envinlist(t_toexec **head, t_env *env_list)
+void	fill_envinlist(t_toexec **head, t_env *env_list)
 {
-    t_toexec *current = *head;
-    while (current != NULL) 
+	t_toexec	*current;
+
+	current = *head;
+	while (current != NULL)
 	{
-        current->env = env_list;
-        current = current->next;
-    }
+		current->env = env_list;
+		current = current->next;
+	}
 }
 
-
-void update_env(t_env *envl)
+void	update_env(t_env *envl)
 {
-	char *to_replace;
+	char	*to_replace;
+
 	to_replace = ft_env_list_serch_res(envl, "SHLVL");
-	// tmp = to_replace;
 	env_search_replace(envl, ft_itoa(ft_atoi(to_replace) + 1, false), "SHLVL");
 }
 
@@ -56,18 +57,19 @@ static void	ft_add_last_env(t_env *new_env, t_env *envl)
 	tmp->next = new_env;
 }
 
-t_env *set_env(char **env)
+t_env	*set_env(char **env)
 {
 	t_env	*envl;
+	t_env	*new_env;
 	char	**argument;
-	int i;
+	int		i;
 
 	i = 0;
 	envl = NULL;
 	argument = NULL;
 	while (env[i] != NULL)
 	{
-		t_env *new_env = zyalloc(sizeof(t_env), 'a', false);
+		new_env = zyalloc(sizeof(t_env), 'a', false);
 		if (!new_env)
 			return (ft_printerror(MALLOC_ERORR), NULL);
 		argument = split_env(env[i], '=');
@@ -80,12 +82,13 @@ t_env *set_env(char **env)
 			ft_add_last_env(new_env, envl);
 		i++;
 	}
-	return(envl);
+	return (envl);
 }
-t_env *set_spare_env(void)
+t_env	*set_spare_env(void)
 {
 	t_env	*head;
 	char	cwd[1024];
+
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		perror("getcwd");
 	head = zyalloc(sizeof(t_env), 'a', false);
@@ -93,7 +96,8 @@ t_env *set_spare_env(void)
 	head->var = ft_strdup("0", false);
 	head->next = zyalloc(sizeof(t_env), 'a', false);
 	head->next->name = ft_strdup("PATH", false);
-	head->next->var = ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.", false);
+	head->next->var = \
+	ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.", false);
 	head->next->next = zyalloc(sizeof(t_env), 'a', false);
 	head->next->next->name = ft_strdup("PWD", false);
 	head->next->next->var = ft_strdup(cwd, false);
@@ -101,9 +105,10 @@ t_env *set_spare_env(void)
 	head->next->next->next->name = ft_strdup("_", false);
 	head->next->next->next->var = ft_strdup("./minishell", false);
 	head->next->next->next->next = NULL;
-	return(head);
+	return (head);
 }
-int	ft_set_status(int	new_status, int type)
+
+int	ft_set_status(int new_status, int type)
 {
 	static int	old_status;
 
@@ -120,11 +125,10 @@ int	main(int ac, char **av, char **env)
 	t_env		*envl;
 	int			exit_status;
 	t_pipe		needs;
-	extern int	rl_catch_signals;
 
 	(void)ac;
 	(void)av;
-	if(*env == NULL)
+	if (*env == NULL)
 		envl = set_spare_env();
 	else
 		envl = set_env(env);
