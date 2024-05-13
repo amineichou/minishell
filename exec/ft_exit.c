@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 03:04:31 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/12 15:43:41 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:00:31 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	str_isnum(char *str)
 
 int	ft_exit(char **args)
 {
-	char *res;
+	char	*res;
 
 	if (!args[1])
 		exit(0);

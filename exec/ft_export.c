@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/12 18:52:18 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:59:54 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	add_to_env(char *av, t_toexec *data, t_pipe *needs, char **to_add)
 		else
 			env_search_replace(data->env, ft_strdup(to_add[1], false),
 				ft_strdup(to_add[0], false));
-
 	}
 	else if (!env_list_serch(&data->env, to_add[0]))
 	{
@@ -74,7 +73,7 @@ void	exporter(char *av, t_toexec *data, t_pipe *needs)
 		ft_export(NULL, NULL, &data->env, needs);
 		return ;
 	}
-	if(ft_strchr(av, '=') == 0)
+	if (ft_strchr(av, '=') == 0)
 	{
 		ft_export(ft_strdup(av, false), NULL, &data->env, needs);
 		return ;
