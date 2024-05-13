@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:02:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 22:01:37 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/13 10:28:43 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ static int	ft_analyse_herdoc(t_token **lst_token, t_toexec *node)
 	{
 		if (ft_hnadle_herdoc(lst_token, node) == -1)
 		{
+			ft_set_status(1, 1);
 			signal(SIGINT, ft_sigkill_handler);
 			return (-1);
 		}
