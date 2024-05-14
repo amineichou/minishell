@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:31 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 11:30:12 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 12:31:49 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,6 @@ static void	ft_init(char **env, t_env **envl, int *exit_status)
 	rl_catch_signals = 0;
 	signal(SIGINT, ft_sigkill_handler);
 	signal(SIGQUIT, ft_sigquit_handler);
-}
-
-int	ft_set_status(int new_status, int type)
-{
-	static int	old_status;
-
-	if (type)
-		old_status = new_status;
-	return (old_status);
 }
 
 int	main(int ac, char **av, char **env)

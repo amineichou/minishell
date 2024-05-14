@@ -29,7 +29,7 @@ void	test_lst(t_toexec *lst)
 	}
 }
 
-static char* token_to_string(token t) {
+static char* token_to_string(t_tokenenm t) {
     switch (t) {
         case WORD:
             return "WORD";

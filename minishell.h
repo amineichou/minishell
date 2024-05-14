@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 11:23:14 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 12:35:25 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct t_pipe
 	struct termios	term;
 }	t_pipe;
 
-typedef enum token
+typedef enum tokenenm
 {
 	WORD,
 	PIPE,
@@ -87,14 +87,14 @@ typedef enum token
 	RD_RP, // >
 	RD_IN, // <
 	HEREDOC, // <<
-}	token;
+}	t_tokenenm;
 
 typedef struct s_token
 {
-	token			token;
-	char			*value;
-	int				order;
-	struct s_token	*next;
+	t_tokenenm			token;
+	char				*value;
+	int					order;
+	struct s_token		*next;
 }	t_token;
 
 typedef struct s_herdoc
@@ -116,8 +116,10 @@ typedef struct s_garbage
 // START FUNCTION
 t_toexec	*ft_parser(char *line, t_env *envl);
 
-// syntax sanitizer
+// syntax_error
+int			ft_check_syntax_error(char *line, int *where);
 
+// syntax sanitizer
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 void		ft_set_default_vals(t_toexec *node, t_env *envl);
@@ -159,6 +161,8 @@ void		ft_append_node_t_token(t_token **head, t_token *node);
 void		ft_append_node_t_toexec(t_toexec **head, t_toexec *node);
 void		ft_append_node_expand(t_expand **head, t_expand *node);
 void		ft_pop_node_t_token(t_token **head, t_token *to_pop);
+int			ft_check_valid_fd(t_toexec *head);
+int			ft_set_status(int new_status, int type);
 // 1
 // char		*ft_remove_qoutes(char *str);
 void		ft_skip_quotes(char *str, int *i);
