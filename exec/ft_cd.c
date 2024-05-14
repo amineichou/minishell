@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:13:47 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 15:27:23 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:34:02 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,12 @@ int	ft_cd(char *dir, t_env *env, t_pipe *needs)
 	}
 	env_search_replace(env, cwd, "PWD");
 	if (!env_list_serch(&env, "OLDPWD"))
-		ft_export("OLDPWD", oldpwd, &env, needs);
+	{
+		if (oldpwd && *oldpwd)
+			ft_export("OLDPWD", oldpwd, &env, needs);
+	}
 	else
-		env_search_replace(env, oldpwd, "OLDPWD");
+		if (oldpwd && *oldpwd)
+			env_search_replace(env, oldpwd, "OLDPWD");
 	return (1);
 }
