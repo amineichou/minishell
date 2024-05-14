@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 11:16:50 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 11:19:31 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 22:05:39 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fill_envinlist(t_toexec **head, t_env *env_list)
+void	fill_envinlist(t_toexec **head, t_env **env_list)
 {
 	t_toexec	*current;
 
 	current = *head;
 	while (current != NULL)
 	{
-		current->env = env_list;
+		current->env = (*env_list);
 		current = current->next;
 	}
 }

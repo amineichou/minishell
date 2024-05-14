@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:35:15 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 16:40:53 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 22:57:19 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static void	execution_routine(t_toexec *lst, t_env *envl, int exit_status)
 	g_inexec = 1;
 	fill_envinlist(&lst, envl);
 	executer(lst, &needs);
-	envl = lst->env;
+	printf("%s\n", (*lst)->env->name);
+	*envl = (*lst)->env;
 	exit_status = *(needs.ex_stat);
 	g_inexec = 0;
 }
@@ -60,6 +61,7 @@ int	main(int ac, char **av, char **env)
 	char		*line;
 	t_env		*envl;
 	int			exit_status;
+	// t_pipe		needs;
 
 	((void)ac, (void)av);
 	ft_init(env, &envl, &exit_status);
@@ -73,7 +75,13 @@ int	main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				execution_routine(lst, envl, exit_status);
+				execution_routine(lst, &envl, exit_status);
+				// g_inexec = 1;
+				// fill_envinlist(&lst, &envl);
+				// executer(lst, &needs);
+				// envl = lst->env;
+				// exit_status = *(needs.ex_stat);
+				// g_inexec = 0;
 				continue ;
 			}
 		}

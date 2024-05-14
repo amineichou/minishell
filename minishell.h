@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 16:41:09 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 22:46:02 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,18 +209,18 @@ void		printf_test(char *str);
 t_env		*set_spare_env(void);
 t_env		*set_env(char **env);
 void		update_env(t_env *envl);
-void		fill_envinlist(t_toexec **head, t_env *env_list);
+void		fill_envinlist(t_toexec **head, t_env **env_list);
 
 // exec
 void		executer(t_toexec *cmds, t_pipe *needs);
 int			ft_cd(char *dir, t_env *env, t_pipe *needs);
 int			ft_echo(t_toexec *cmd, t_pipe *needs);
-int			env_print(t_toexec *data);
+int			env_print(t_env **data);
 void		ft_export(char *name, char *var, t_env **head, t_pipe *needs);
 int			ft_exporter(t_toexec *cmd, t_pipe *needs);
 int			add_orjoin(char *av);
 int			ft_pwd(t_pipe *needs);
-int			unseter(t_toexec *cmd, t_pipe *needs);
+int			unseter(t_toexec **cmd, t_pipe *needs);
 t_env		*duplicate_list(t_env **head);
 void		env_search_replace(t_env *head, char *to_replace, char *to_look);
 int			env_list_serch(t_env **head, char *to_look);

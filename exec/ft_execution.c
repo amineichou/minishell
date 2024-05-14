@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:09:30 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 15:45:50 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 22:45:10 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ int	check_builtin(t_toexec *cmd, t_pipe *needs)
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		res = ft_cd(cmd->args[1], cmd->env, needs);
 	if (ft_strcmp(cmd->args[0], "env") == 0)
-		res = env_print(cmd);
+		res = env_print(&cmd->env);
 	if (ft_strcmp(cmd->args[0], "export") == 0)
 		res = ft_exporter(cmd, needs);
 	if (ft_strcmp(cmd->args[0], "unset") == 0)
-		res = unseter(cmd, needs);
+		res = unseter(&cmd, needs);
 	if (ft_strcmp(cmd->args[0], "exit") == 0)
 	{
 		res = ft_exit(cmd->args);

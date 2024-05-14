@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:29:49 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 12:35:46 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 17:45:39 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static t_tokenenm	ft_check_token_type(char *args)
 {
+	if (!args)
+		return (WORD);
 	if (args[0] == '|')
 		return (PIPE);
 	if (args[0] == '<')

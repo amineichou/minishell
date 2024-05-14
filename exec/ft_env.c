@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:54:51 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/11 16:07:25 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:34:22 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ char	**env_tolist(t_env **env_list)
 	return (result);
 }
 
-int	env_print(t_toexec *data)
+int	env_print(t_env **data)
 {
 	t_env	*tmp;
 
-	tmp = data->env;
+	tmp = *(data);
 	while (tmp)
 	{
 		if (tmp->name && tmp->var)
