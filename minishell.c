@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:35:15 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 15:33:47 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 16:40:53 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_inexec = 0;
 
 static void	ft_init(char **env, t_env **envl, int *exit_status)
 {
@@ -31,38 +29,51 @@ static void	ft_init(char **env, t_env **envl, int *exit_status)
 	signal(SIGQUIT, ft_sigquit_handler);
 }
 
+static char	*ft_readline(char *prompt)
+{
+	char	*line;
+
+	line = readline(prompt);
+	if (!line)
+	{
+		write(1, "exit\n", 6);
+		exit (0);
+	}
+	return (line);
+}
+
+static void	execution_routine(t_toexec *lst, t_env *envl, int exit_status)
+{
+	t_pipe		needs;
+
+	g_inexec = 1;
+	fill_envinlist(&lst, envl);
+	executer(lst, &needs);
+	envl = lst->env;
+	exit_status = *(needs.ex_stat);
+	g_inexec = 0;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_toexec	*lst;
 	char		*line;
 	t_env		*envl;
 	int			exit_status;
-	t_pipe		needs;
 
 	((void)ac, (void)av);
 	ft_init(env, &envl, &exit_status);
 	update_env(envl);
 	while (1)
 	{
-		line = readline("\033[0;32mminishell$ \033[0;0m");
-		if (!line)
-		{
-			write(1, "exit\n", 6);
-			exit (0);
-		}
+		line = ft_readline("\033[0;32mminishell$ \033[0;0m");
 		if (line && line[0])
 		{
 			add_history(line);
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				// test_lst(lst);
-				g_inexec = 1;
-				fill_envinlist(&lst, envl);
-				executer(lst, &needs);
-				envl = lst->env;
-				exit_status = *(needs.ex_stat);
-				g_inexec = 0;
+				execution_routine(lst, envl, exit_status);
 				continue ;
 			}
 		}
