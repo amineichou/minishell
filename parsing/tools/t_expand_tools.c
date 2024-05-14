@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_expand_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 10:13:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/04 15:57:06 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 10:27:37 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ void	ft_append_node_expand(t_expand **head, t_expand *node)
 	if ((*head) == NULL)
 	{
 		(*head) = node;
-		// (*head)->next = NULL;
 		return ;
 	}
-
 	last = (*head);
 	while (last->next)
 		last = last->next;
