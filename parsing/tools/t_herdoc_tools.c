@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_herdoc_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 11:34:29 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/04 15:57:14 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 10:28:02 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,10 @@ void	ft_append_node_herdoc(t_herdoc **head, t_herdoc *node)
 	if ((*head) == NULL)
 	{
 		(*head) = node;
-		// (*head)->next = NULL;
 		return ;
 	}
-
 	last = (*head);
 	while (last->next)
 		last = last->next;
 	last->next = node;
-	// node->next = NULL;
 }

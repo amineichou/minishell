@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/11 15:18:27 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/13 16:59:42 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*ft_env_list_serch_res(t_env *head, char *to_look)
 	if (!head || !to_look)
 		return (NULL);
 	tmp = head;
-	while(tmp)
+	while (tmp)
 	{
-		if(ft_strcmp(tmp->name, to_look) == 0)
-			return(ft_strdup(tmp->var, false));
+		if (ft_strcmp(tmp->name, to_look) == 0)
+			return (ft_strdup(tmp->var, false));
 		tmp = tmp->next;
 	}
 	return (NULL);

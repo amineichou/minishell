@@ -3,58 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 15:14:01 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 11:23:14 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "readline/readline.h"
-#include "readline/history.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <sys/wait.h>
-#include <limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "readline/readline.h"
+# include "readline/history.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <termios.h>
+# include <sys/wait.h>
+# include <limits.h>
 
-extern int g_inexec;
+extern int	g_inexec;
 
-#define MALLOC_ERORR "allocation failed\n"
-#define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
-#define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
-#define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `>'\n"
-#define SYNTAX_ERROR_REDIRECTION_2 "syntax error near unexpected token `>>'\n"
-#define FILE_D_ERROR_FAIL "faild to open fd\n"
+# define MALLOC_ERORR "allocation failed\n"
+# define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
+# define SYNTAX_ERROR_QUOTE "syntax error missing quote\n"
+# define SYNTAX_ERROR_REDIRECTION "syntax error near unexpected token `>'\n"
+# define SYNTAX_ERROR_REDIRECTION_2 "syntax error near unexpected token `>>'\n"
+# define FILE_D_ERROR_FAIL "faild to open fd\n"
 
-typedef struct s_expand {
+typedef struct s_expand
+{
 	bool			is_expand;
 	char			*value;
 	struct s_expand	*next;
 }	t_expand;
 
-typedef struct s_env {
+typedef struct s_env
+{
 	char			*var;
 	char			*name;
 	struct s_env	*next;
 }	t_env;
 
-typedef struct  s_toexec {
+typedef struct s_toexec
+{
 	int					input;
 	int					output;
 	char				**args;
-	t_env 				*env;
-	struct s_toexec	*next;
-	struct s_toexec	*prev;
+	t_env				*env;
+	struct s_toexec		*next;
+	struct s_toexec		*prev;
 }	t_toexec;
 
 typedef struct t_pipe
@@ -86,23 +89,26 @@ typedef enum token
 	HEREDOC, // <<
 }	token;
 
-typedef struct s_token {
-	token 	token;
-	char	*value;
-	int		order;
+typedef struct s_token
+{
+	token			token;
+	char			*value;
+	int				order;
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_herdoc {
+typedef struct s_herdoc
+{
 	char			*del;
 	bool			is_expand;
 	struct s_herdoc	*next;
 }	t_herdoc;
 
-typedef struct s_garbage {
-	void	*adr;
-	bool	is_free;
-	struct	s_garbage	*next;
+typedef struct s_garbage
+{
+	void				*adr;
+	bool				is_free;
+	struct s_garbage	*next;
 }	t_garbage;
 
 // #define malloc(x) NULL
@@ -114,11 +120,15 @@ t_toexec	*ft_parser(char *line, t_env *envl);
 
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
-
+void		ft_set_default_vals(t_toexec *node, t_env *envl);
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
 t_token		*ft_make_tokens(char *sanitize_result);
 void		ft_handle_args(t_toexec **node, t_token **lst_token);
+// analyser tools
+char		**ft_reallocate_copy(char **old_res, char *new);
+int			ft_hnadle_herdoc(t_token **lst_token, t_toexec *node);
+bool		ft_isexpand_herdoc(char *str);
 
 // expanding
 char		*ft_expand(t_token *lst_token, t_env *envl);
@@ -128,7 +138,6 @@ char		*ft_remove_qoutes(char *str);
 t_token		*ft_lst_remvove_qoutes(t_token *lst_token);
 
 // herdoc
-// void	ft_open_herdoc(t_token **lst_token, t_pipe *needs, t_env *env);
 int			ft_heredoc_handler_exec(t_toexec *node, char *del, bool is_expand);
 int			ft_heredoc_handler_syn(char *delemiter);
 
@@ -137,7 +146,6 @@ int			ft_strlen(char *str);
 char		**ft_split(char *s, char c);
 void		ft_printerror(char *msg);
 void		ft_put_syntaxerror(char *msg, char c);
-int			ft_count_legal_char(char *line, char c);
 char		*ft_strldup(char *s1, int lenght);
 int			ft_isspecialchars(char c);
 int			ft_isquote(char c);
@@ -169,7 +177,7 @@ char		*ft_itoa(int n, bool to_free);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putstr(char *s);
 void		ft_print_error(char *str);
-char		*ft_strstr(const char* haystack, const char* needle);
+char		*ft_strstr(const char *haystack, const char *needle);
 char		*ft_substr(char *s, int start, int len, bool to_free);
 char		*ft_strjoin(char *s1, char *s2, bool to_free);
 size_t		ft_strlcpy(char *dst, char *src, size_t dstsize);
@@ -179,11 +187,6 @@ int			ft_atoi(const char *str);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		free_env_list(t_env **head);
 char		*ft_strjoin_addspace(char *s1, char *s2, bool to_free);
-
-// free leaks
-void		ft_free_toexec(t_toexec *head);
-void		ft_free_args(char **args);
-void		ft_free_token(t_token *head);
 
 // signal hanldler
 void		ft_sigkill_handler(int signum);
@@ -196,6 +199,14 @@ void		test_tokens(t_token *lst_token_input);
 void		test_lst(t_toexec *lst);
 void		printf_test(char *str);
 // test end
+
+// env_tools
+t_env		*set_spare_env(void);
+t_env		*set_env(char **env);
+void		update_env(t_env *envl);
+void		fill_envinlist(t_toexec **head, t_env *env_list);
+
+// exec
 void		executer(t_toexec *cmds, t_pipe *needs);
 int			ft_cd(char *dir, t_env *env, t_pipe *needs);
 int			ft_echo(t_toexec *cmd, t_pipe *needs);

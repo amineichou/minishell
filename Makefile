@@ -1,17 +1,16 @@
-FLAGS = -Wall -Wextra -Werror #-g -fsanitize=address 
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address 
 CC = cc
 NAME = minishell
 READLINE_LIB = -lreadline
 READLINE_L = $(shell brew --prefix readline)/lib
 READLINE_I = $(shell brew --prefix readline)/include
-SRC = minishell.c parsing/ft_parser.c parsing/ft_split.c parsing/libft.c parsing/signal_handlers.c \
+SRC = minishell.c ft_env_tools.c parsing/ft_parser.c parsing/ft_split.c parsing/signal_handlers.c \
 	parsing/analyser/ft_analyse_redirections.c parsing/analyser/ft_analyser.c \
-	parsing/analyser/ft_make_tokens.c \
+	parsing/analyser/ft_make_tokens.c parsing/analyser/analyser_tools.c \
 	parsing/tools/t_expand_tools.c parsing/tools/t_toexec_tools.c parsing/tools/t_token_tools.c \
 	parsing/herdoc/herdoc_exec.c parsing/herdoc/herdoc_syn.c \
-	parsing/tools/t_herdoc_tools.c \
-	free_leaks/ft_linked_lists.c \
-	parsing/tools/tools_1.c parsing/test/test.c \
+	parsing/tools/t_herdoc_tools.c parsing/libft/libft.c parsing/libft/libft_1.c parsing/libft/libft_2.c \
+	parsing/test/test.c \
 	expanding/ft_expand.c expanding/ft_remove_quotes.c expanding/ft_replace_dollar.c \
 	exec/ft_cd.c exec/ft_echo.c exec/ft_env.c exec/ft_exec.c exec/ft_exit.c exec/ft_export.c exec/ft_pwd.c \
 	exec/ft_unset.c exec/utilst.c exec/fd_handler.c exec/exec_routine.c exec/ft_execution.c exec/path_finder.c \
