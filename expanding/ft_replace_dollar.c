@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:17:59 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 16:59:42 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 17:53:58 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ static char	*ft_fill_arg(char *str, int *i, t_env *env)
 	return (res);
 }
 
+static char	*ft_replace_dollar_handler(char *res, char *str, int i, int start)
+{
+	return (ft_strjoin(res, ft_strldup(&str[start], i - start), true));
+}
+
 char	*ft_replace_dollar(char *str, t_env *env)
 {
 	char	*res;
@@ -83,7 +88,7 @@ char	*ft_replace_dollar(char *str, t_env *env)
 			if (str[i] == '$')
 			{
 				if (start != i)
-					res = ft_strjoin(res, ft_strldup(&str[start], i - start), true);
+					res = ft_replace_dollar_handler(res, str, i, start);
 				break ;
 			}
 			i++;
