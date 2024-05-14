@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:31 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 22:01:20 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/13 20:17:07 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,4 +161,3 @@ int	main(int ac, char **av, char **env)
 			free(line);
 	}
 }
-
