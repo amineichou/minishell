@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 21:54:51 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 14:57:13 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_remove_qoutes(char *str)
 
 t_token	*ft_lst_remvove_qoutes(t_token *lst_token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = lst_token;
 	while (tmp)
