@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 12:04:48 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 12:20:19 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 14:48:21 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,8 @@ int	ft_check_syntax_error(char *line, int *where)
 {
 	int	i;
 
-	i = 0;
-	*where = 0;
-	if (!line || line[i] == '|')
-		return (ft_printerror("syntax error near unexpected token `|'\n"), -1);
+	if (ft_init_syntax_error_vals(&i, line, where) == -1)
+		return (-1);
 	while (line[i])
 	{
 		if (ft_isquote(line[i]))

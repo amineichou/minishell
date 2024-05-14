@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 16:03:53 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:41:09 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int			ft_check_syntax_error(char *line, int *where);
 char		*ft_trim_spaces(char *str); // TODO : move it to tools
 void		ft_handle_redirections(t_token **lst_token, t_toexec *node);
 void		ft_set_default_vals(t_toexec *node, t_env *envl);
+int			ft_init_syntax_error_vals(int *i, char *line, int *where);
 // analyser
 t_toexec	*ft_analyser(char *sanitize_result, t_env *envl);
 t_token		*ft_make_tokens(char *sanitize_result);

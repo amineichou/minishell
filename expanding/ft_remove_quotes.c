@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 01:40:17 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/12 21:54:51 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 15:51:29 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,28 @@ static char	*ft_get_inside_qoutes(char *str, int *i, int type)
 	return (res);
 }
 
+static void	ft_remove_qoutes_handler(char *str, char *res, int *x, int *i)
+{
+	res[*x] = str[*i];
+	(*x)++;
+	(*i)++;
+}
+
+static void	ft_cat_inside_qoutes(char *res, char *str, int *i, int *x)
+{
+	char	*inside_quotes;
+	int		j;
+
+	inside_quotes = ft_get_inside_qoutes(str, i, ft_isquote(str[*i]));
+	j = 0;
+	while (inside_quotes[j])
+		res[(*x)++] = inside_quotes[j++];
+}
+
 char	*ft_remove_qoutes(char *str)
 {
 	char	*res;
-	char	*inside_quotes;
 	int		i;
-	int		j;
 	int		x;
 
 	i = 0;
@@ -55,18 +71,9 @@ char	*ft_remove_qoutes(char *str)
 				i++;
 		}
 		if (str[i] && ft_isquote(str[i]))
-		{
-			inside_quotes = ft_get_inside_qoutes(str, &i, ft_isquote(str[i]));
-			j = 0;
-			while (inside_quotes[j])
-				res[x++] = inside_quotes[j++];
-		}
+			ft_cat_inside_qoutes(res, str, &i, &x);
 		else
-		{
-			res[x] = str[i];
-			x++;
-			i++;
-		}
+			ft_remove_qoutes_handler(str, res, &x, &i);
 	}
 	res[x] = '\0';
 	return (res);
@@ -74,7 +81,7 @@ char	*ft_remove_qoutes(char *str)
 
 t_token	*ft_lst_remvove_qoutes(t_token *lst_token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = lst_token;
 	while (tmp)
