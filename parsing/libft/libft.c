@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:59:34 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 14:31:49 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 14:43:41 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	garb_add(t_garbage **lst, t_garbage *new)
+static void	garb_add(t_garbage **lst, t_garbage *new)
 {
 	t_garbage	*lastone;
 
@@ -30,24 +30,26 @@ void	garb_add(t_garbage **lst, t_garbage *new)
 	new->next = NULL;
 }
 
-t_garbage	*garb_new(void *addrress, bool is_free)
+static t_garbage	*garb_new(void *addrress, bool is_free)
 {
- 	t_garbage *newnode = malloc(sizeof(t_garbage));
-    if (newnode == NULL)
+	t_garbage	*newnode;
+
+	newnode = malloc(sizeof(t_garbage));
+	if (newnode == NULL)
 	{
-        perror("malloc");
-        return(NULL);
-    }
-    newnode->adr = addrress;
+		perror("malloc");
+		return (NULL);
+	}
+	newnode->adr = addrress;
 	newnode->is_free = is_free;
-    newnode->next = NULL;
-    return (newnode);
+	newnode->next = NULL;
+	return (newnode);
 }
 
-void free_garb_list(t_garbage **head)
+static void	free_garb_list(t_garbage **head)
 {
-	t_garbage *current;
-	t_garbage *next;
+	t_garbage	*current;
+	t_garbage	*next;
 
 	current = *head;
 	while (current != NULL)
@@ -55,67 +57,59 @@ void free_garb_list(t_garbage **head)
 		next = current->next;
 		if (current->is_free)
 		{
-			// dprintf(2 ,"%s\n", current->adr);
 			free(current->adr);
 			current->adr = NULL;
-			
 		}
 		current = next;
 	}
 }
 
-void *zyalloc(size_t size, int flag, bool is_free)
+void	*zyalloc(size_t size, int flag, bool is_free)
 {
 	static t_garbage	*gooper;
 	t_garbage			*node;
-	void *address;
-	
+	void				*address;
+
 	address = NULL;
-	if(flag == 'a')
+	if (flag == 'a')
 	{
 		address = malloc(size);
-		if(!address)
+		if (!address)
 			(perror("malloc"), exit(1));
-		if(gooper == NULL)
-		{
+		if (gooper == NULL)
 			gooper = garb_new(address, is_free);
-		}
 		else
 		{
 			node = garb_new(address, is_free);
 			garb_add(&gooper, node);
 		}
 	}
-	else if(flag == 'f')
+	else if (flag == 'f')
 		free_garb_list(&gooper);
-	return(address);
+	return (address);
 }
 
-char* ft_strstr(const char* haystack, const char* needle)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-
-    const char* p1;
-    const char* p2;
-    const char* p1_advance;
+	const char	*p1;
+	const char	*p2;
+	const char	*p1_advance;
 
 	if (*needle == '\0')
-        return (char*)haystack;
+		return ((char *)haystack);
 	p1_advance = haystack;
-    while (*p1_advance)
+	while (*p1_advance)
 	{
-        p1 = p1_advance;
-        p2 = needle;
-        
-        while (*p1 && *p2 && *p1 == *p2)
+		p1 = p1_advance;
+		p2 = needle;
+		while (*p1 && *p2 && *p1 == *p2)
 		{
-            p1++;
-            p2++;
-        }
-        if (*p2 == '\0')
-            return (char*)p1_advance;
-        
-        p1_advance++;
-    }
-    
-    return (NULL);
+			p1++;
+			p2++;
+		}
+		if (*p2 == '\0')
+			return ((char *)p1_advance);
+		p1_advance++;
+	}
+	return (NULL);
 }
