@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 22:29:12 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 11:23:14 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ char		*ft_itoa(int n, bool to_free);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putstr(char *s);
 void		ft_print_error(char *str);
-char		*ft_strstr(const char* haystack, const char* needle);
+char		*ft_strstr(const char *haystack, const char *needle);
 char		*ft_substr(char *s, int start, int len, bool to_free);
 char		*ft_strjoin(char *s1, char *s2, bool to_free);
 size_t		ft_strlcpy(char *dst, char *src, size_t dstsize);
@@ -187,11 +187,6 @@ int			ft_atoi(const char *str);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		free_env_list(t_env **head);
 char		*ft_strjoin_addspace(char *s1, char *s2, bool to_free);
-
-// free leaks
-void		ft_free_toexec(t_toexec *head);
-void		ft_free_args(char **args);
-void		ft_free_token(t_token *head);
 
 // signal hanldler
 void		ft_sigkill_handler(int signum);
@@ -204,6 +199,14 @@ void		test_tokens(t_token *lst_token_input);
 void		test_lst(t_toexec *lst);
 void		printf_test(char *str);
 // test end
+
+// env_tools
+t_env		*set_spare_env(void);
+t_env		*set_env(char **env);
+void		update_env(t_env *envl);
+void		fill_envinlist(t_toexec **head, t_env *env_list);
+
+// exec
 void		executer(t_toexec *cmds, t_pipe *needs);
 int			ft_cd(char *dir, t_env *env, t_pipe *needs);
 int			ft_echo(t_toexec *cmd, t_pipe *needs);
