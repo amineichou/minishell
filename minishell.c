@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:35:15 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 14:35:19 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 15:33:47 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	main(int ac, char **av, char **env)
 	int			exit_status;
 	t_pipe		needs;
 
-	(void)ac;
-	(void)av;
+	((void)ac, (void)av);
 	ft_init(env, &envl, &exit_status);
 	update_env(envl);
 	while (1)
