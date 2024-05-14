@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 12:35:25 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 16:03:53 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <sys/wait.h>
 # include <limits.h>
 
-extern int	g_inexec;
+int	g_inexec;
 
 # define MALLOC_ERORR "allocation failed\n"
 # define SYNTAX_ERROR_PIPE "syntax error near unexpected token `|'\n"
