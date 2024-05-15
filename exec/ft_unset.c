@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/14 22:44:45 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/15 14:50:17 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	unseter(t_toexec **cmd, t_pipe *needs)
 	i = 1;
 	while ((*cmd)->args[i])
 	{
-		if (ft_isdigit((*cmd)->args[i][0]))
+		if (!check_ifvalid((*cmd)->args[i]))
 		{
 			ft_putstr_fd("minishell: unset: ", 2);
 			ft_putstr_fd((*cmd)->args[i], 2);
