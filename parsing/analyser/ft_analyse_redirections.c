@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:52:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/13 22:28:43 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 22:36:34 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	ft_hanlde_red_ap(t_token **lst_token, t_toexec *node)
 	{
 		ft_printerror("");
 		perror((*lst_token)->next->value);
+		ft_set_status(1, 1);
 	}
 	(*lst_token) = (*lst_token)->next;
 }
@@ -41,6 +42,7 @@ static void	ft_hanlde_red_rp(t_token **lst_token, t_toexec *node)
 	{
 		ft_printerror("");
 		perror((*lst_token)->next->value);
+		ft_set_status(1, 1);
 	}
 	(*lst_token) = (*lst_token)->next;
 }
@@ -52,6 +54,7 @@ static void	ft_hanlde_red_in(t_token **lst_token, t_toexec *node)
 	{
 		ft_printerror("");
 		perror((*lst_token)->next->value);
+		ft_set_status(1, 1);
 	}
 	(*lst_token) = (*lst_token)->next;
 }
@@ -67,6 +70,7 @@ void	ft_handle_redirections(t_token **lst_token, t_toexec *node)
 			ft_printerror("ambiguous redirect\n");
 			node->args = NULL;
 			(*lst_token) = (*lst_token)->next;
+			ft_set_status(1, 1);
 			return ;
 		}
 		if ((*lst_token)->token == RD_AP)

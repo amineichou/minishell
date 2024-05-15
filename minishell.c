@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:35:15 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 16:40:53 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/14 23:41:53 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ static char	*ft_readline(char *prompt)
 	return (line);
 }
 
-static void	execution_routine(t_toexec *lst, t_env *envl, int exit_status)
+static void	execution_routine(t_toexec *lst, t_env **envl, int exit_status)
 {
 	t_pipe		needs;
 
 	g_inexec = 1;
-	fill_envinlist(&lst, envl);
+	fill_envinlist(&lst, *envl);
 	executer(lst, &needs);
-	envl = lst->env;
+	*envl = lst->env;
 	exit_status = *(needs.ex_stat);
 	g_inexec = 0;
 }
@@ -73,7 +73,7 @@ int	main(int ac, char **av, char **env)
 			lst = ft_parser(line, envl);
 			if (lst)
 			{
-				execution_routine(lst, envl, exit_status);
+				execution_routine(lst, &envl, exit_status);
 				continue ;
 			}
 		}
