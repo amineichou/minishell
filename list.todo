@@ -70,3 +70,10 @@ bash: exit: dcw: numeric argument required
  << '' cat
  
  echo $123
+
+ echo hello > file | cat < file | ls
+ ls > $USER -la | cat $USER
+
+ exit dwd efef
+exit
+bash: exit: dwd: numeric argument required

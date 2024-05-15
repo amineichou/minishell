@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 12:18:41 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/14 22:43:09 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static t_toexec	*ft_sanitizer(char *line, t_env *env)
 		return (free(line), NULL);
 	if (ft_check_syntax_error(line, &syntax_error_where) == -1)
 	{
+		ft_set_status(258, 1);
 		if (syntax_error_where > 1)
 		{
 			herdoc_lst = ft_createpast_herdoc(line, syntax_error_where);
