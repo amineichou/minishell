@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/19 15:11:09 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/19 15:12:31 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,5 +257,3 @@ void		lst_add(t_env **lst, t_env *new);
 void		*zyalloc(size_t size, int flag, bool is_free);
 
 #endif
-
-// 'something''something'
