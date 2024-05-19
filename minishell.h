@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
+/*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 22:46:02 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/19 15:04:40 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void		ft_append_node_t_token(t_token **head, t_token *node);
 void		ft_append_node_t_toexec(t_toexec **head, t_toexec *node);
 void		ft_append_node_expand(t_expand **head, t_expand *node);
 void		ft_pop_node_t_token(t_token **head, t_token *to_pop);
-int			ft_check_valid_fd(t_toexec *head);
+void		ft_check_valid_fd(t_toexec **head);
 int			ft_set_status(int new_status, int type);
 // 1
 // char		*ft_remove_qoutes(char *str);

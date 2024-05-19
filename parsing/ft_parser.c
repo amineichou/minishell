@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 03:41:06 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 22:43:09 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/19 15:04:15 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ t_toexec	*ft_parser(char *line, t_env *envl)
 	t_toexec	*lst_toexec;
 
 	lst_toexec = ft_sanitizer(line, envl);
-	if (ft_check_valid_fd(lst_toexec) == -1)
-		return (free(line), NULL);
+	ft_check_valid_fd(&lst_toexec);
 	free(line);
 	return (lst_toexec);
 }

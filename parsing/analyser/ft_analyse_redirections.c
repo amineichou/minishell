@@ -6,19 +6,16 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 01:52:13 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/17 18:25:45 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/19 15:02:42 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// this func will set t_toexec node to it's default values
-void	ft_set_default_vals(t_toexec *node, t_env *envl)
+static void	ft_skep_to_pipe(t_token **lst_token)
 {
-	node->input = 0;
-	node->output = 1;
-	node->args = NULL;
-	node->env = envl;
+	while ((*lst_token) && (*lst_token)->token != PIPE)
+		*lst_token = (*lst_token)->next;
 }
 
 static void	ft_hanlde_red_ap(t_token **lst_token, t_toexec *node)
@@ -31,7 +28,7 @@ static void	ft_hanlde_red_ap(t_token **lst_token, t_toexec *node)
 		perror((*lst_token)->next->value);
 		ft_set_status(1, 1);
 		close_all();
-		(*lst_token) = NULL;
+		ft_skep_to_pipe(lst_token);
 		return ;
 	}
 	(*lst_token) = (*lst_token)->next;
@@ -47,7 +44,7 @@ static void	ft_hanlde_red_rp(t_token **lst_token, t_toexec *node)
 		perror((*lst_token)->next->value);
 		ft_set_status(1, 1);
 		close_all();
-		(*lst_token) = NULL;
+		ft_skep_to_pipe(lst_token);
 		return ;
 	}
 	(*lst_token) = (*lst_token)->next;
@@ -62,7 +59,7 @@ static void	ft_hanlde_red_in(t_token **lst_token, t_toexec *node)
 		perror((*lst_token)->next->value);
 		ft_set_status(1, 1);
 		close_all();
-		(*lst_token) = NULL;
+		ft_skep_to_pipe(lst_token);
 		return ;
 	}
 	(*lst_token) = (*lst_token)->next;
@@ -88,7 +85,7 @@ void	ft_handle_redirections(t_token **lst_token, t_toexec *node)
 			ft_hanlde_red_rp(lst_token, node);
 		else if ((*lst_token)->token == RD_IN)
 			ft_hanlde_red_in(lst_token, node);
-		if ((*lst_token))
+		if ((*lst_token) && (*lst_token)->token != PIPE)
 			(*lst_token) = (*lst_token)->next;
 	}
 }
