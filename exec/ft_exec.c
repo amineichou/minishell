@@ -6,11 +6,10 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:04:57 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/14 23:01:41 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/18 16:22:30 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "head.h"
 #include "../minishell.h"
 
 void	error_handler(char *str)
@@ -84,7 +83,6 @@ void	executer(t_toexec *cmds, t_pipe *needs)
 				return ;
 			}
 			single_cmd(cmds, needs);
-			ft_wait(needs);
 		}
 	}
 	else if (needs->size > 1)

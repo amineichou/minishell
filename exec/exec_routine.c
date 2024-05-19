@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:23:05 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/14 22:46:42 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:45:09 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ void	cmds_executer(t_toexec *cmds, t_pipe *needs)
 		return (perror("pipe"));
 	needs->pids[needs->p] = fork();
 	if (needs->pids[needs->p] == -1)
-		return (perror("fork"));
+		return ;
 	exec_routines(cmds, needs);
 }
