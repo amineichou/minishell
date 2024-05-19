@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/14 22:46:02 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/19 14:54:47 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ int			env_print(t_env **data);
 void		ft_export(char *name, char *var, t_env **head, t_pipe *needs);
 int			ft_exporter(t_toexec *cmd, t_pipe *needs);
 int			add_orjoin(char *av);
-int			ft_pwd(t_pipe *needs);
+int			ft_pwd(t_pipe *needs, t_env *env);
 int			unseter(t_toexec **cmd, t_pipe *needs);
 t_env		*duplicate_list(t_env **head);
 void		env_search_replace(t_env *head, char *to_replace, char *to_look);

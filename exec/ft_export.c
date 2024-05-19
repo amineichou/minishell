@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:20:27 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/13 14:59:54 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:36:38 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_ifvalid(char *cmd)
 	int	i;
 
 	i = 0;
-	if (cmd[0] == '=' || ft_isdigit(cmd[0]))
+	if (cmd[0] == '=' || cmd[0] == '+' || ft_isdigit(cmd[0]))
 		return (0);
 	while (cmd[i])
 	{

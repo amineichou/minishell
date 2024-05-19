@@ -6,7 +6,7 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:09:30 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/14 22:45:10 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:57:18 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	check_builtin(t_toexec *cmd, t_pipe *needs)
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		res = ft_echo(cmd, needs);
 	if (ft_strcmp(cmd->args[0], "pwd") == 0)
-		res = ft_pwd(needs);
+		res = ft_pwd(needs, cmd->env);
 	if (ft_strcmp(cmd->args[0], "cd") == 0)
 		res = ft_cd(cmd->args[1], cmd->env, needs);
 	if (ft_strcmp(cmd->args[0], "env") == 0)

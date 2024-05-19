@@ -6,12 +6,11 @@
 /*   By: zyamli <zakariayamli00@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 20:39:33 by zyamli            #+#    #+#             */
-/*   Updated: 2024/05/15 14:50:17 by zyamli           ###   ########.fr       */
+/*   Updated: 2024/05/15 15:33:34 by zyamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <string.h>
 
 void	free_env_list(t_env **head)
 {
@@ -60,7 +59,8 @@ int	unseter(t_toexec **cmd, t_pipe *needs)
 	i = 1;
 	while ((*cmd)->args[i])
 	{
-		if (!check_ifvalid((*cmd)->args[i]))
+		if (!check_ifvalid((*cmd)->args[i]) || ft_strchr((*cmd)->args[i]
+				, '+') != 0 || ft_strchr((*cmd)->args[i], '=') != 0)
 		{
 			ft_putstr_fd("minishell: unset: ", 2);
 			ft_putstr_fd((*cmd)->args[i], 2);
