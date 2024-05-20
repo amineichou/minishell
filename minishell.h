@@ -6,7 +6,7 @@
 /*   By: moichou <moichou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:05:44 by moichou           #+#    #+#             */
-/*   Updated: 2024/05/19 15:12:31 by moichou          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:22:52 by moichou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ typedef enum tokenenm
 {
 	WORD,
 	PIPE,
-	RD_AP, // >>
-	RD_RP, // >
-	RD_IN, // <
-	HEREDOC, // <<
+	RD_AP,
+	RD_RP,
+	RD_IN,
+	HEREDOC,
 }	t_tokenenm;
 
 typedef struct s_token
