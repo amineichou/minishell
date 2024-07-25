@@ -31,15 +31,15 @@ By implementing your own shell, you will explore these concepts in depth and dev
 To install and run the minishell, follow these steps:
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone https://github.com/amineichou/minishell.git
    ```
 2. Navigate to the project directory:
-    ```
+    ```bash
     cd minishell
     ```
 3. Compile:
-    ```
+    ```bash
     make
     ```
 
@@ -47,7 +47,7 @@ To install and run the minishell, follow these steps:
 
 - Run `./minishell`
 - Example 
-```
+```bash
 minishell> ls -la
 minishell> cd /path/to/directory
 minishell> echo "Hello, World!" > output.txt
