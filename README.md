@@ -30,6 +30,13 @@ By implementing your own shell, you will explore these concepts in depth and dev
 
 To install and run the minishell, follow these steps:
 
+0. Install libreadline if it's not installed
+```bash
+sudo apt update
+sudo apt install libreadline-dev
+sudo apt install libreadline8
+```
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/amineichou/minishell.git
